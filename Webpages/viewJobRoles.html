@@ -1,0 +1,32 @@
+{% extends "layout.html" %} 
+{% block pageTitle %} 
+  List of Employees 
+{% endblock %} 
+
+
+{% block content %}
+<h2>List Job Roles</h2> 
+{% if employees and employees.length > 0 %}
+
+
+{% set employeerows = [] %}
+
+{% for employee in employees | sort(attribute='employeeNumber') %}
+
+{% set employeerows = (employeerows.push([{ text: employee.employeeNumber }, {text: employee.Role }), employeerows) %}
+
+{% endfor %}
+
+{{govukTable({
+
+head: [{ text: "ID" }, { text: "Employee Number" }, { text: "Job Role" }, 
+rows: employeerows })
+
+}}
+
+{% else %}
+
+There are no employees.
+
+{% endif %}
+{% endblock %}
