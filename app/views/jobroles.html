@@ -16,7 +16,7 @@
 
 {% for jobrole in jobroles %}
 
-{% set jobrolesrows = (jobrolesrows.push([{ text: jobrole.employeeID }, {text: jobrole.employeeRole }]), jobrolesrows) %}
+{% set jobrolesrows = (jobrolesrows.push([{ text: jobrole.jobRoleID }, {text: jobrole.jobRole }]), jobrolesrows) %}
 
 {% endfor %}
 
