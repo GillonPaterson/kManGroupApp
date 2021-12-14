@@ -235,7 +235,7 @@ if (promoMode === 'true') {
 if (typeof (routes) !== 'function') {
   console.log(routes.bind)
   console.log('Warning: the use of bind in routes is deprecated - please check the Prototype Kit documentation for writing routes.')
-  routes.bind(app)
+  routes.bind
 } else {
   app.use('/', routes)
 }
