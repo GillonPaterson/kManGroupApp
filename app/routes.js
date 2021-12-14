@@ -7,6 +7,9 @@ const NodeCache = require("node-cache");
 const myCache = new NodeCache();
 
 
-router.get("/jobroles", async(req, res) => {
-    res.render('job-roles', { jobroles: await jobrolesservice.getJobRoles() });
+router.get("/jobroles", async(req, res) => { var role =  await jobrolesservice.getJobRoles()
+    console.log(role)
+    res.render('jobroles.html', { jobroles: role });
 });
+
+module.exports = router;

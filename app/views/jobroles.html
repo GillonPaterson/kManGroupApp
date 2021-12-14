@@ -14,9 +14,9 @@
 {% if jobroles and jobroles.length > 0 %}
 {% set jobrolesrows = [] %}
 
-{% for jobrole in jobroles | sort(attribute='jobroleid') %}
+{% for jobrole in jobroles %}
 
-{% set jobrolesrows = (jobrolesrows.push([{ text: jobrole.jobroleid }, {text: employee.jobrolename }]), jobrolesrows) %}
+{% set jobrolesrows = (jobrolesrows.push([{ text: jobrole.employeeID }, {text: jobrole.employeeRole }]), jobrolesrows) %}
 
 {% endfor %}
 
