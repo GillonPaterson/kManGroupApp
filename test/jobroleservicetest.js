@@ -22,7 +22,7 @@ describe("Job Role Service", function() {
 
         mock.onGet('http://localhost:8080/api/getJobRoles').reply(200, list);
 
-        var result = await jobrolesservice.getJobRoles();
+        var result = await employeeservice.getJobRoles();
 
         expect(result.length).to.equal(2);
         expect(list[0]).to.equal(jobrole1);

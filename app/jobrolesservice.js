@@ -7,3 +7,8 @@ exports.getJobRoles = async() => {
     const response = await axios.get('http://localhost:8080/api/getJobRoles');
     return response.data;
 }
+
+exports.getJobRoleSpec = async(jobRoleID) =>{
+    const response = await axios.get('http://localhost:8080/api/getJobSpec/'+jobRoleID)
+    return response.data;
+}
