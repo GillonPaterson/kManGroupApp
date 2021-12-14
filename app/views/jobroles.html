@@ -9,22 +9,26 @@
 {% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
 
 
 <h2>List of Job Roles</h2> 
+=======
+<h2 class="govuk-heading-xl">List of Job Roles</h2> 
+>>>>>>> 01a9d6572fbbd476e6eb20ee6e2bcb6c8150fead
 
 {% if jobroles and jobroles.length > 0 %}
 {% set jobrolesrows = [] %}
 
 {% for jobrole in jobroles %}
 
-{% set jobrolesrows = (jobrolesrows.push([{ text: jobrole.jobRoleID }, {text: jobrole.jobRole }, {text: jobrole.viewSpecURL|safe}]), jobrolesrows) %}
+{% set jobrolesrows = (jobrolesrows.push([{ text: jobrole.jobRoleID }, {text: jobrole.jobRole },{text: jobrole.jobCapability}, {text: jobrole.jobBandLevel|safe}, {text: jobrole.viewSpecURL|safe}]), jobrolesrows) %}
 
 {% endfor %}
 
 {{govukTable({
 
-head: [{ text: "ID" }, { text: "Job Role" }, {text: "View Job Spec"}], 
+head: [{ text: "ID" }, { text: "Job Role" },{text: "Job Capability"}, {text: "Band Level"}, {text: "View Job Spec"}], 
 rows: jobrolesrows })
 
 }}
