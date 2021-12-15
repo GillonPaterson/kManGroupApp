@@ -35,7 +35,7 @@ router.get("/competencyData", async(req, res) =>{
     var role = await jobrolesservice.getCompetencyData(req.query.bandLevel)
     console.log(role)
     res.render('competencyInfo.html', {
-        jobRoleInfo: role[0]
+        jobRoleInfo: role
     })    
 });
 
