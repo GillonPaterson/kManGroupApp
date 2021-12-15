@@ -1,0 +1,70 @@
+{% extends "layout.html" %} 
+{% block pageTitle %} 
+  Job Roles
+{% endblock %} 
+
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">K Man Group (The Better Team)</h1>
+
+      <p class="govuk-body">Use this service to:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>see a list of job roles available</li>
+        <li>view job specifications</li>
+        <li>navigate the kainos career lattice</li>
+      </ul>
+
+      <p class="govuk-body">Quick and simple!</p>
+
+      {{ govukButton({
+        text: "Search jobs",
+        href: "#",
+        classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
+        isStartButton: true
+      }) }}
+
+      <h2 class="govuk-heading-m">Before you start</h2>
+
+      <p class="govuk-body">You can also <a class="govuk-link" href="#">register by post</a>.</p>
+
+      <p class="govuk-body">The online service is also available in <a class="govuk-link" href="#">Welsh (Cymraeg)</a>.</p>
+
+      <p class="govuk-body">You cannot register for this service if you’re in the UK illegally.</p>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+
+      <!-- The Related items component is not part of GOV.UK Frontend but will be styled if used in the Prototype Kit -->
+
+      <aside class="app-related-items" role="complementary">
+        <h2 class="govuk-heading-m" id="subsection-title">
+          Quick Links
+        </h2>
+        <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list govuk-!-font-size-16">
+            <li>
+              <a class="govuk-link" href="http://localhost:3000/apprenticecompetencies.html">
+                View Apprentice Competencies
+              </a>
+            </li>
+            <li>
+              <a class="govuk-link" href="http://localhost:3000/associatecompetencies.html">
+                Related link
+              </a>
+            </li>
+            <li>
+              <a href="#" class="govuk-link govuk-!-font-weight-bold">
+                More <span class="govuk-visually-hidden">in Subsection</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+    </div>
+  </div>
+{% endblock %}
+
