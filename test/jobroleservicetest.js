@@ -29,7 +29,21 @@ describe("Job Role Service", function() {
         expect(result[1].val).to.equal(jobrole2.val);
     });
 
-    it("Should return a info about a jobRole", async() => {
+    it("Should fail to return a list of all job roles", async() => {
+        var mock = new MockAdapter(axios);
+        var jobrole1 = { val: 1 };
+        var jobrole2 = { val: 2 };
+        var list = [jobrole1, jobrole2];
+
+
+        mock.onGet('http://localhost:8080/api/getJobRoles').reply(404, list);
+
+        var result = await employeeservice.getJobRoles();
+
+        expect(result).to.equal(undefined);
+    });
+
+    it("Should return jobSpec info", async() => {
         var mock = new MockAdapter(axios);
         var jobrole = { jobRoleID: 1 , jobRole: "Software Engineer"};
 
@@ -40,4 +54,14 @@ describe("Job Role Service", function() {
 
         expect(result).to.eql(jobrole);
     });
+
+    it("Should return false when 400 error", async() => {
+        var mock = new MockAdapter(axios);
+
+        mock.onGet('http://localhost:8080/api/getJobSpec/100').reply(400, "");
+
+        var result = await employeeservice.getJobRoleSpec(100)
+
+        expect(result).to.equal(false);
+    })
 });
