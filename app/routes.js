@@ -14,7 +14,7 @@ router.get("/home", async(req, res) =>{
 router.get("/jobroles", async(req, res) => { 
     var role =  await jobrolesservice.getJobRoles()
     for(i = 0; i < role.length; i++){
-        role[i].jobBandLevel = "<a href=http://localhost:3000/"+role[i].jobBandLevel.toLowerCase()+"competencies.html> "+role[i].jobBandLevel+"</a>"
+        role[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?bandLevel="+role[i].jobBandLevel.toLowerCase()+">"+role[i].jobBandLevel+"</a>"
         role[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+role[i].jobRoleID+">More Info</a>"
     }
     res.render('jobroles.html', { jobroles: role })
@@ -25,6 +25,14 @@ router.get("/jobSpec", async(req, res) =>{
     res.render('jobSpec.html', {
         jobRoleInfo: role[0]
     })
+});    
+
+router.get("/competencyData", async(req, res) =>{
+    var role = await jobrolesservice.getCompetencyData(req.query.bandLevel)
+    console.log(role)
+    res.render('competencyInfo.html', {
+        jobRoleInfo: role[0]
+    })    
 });
 
 module.exports = router;
