@@ -9,6 +9,10 @@ exports.getJobRoles = async() => {
 }
 
 exports.getJobRoleSpec = async(jobRoleID) =>{
-    const response = await axios.get('http://localhost:8080/api/getJobSpec/'+jobRoleID)
-    return response.data;
+    try{
+        const response = await axios.get('http://localhost:8080/api/getJobSpec/'+jobRoleID)
+        return response.data;
+    }catch(err){
+        return false;
+    }
 }

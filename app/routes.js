@@ -22,9 +22,13 @@ router.get("/jobroles", async(req, res) => {
 
 router.get("/jobSpec", async(req, res) =>{
     var role = await jobrolesservice.getJobRoleSpec(req.query.jobRoleID)
-    res.render('jobSpec.html', {
-        jobRoleInfo: role[0]
-    })
+    if(role != false){
+        res.render('jobSpec.html', {
+            jobRoleInfo: role
+        })
+    }else{
+        res.render('pageNotFound.html')
+    }
 });
 
 module.exports = router;
