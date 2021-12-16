@@ -37,16 +37,30 @@ router.get("/jobSpec", async(req, res) =>{
 
 router.get("/competencyData", async(req, res) =>{
     var role = await jobrolesservice.getCompetencyData(req.query.jobRoleID)
-    console.log(role)
     res.render('competencyInfo.html', {
         jobRoleInfo: role
     })    
 });
 
+
+router.get("/training", async(req, res) =>{
+    console.log(req.query.jobBandLevel)
+    var role = await jobrolesservice.getJobTraining(req.query.jobBandLevel)
+
+    for(i = 0; i < role.length; i++){
+        role[i].trainingLink = "<a href=" + role[i].trainingLink + ">View course</a>"
+    }
+
+    res.render('training.html', {
+        trainingcourses: role
+    })
+  });
+
 router.get("/roleMatrix", async(req, res) =>{
     var roleMatrix = await jobrolesservice.getRoleMatrix()
     res.render('roleMatrix.html', {
         jobroles: roleMatrix
+
     })    
 });
 
