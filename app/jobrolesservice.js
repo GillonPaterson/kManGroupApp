@@ -22,12 +22,17 @@ exports.getJobRoleSpec = async(jobRoleID) =>{
     }
 }
 
-exports.getCompetencyData = async(bandLevel,jobRoleID) =>{
-    const response = await axios.get('http://localhost:8080/api/getJobCompetency/'+bandLevel+jobRoleID)
-    return response.data;
-}
-
 exports.getRoleMatrix = async() => {
     const response = await axios.get('http://localhost:8080/api/getRoleMatrix')
     return response.data;
+}
+
+exports.getCompetencyData = async(jobRoleID) =>{
+    try{
+        const response = await axios.get('http://localhost:8080/api/getJobCompetency/'+jobRoleID)
+        return response.data;
+    }catch(e)
+    {
+        return;
+    }
 }
