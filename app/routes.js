@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const jobrolesservice = require("./jobrolesservice.js");
+const app = express();
+const port = 3000;
+
+app.set('view engine', 'pug');
 
 
 const NodeCache = require("node-cache");
@@ -36,6 +40,13 @@ router.get("/competencyData", async(req, res) =>{
     console.log(role)
     res.render('competencyInfo.html', {
         jobRoleInfo: role
+    })    
+});
+
+router.get("/roleMatrix", async(req, res) =>{
+    var roleMatrix = await jobrolesservice.getRoleMatrix()
+    res.render('roleMatrix.html', {
+        jobroles: roleMatrix
     })    
 });
 

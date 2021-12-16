@@ -1,0 +1,49 @@
+{% extends "layout.html" %} 
+{% block pageTitle %} 
+  List of Job Roles
+{% endblock %} 
+
+{% block beforeContent %}
+  <a class="govuk-back-link" href="javascript:window.history.back()">Back</a>
+  <a class="govuk-back-link" href="home.html">Home</a>
+{% endblock %}
+
+{% block content %}
+<h2 class="govuk-heading-xl">Role Matrix</h2> 
+
+{% if jobroles and jobroles.length > 0 %}
+{% set jobrolesrows = [] %}
+{% set matrix = [] %}
+{% set jobrolesrow = [] %}
+{% set header = [] %}
+{% set head = [] %}
+
+{% for jobrole in jobroles %}
+{% if not loop.first%}
+  {% set jobrolesrow = [] %}
+  {% for role in jobrole %}
+    {% set jobrolesrow = (jobrolesrow.push({text: role}), jobrolesrow )%}
+  {% endfor %}
+  {% set matrix = (matrix.push(jobrolesrow), matrix )%}
+{% else %}
+  {% for role in jobrole %}
+  {% set head = (head.push({text: role}), head) %}
+  {% endfor %}
+{% endif %}
+{% endfor %}
+
+{{govukTable({
+firstCellIsHeader: true,
+head: head, 
+rows: matrix,
+attributes: {border : "2px solid black"}
+ })
+
+}}
+
+{% else %}
+
+There are no job roles.
+
+{% endif %}
+{% endblock %}
