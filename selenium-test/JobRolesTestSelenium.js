@@ -64,7 +64,7 @@ describe("Selenium test", () => {
       driver.findElement(By.xpath('//*[@id="main-content"]/a')).click();
       await driver.wait(until.titleIs("Job Band Level Training"));
       const title = await driver.getTitle();
-
+      
       expect(title).to.equal("Job Band Level Training");
     });
 
@@ -89,7 +89,6 @@ describe("Selenium test", () => {
 
       expect(title).to.equal("Job Roles");
     });
-
     after(async () => driver.quit());
   });
 
