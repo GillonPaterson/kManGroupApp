@@ -26,13 +26,19 @@ describe("Selenium test", () => {
   
     it('should have correct first row displayed on job roles page', async () => {
 
-      expectedFirstRow = [ '1', 'Software Engineer', 'Engineering' ];
+      expectedFirstRow = ['Software Engineer', 'Engineering', "Associate"];
+
+      console.log(expectedFirstRow)
 
       var elements = (await driver.findElements(By.className("govuk-table__cell")))
-      var id = await elements[0].getText()
-      var jobRole = await elements[1].getText()
-      var jobCapability = await elements[2].getText()
-      var firstRow = [id,jobRole,jobCapability]
+      var jobRole = await elements[0].getText()
+      var jobCapability = await elements[1].getText()
+      var bandLevel = await elements[2].getText()
+
+      var firstRow = [jobRole,jobCapability,bandLevel]
+
+      console.log(firstRow)
+
       expect(firstRow).to.eql(expectedFirstRow);
     });
 
@@ -54,10 +60,11 @@ describe("Selenium test", () => {
 
     it('should click band level and display band level', async () => {
       driver.findElement(By.linkText('Associate')).click();
-      await driver.wait(until.titleIs("Associate Competencies"));
+      await driver.wait(until.titleIs("Competencies Information"));
       const title = await driver.getTitle();
+      console.log("title "+title)
 
-      expect(title).to.equal("Associate Competencies");
+      expect(title).to.equal("Competency Information");
     });
 
     it('should click back and display job roles', async () => {
@@ -76,7 +83,6 @@ describe("Selenium test", () => {
 
       expect(title).to.equal("Job Roles");
     });
-
     after(async () => driver.quit());
   });
 
