@@ -105,3 +105,4 @@ describe("Job Role Service", function() {
 
         expect(result).to.equal(undefined);
     });
+});
