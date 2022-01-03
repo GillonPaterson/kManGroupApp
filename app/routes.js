@@ -44,23 +44,41 @@ router.get("/competencyData", async(req, res) =>{
 
 
 router.get("/training", async(req, res) =>{
-    console.log(req.query.jobBandLevel)
-    var role = await jobrolesservice.getJobTraining(req.query.jobBandLevel)
+    var roleDP = await jobrolesservice.getJobTrainingDP(req.query.jobBandLevel)
+    var rolePS = await jobrolesservice.getJobTrainingPS(req.query.jobBandLevel)
+    var roleTS = await jobrolesservice.getJobTrainingTS(req.query.jobBandLevel)
 
-    for(i = 0; i < role.length; i++){
-        role[i].trainingLink = "<a href=" + role[i].trainingLink + ">View course</a>"
+    for(i = 0; i < roleDP.length; i++){
+        roleDP[i].trainingLink = "<a href=" + roleDP[i].trainingLink + ">View course</a>"
+    }
+
+    for(i = 0; i < rolePS.length; i++){
+        rolePS[i].trainingLink = "<a href=" + rolePS[i].trainingLink + ">View course</a>"
+    }
+
+    for(i = 0; i < roleTS.length; i++){
+        roleTS[i].trainingLink = "<a href=" + roleTS[i].trainingLink + ">View course</a>"
     }
 
     res.render('training.html', {
-        trainingcourses: role
+        DPtrainingcourses: roleDP,
+        PStrainingcourses: rolePS,
+        TStrainingcourses: roleTS
     })
   });
 
 router.get("/roleMatrix", async(req, res) =>{
     var roleMatrix = await jobrolesservice.getRoleMatrix()
     res.render('roleMatrix.html', {
-        jobroles: roleMatrix
+        rows: roleMatrix.rows,
+        headers: roleMatrix.headers
+    })    
+});
 
+router.get("/jobFamilies", async(req, res) =>{
+    var jobFamilies = await jobrolesservice.getJobFamilies()
+    res.render('jobFamilies.html', {
+        rows: jobFamilies
     })    
 });
 
