@@ -11,28 +11,22 @@ List of Job Roles
 {% block content %}
 <h2 class="govuk-heading-xl">Role Matrix</h2> 
 
-{% if jobroles and jobroles.length > 0 %}
-{% set jobrolesrows = [] %}
+{% if rows and rows.length > 0 %}
 {% set matrix = [] %}
-{% set jobrolesrow = [] %}
-{% set header = [] %}
+{% set roleMatrixRow = [] %}
 {% set head = [] %}
 
-{% for jobrole in jobroles %}
-{% if not loop.first%}
-  {% set jobrolesrow = [] %}
-  {% for role in jobrole %}
-    {% set jobrolesrow = (jobrolesrow.push({text: role}), jobrolesrow )%}
+{% for row in rows %}
+  {% set roleMatrixRow = [] %}
+  {% for cell in row %}
+    {% set roleMatrixRow = (roleMatrixRow.push({text: cell|safe}), roleMatrixRow )%}
   {% endfor %}
-  {% set matrix = (matrix.push(jobrolesrow), matrix )%}
-{% else %}
-  {% for role in jobrole %}
-  {% set head = (head.push({text: role}), head) %}
-  {% endfor %}
-{% endif %}
+  {% set matrix = (matrix.push(roleMatrixRow), matrix )%}
 {% endfor %}
 
-{{matrix[0] | dump}}
+{% for header in headers %}
+  {% set head = (head.push({text: header}), head)%}
+{% endfor %}
 
 {{govukTable({
 firstCellIsHeader: true,

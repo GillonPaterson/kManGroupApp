@@ -59,8 +59,8 @@ router.get("/training", async(req, res) =>{
 router.get("/roleMatrix", async(req, res) =>{
     var roleMatrix = await jobrolesservice.getRoleMatrix()
     res.render('roleMatrix.html', {
-        jobroles: roleMatrix
-
+        rows: roleMatrix.rows,
+        headers: roleMatrix.headers
     })    
 });
 
