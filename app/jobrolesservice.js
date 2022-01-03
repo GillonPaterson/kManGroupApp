@@ -43,9 +43,29 @@ exports.getCompetencyData = async(jobRoleID) =>{
 
 }
 
-exports.getJobTraining = async(jobBandLevel) =>{
+exports.getJobTrainingDP = async(jobBandLevel) =>{
     try{
-        const response = await axios.get('http://localhost:8080/api/getJobTraining/' + jobBandLevel)
+        const response = await axios.get('http://localhost:8080/api/getJobTrainingDP/' + jobBandLevel)
+        return response.data;
+    }catch(e)
+    {
+        return;
+    }
+}
+
+exports.getJobTrainingPS = async(jobBandLevel) =>{
+    try{
+        const response = await axios.get('http://localhost:8080/api/getJobTrainingPS/' + jobBandLevel)
+        return response.data;
+    }catch(e)
+    {
+        return;
+    }
+}
+
+exports.getJobTrainingTS = async(jobBandLevel) =>{
+    try{
+        const response = await axios.get('http://localhost:8080/api/getJobTrainingTS/' + jobBandLevel)
         return response.data;
     }catch(e)
     {
