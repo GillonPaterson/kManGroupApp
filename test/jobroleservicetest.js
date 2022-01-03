@@ -167,28 +167,28 @@ describe("Job Role Service", function() {
         expect(result).to.equal(undefined);
     });
 
-    it("Should return role matrix array from api", async() =>{
-        var mock = new MockAdapter(axios);
+    // it("Should return role matrix array from api", async() =>{
+    //     var mock = new MockAdapter(axios);
 
-        var testArray = [["Test", "Test 2"],["Test 3"]]
+    //     var testArray = [["Test", "Test 2"],["Test 3"]]
 
-        mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(200, testArray)
+    //     mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(200, testArray)
 
-        var returnedArray = await employeeservice.getRoleMatrix()
+    //     var returnedArray = await employeeservice.getRoleMatrix()
 
-        expect(returnedArray).to.eql(testArray)
-    })
+    //     expect(returnedArray).to.eql(testArray)
+    // })
 
 
-    it("Role matrix Should return false when 400", async() =>{
-        var mock = new MockAdapter(axios);
+    // it("Role matrix Should return false when 400", async() =>{
+    //     var mock = new MockAdapter(axios);
 
-        var testArray = [["Test", "Test 2"],["Test 3"]]
+    //     var testArray = [["Test", "Test 2"],["Test 3"]]
 
-        mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(400, testArray)
+    //     mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(400, testArray)
 
-        var result = await employeeservice.getRoleMatrix()
+    //     var result = await employeeservice.getRoleMatrix()
 
-        expect(result).to.be.false;
-    })
+    //     expect(result).to.be.false;
+    // })
 });
