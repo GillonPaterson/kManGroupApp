@@ -25,7 +25,6 @@ exports.getJobRoleSpec = async(jobRoleID) =>{
 exports.getRoleMatrix = async() => {
     try{
         const response = await axios.get('http://localhost:8080/api/getRoleMatrix')
-        console.log(response.data.roleMatrixModel)
         let rows = []
         let headers = []
         
@@ -43,7 +42,7 @@ exports.getRoleMatrix = async() => {
                 let roles = []
                 response.data.roleMatrixModel.forEach(role => {
                     if(role.bandLevel == row[0] && role.capability == headers[col]){
-                        roles.push('<a href="http://localhost:3000/jobSpec?jobRoleID="'+role.jobRoleID +">" + role.jobRole +"</a>")
+                        roles.push('<a href="http://localhost:3000/jobSpec?jobRoleID='+role.jobRoleID+'">' + role.jobRole +"</a>")
                     }
                 })
                 row.push(roles.join(", "))
@@ -51,6 +50,7 @@ exports.getRoleMatrix = async() => {
 
             rows.push(row)
         });
+        console.log(rows)
 
         let roleMatrix = {headers: headers, rows: rows};
 
