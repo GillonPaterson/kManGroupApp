@@ -82,4 +82,11 @@ router.get("/jobFamilies", async(req, res) =>{
     })    
 });
 
+router.get("/AllCapabilityLeadInfo", async(req, res) => { 
+    var role =  await jobrolesservice.getAllCapabilityLeadInfo()
+    for(i = 0; i < role.length; i++){
+    }
+    res.render('viewCapabilityLead.html', { jobroles: role })
+});
+
 module.exports = router;
