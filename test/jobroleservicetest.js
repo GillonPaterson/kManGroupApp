@@ -77,95 +77,36 @@ describe("Job Role Service", function() {
         expect(result).to.eql(jobrole);
       });
 
-    it("Should return a list of all job training in Development programmes", async() => {
+    it("Should return a list of all job training in groups", async() => {
         var mock = new MockAdapter(axios);
         var jt1 = { val: 1 };
         var jt2 = { val: 2 };
         var list = [jt1, jt2];
 
 
-        mock.onGet('http://localhost:8080/api/getJobTrainingDP/Associate').reply(200, list);
+        mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(200, list);
 
-        var result = await employeeservice.getJobTrainingDP("Associate");
+        var result = await employeeservice.getJobTraining("Associate");
 
         expect(result.length).to.equal(2);
         expect(result[0].val).to.equal(jt1.val);
         expect(result[1].val).to.equal(jt2.val);
     });
 
-    it("Should fail to return a list of all job training in Development programmes", async() => {
+    it("Should fail to return a list of all job training in groups", async() => {
         var mock = new MockAdapter(axios);
         var jt1 = { val: 1 };
         var jt2 = { val: 2 };
         var list = [jt1, jt2];
 
 
-        mock.onGet('http://localhost:8080/api/getJobTrainingDP/Associate').reply(404, list);
+        mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(404, list);
 
-        var result = await employeeservice.getJobTrainingDP("Associate");
+        var result = await employeeservice.getJobTraining("Associate");
 
         expect(result).to.equal(undefined);
     });
 
-    it("Should return a list of all job training in Professional skills", async() => {
-        var mock = new MockAdapter(axios);
-        var jt1 = { val: 1 };
-        var jt2 = { val: 2 };
-        var list = [jt1, jt2];
-
-
-        mock.onGet('http://localhost:8080/api/getJobTrainingPS/Associate').reply(200, list);
-
-        var result = await employeeservice.getJobTrainingPS("Associate");
-
-        expect(result.length).to.equal(2);
-        expect(result[0].val).to.equal(jt1.val);
-        expect(result[1].val).to.equal(jt2.val);
-    });
-
-    it("Should fail to return a list of all job training in Professional skills", async() => {
-        var mock = new MockAdapter(axios);
-        var jt1 = { val: 1 };
-        var jt2 = { val: 2 };
-        var list = [jt1, jt2];
-
-
-        mock.onGet('http://localhost:8080/api/getJobTrainingPS/Associate').reply(404, list);
-
-        var result = await employeeservice.getJobTrainingPS("Associate");
-
-        expect(result).to.equal(undefined);
-    });
-
-    it("Should return a list of all job training in Technical skills", async() => {
-        var mock = new MockAdapter(axios);
-        var jt1 = { val: 1 };
-        var jt2 = { val: 2 };
-        var list = [jt1, jt2];
-
-
-        mock.onGet('http://localhost:8080/api/getJobTrainingTS/Associate').reply(200, list);
-
-        var result = await employeeservice.getJobTrainingTS("Associate");
-
-        expect(result.length).to.equal(2);
-        expect(result[0].val).to.equal(jt1.val);
-        expect(result[1].val).to.equal(jt2.val);
-    });
-
-    it("Should fail to return a list of all job training in Technical skills", async() => {
-        var mock = new MockAdapter(axios);
-        var jt1 = { val: 1 };
-        var jt2 = { val: 2 };
-        var list = [jt1, jt2];
-
-
-        mock.onGet('http://localhost:8080/api/getJobTrainingTS/Associate').reply(404, list);
-
-        var result = await employeeservice.getJobTrainingTS("Associate");
-
-        expect(result).to.equal(undefined);
-    });
 
     it("Should return role matrix array from api", async() =>{
         var mock = new MockAdapter(axios);
