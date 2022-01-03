@@ -81,3 +81,29 @@ exports.getJobTraining = async(jobBandLevel) =>{
         return;
     }
 }
+
+exports.getJobFamilies = async() =>{
+    try{
+        const response = await axios.get('http://localhost:8080/api/getJobFamilies/')
+        console.log(response.data)
+
+        
+        let rows = []
+        response.data.capabilities.forEach(capability =>{
+            let row = []
+            row.push(capability)
+
+            response.data.jobFamilyModels.forEach(jobFamily =>{
+                if(jobFamily.jobCapability == capability){
+                    row.push(jobFamily.jobFamily)
+                }
+            })
+            rows.push(row)
+        })
+
+        return rows;
+    }catch(e)
+    {
+        return;
+    }
+}

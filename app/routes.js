@@ -64,4 +64,11 @@ router.get("/roleMatrix", async(req, res) =>{
     })    
 });
 
+router.get("/jobFamilies", async(req, res) =>{
+    var jobFamilies = await jobrolesservice.getJobFamilies()
+    res.render('jobFamilies.html', {
+        rows: jobFamilies
+    })    
+});
+
 module.exports = router;

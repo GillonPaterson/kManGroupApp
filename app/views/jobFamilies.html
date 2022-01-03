@@ -10,12 +10,32 @@
 {% endblock %}
 
 {% block content %}
+{% set table = [] %}
+{% set roleMatrixRow = [] %}
+{% set length = 1%}
+{% set head = []%}
+
+{% for row in rows %}
+  {% set jobFamilyRow = [] %}
+  {% for cell in row %}
+    {% set jobFamilyRow = (jobFamilyRow.push({text: cell|safe}), jobFamilyRow )%}
+  {% endfor %}
+    {%if jobFamilyRow.length > length%}
+        {% set length = jobFamilyRow.length %}
+    {% endif %}
+  {% set table = (table.push(jobFamilyRow), table )%}
+{% endfor %}
+
+{% set length = length -1 %}
+
+{% set head = [{text: "Capability"}, {text: "Job Families", colspan: length}]%}
+
+
 
 {{govukTable({
     firstCellIsHeader: true,
-    head: head, 
-    rows: matrix,
-    attributes: {border : "2px solid black"}
+    head: head,
+    rows: table
  })
 }}
 
