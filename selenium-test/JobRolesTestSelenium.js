@@ -89,6 +89,19 @@ describe("Selenium test", () => {
 
       expect(title).to.equal("Job Roles");
     });
+
+    it('should click View Role Matrix and confirm table', async () => {
+      driver.findElement(By.linkText('View Role Matrix')).click();
+      await driver.wait(until.titleIs("List of Job Roles"));
+      const title = await driver.getTitle();
+
+      var elements = (await driver.findElements(By.className("govuk-table__cell")))
+      var jobRole = await elements[0].getText()     
+
+      expect(jobRole).to.equal("Software Engineer")
+      expect(title).to.equal("List of Job Roles");
+    })
+
     after(async () => driver.quit());
   });
 
