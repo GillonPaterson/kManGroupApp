@@ -112,7 +112,7 @@ exports.getAllCapabilityLeadInfo = async() =>{
     {
         return;
     }
-
+}
 exports.getJobFamilies = async() =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobFamilies/')
