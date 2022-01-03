@@ -93,7 +93,7 @@ describe("Job Role Service", function() {
         expect(result[1].val).to.equal(jt2.val);
     });
 
-    it("Should fail to return a list of all job training in Develpment programmes", async() => {
+    it("Should fail to return a list of all job training in Development programmes", async() => {
         var mock = new MockAdapter(axios);
         var jt1 = { val: 1 };
         var jt2 = { val: 2 };
