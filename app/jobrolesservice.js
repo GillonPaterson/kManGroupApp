@@ -97,7 +97,7 @@ exports.getJobTrainingPS = async(jobBandLevel) =>{
         return;
     }
 }
-}
+
 
 exports.getJobTrainingTS = async(jobBandLevel) =>{
     try{
