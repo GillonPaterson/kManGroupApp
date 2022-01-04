@@ -107,28 +107,68 @@ describe("Job Role Service", function() {
         expect(result).to.equal(undefined);
     });
 
-    // it("Should return role matrix array from api", async() =>{
-    //     var mock = new MockAdapter(axios);
+    it("Should return role matrix array from api", async() =>{
+        var mock = new MockAdapter(axios);
 
-    //     var testArray = [["Test", "Test 2"],["Test 3"]]
+        var testMatrixOne = {jobRole: "Dev", capability: "Engineering", bandLevel: "Apprentice", jobRoleID: 1}
+        var testMatrixTwo = {jobRole: "Sec Engineer", capability: "Cyber Security", bandLevel: "Consultant", jobRoleID: 2}
+        var testMatrixThree = {jobRole: "Frontend Dev", capability: "Engineering", bandLevel: "Apprentice", jobRoleID: 3}
+        var roleMatrixList = [testMatrixOne, testMatrixTwo, testMatrixThree]
 
-    //     mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(200, testArray)
+        var bandLevel = ["Apprentice","Associate", "Consultant"]
 
-    //     var returnedArray = await employeeservice.getRoleMatrix()
+        var capabilities = ["Engineering", "AI", "Cyber Security"]
 
-    //     expect(returnedArray).to.eql(testArray)
-    // })
+        var returnedResponse = {roleMatrixModel: roleMatrixList, bandLevel: bandLevel, capability: capabilities}
+
+        mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(200, returnedResponse)
+
+        var returnedObject = await employeeservice.getRoleMatrix()
+        var expected = {headers: ["Band Level","Engineering","AI", "Cyber Security"], rows: [["Apprentice", '<a href="http://localhost:3000/jobSpec?jobRoleID=1">Dev</a>, <a href="http://localhost:3000/jobSpec?jobRoleID=3">Frontend Dev</a>',"",""],["Associate","","",""],["Consultant","","",'<a href="http://localhost:3000/jobSpec?jobRoleID=2">Sec Engineer</a>']]}
+
+        expect(returnedObject).to.eql(expected)
+    })
 
 
-    // it("Role matrix Should return false when 400", async() =>{
-    //     var mock = new MockAdapter(axios);
+    it("Role matrix Should return false when 400", async() =>{
+        var mock = new MockAdapter(axios);
 
-    //     var testArray = [["Test", "Test 2"],["Test 3"]]
+        var testArray = [["Test", "Test 2"],["Test 3"]]
 
-    //     mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(400, testArray)
+        mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(400, testArray)
 
-    //     var result = await employeeservice.getRoleMatrix()
+        var result = await employeeservice.getRoleMatrix()
 
-    //     expect(result).to.be.false;
-    // })
+        expect(result).to.be.false;
+    })
+
+    it("Should create a table array for Job Families from api", async() =>{
+        var mock = new MockAdapter(axios);
+
+        var jobFamily1 = {jobFamily: "Testing",jobCapability: "Engineering"}
+        var jobFamily2 = {jobFamily: "Engineering",jobCapability: "Engineering"}
+        var jobFamily3 = {jobFamily: "Data Science",jobCapability: "AI"}
+        
+        var returnedResponse = {capabilities: ["Engineering", "Cyber Security", "AI"], jobFamilyModels: [jobFamily1,jobFamily2,jobFamily3]}
+
+        mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(200, returnedResponse)
+
+        var returnedArray = await employeeservice.getJobFamilies()
+
+        var expectedArray = [["Engineering", "Testing", "Engineering"],["Cyber Security"],["AI","Data Science"]]
+        expect(returnedArray).to.eql(expectedArray)
+
+    })
+
+    it("Get Families Should return false when 400", async() =>{
+        var mock = new MockAdapter(axios);
+
+        var testObject = {capabilities: ["Test"], jobFamilyModels: [{jobFamily: "Test", jobCapability: "Test"}]}
+
+        mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(400, testObject)
+
+        var result = await employeeservice.getJobFamilies()
+
+        expect(result).to.be.false;
+    })
 });

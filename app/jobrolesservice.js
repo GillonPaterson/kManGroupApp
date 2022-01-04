@@ -50,7 +50,7 @@ exports.getRoleMatrix = async() => {
 
             rows.push(row)
         });
-        console.log(rows)
+        // console.log(rows)
 
         let roleMatrix = {headers: headers, rows: rows};
 
@@ -85,7 +85,7 @@ exports.getJobTraining = async(jobBandLevel) =>{
 exports.getJobFamilies = async() =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobFamilies/')
-        console.log(response.data)
+
 
         
         let rows = []
@@ -104,6 +104,6 @@ exports.getJobFamilies = async() =>{
         return rows;
     }catch(e)
     {
-        return;
+        return false;
     }
 }
