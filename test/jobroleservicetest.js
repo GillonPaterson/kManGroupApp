@@ -144,18 +144,13 @@ describe("Job Role Service", function() {
 
     it("Should create a table array for Job Families from api", async() =>{
         var mock = new MockAdapter(axios);
-
-        var jobFamily1 = {jobFamily: "Testing",jobCapability: "Engineering"}
-        var jobFamily2 = {jobFamily: "Engineering",jobCapability: "Engineering"}
-        var jobFamily3 = {jobFamily: "Data Science",jobCapability: "AI"}
-        
-        var returnedResponse = {capabilities: ["Engineering", "Cyber Security", "AI"], jobFamilyModels: [jobFamily1,jobFamily2,jobFamily3]}
+        var returnedResponse = [{jobCapability: "Engineering", jobFamily: ['Engineering Strategy and Planning','Engineering']},{jobCapability: "Cyber Security", jobFamily: []}, {jobCapability: "AI", jobFamily: ['Data Science']}]
 
         mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(200, returnedResponse)
 
         var returnedArray = await employeeservice.getJobFamilies()
 
-        var expectedArray = [["Engineering", "Testing", "Engineering"],["Cyber Security"],["AI","Data Science"]]
+        var expectedArray = [["Engineering", "Engineering Strategy and Planning", "Engineering"],["Cyber Security"],["AI","Data Science"]]
         expect(returnedArray).to.eql(expectedArray)
 
     })

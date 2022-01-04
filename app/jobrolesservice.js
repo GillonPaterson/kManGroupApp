@@ -116,8 +116,6 @@ exports.getJobFamilies = async() =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobFamilies/')
 
-
-
         let rows = []
         response.data.forEach(capability =>{
             let row = []
@@ -128,6 +126,7 @@ exports.getJobFamilies = async() =>{
             })
             rows.push(row)
         })
+
         return rows;
     }catch(e)
     {
