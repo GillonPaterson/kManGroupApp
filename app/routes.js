@@ -64,4 +64,9 @@ router.get("/roleMatrix", async(req, res) =>{
     })    
 });
 
+router.get("/viewAllCapabilities", async(req, res) => { 
+    var role =  await jobrolesservice.getAllCapabilityLeadsInfo()
+    res.render('viewAllCapabilites.html', { jobroles: role })
+});
+
 module.exports = router;
