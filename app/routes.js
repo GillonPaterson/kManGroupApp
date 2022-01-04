@@ -88,11 +88,10 @@ router.get("/jobFamilies", async(req, res) =>{
 });
 
 
-router.get("/AllCapabilityLeadInfo", async(req, res) => { 
-    var role =  await jobrolesservice.getAllCapabilityLeadInfo()
-    for(i = 0; i < role.length; i++){
-    }
-    res.render('viewCapabilityLead.html', { jobroles: role })
+
+router.get("/viewAllCapabilities", async(req, res) => { 
+    var role =  await jobrolesservice.getAllCapabilityLeadsInfo()
+    res.render('viewAllCapabilites.html', { jobroles: role })
 });
 
 
