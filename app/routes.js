@@ -44,9 +44,12 @@ router.get("/competencyData", async(req, res) =>{
 
 
 router.get("/training", async(req, res) =>{
-    var roleDP = await jobrolesservice.getJobTrainingDP(req.query.jobBandLevel)
-    var rolePS = await jobrolesservice.getJobTrainingPS(req.query.jobBandLevel)
-    var roleTS = await jobrolesservice.getJobTrainingTS(req.query.jobBandLevel)
+    var bandLevel = req.query.jobBandLevel
+    var role = await jobrolesservice.getJobTraining(bandLevel)
+    var roleDP = role.DPGroup
+    var rolePS = role.PSGroup
+    var roleTS = role.TSGroup
+    
 
     for(i = 0; i < roleDP.length; i++){
         roleDP[i].trainingLink = "<a href=" + roleDP[i].trainingLink + ">View course</a>"
@@ -61,11 +64,13 @@ router.get("/training", async(req, res) =>{
     }
 
     res.render('training.html', {
+        jobRoleInfo: bandLevel,
         DPtrainingcourses: roleDP,
         PStrainingcourses: rolePS,
         TStrainingcourses: roleTS
     })
   });
+
 
 router.get("/roleMatrix", async(req, res) =>{
     var roleMatrix = await jobrolesservice.getRoleMatrix()
@@ -83,9 +88,11 @@ router.get("/jobFamilies", async(req, res) =>{
 });
 
 
+
 router.get("/viewAllCapabilities", async(req, res) => { 
     var role =  await jobrolesservice.getAllCapabilityLeadsInfo()
     res.render('viewAllCapabilites.html', { jobroles: role })
 });
+
 
 module.exports = router;
