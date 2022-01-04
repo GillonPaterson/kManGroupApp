@@ -144,4 +144,5 @@ exports.getJobFamilies = async() =>{
     {
         return;
     }
-} 
+}
+    })
