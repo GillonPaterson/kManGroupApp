@@ -45,6 +45,7 @@ router.get("/competencyData", async(req, res) =>{
 
 router.get("/training", async(req, res) =>{
     var bandLevel = req.query.jobBandLevel
+    console.log(bandLevel)
     var role = await jobrolesservice.getJobTraining(bandLevel)
     var roleDP = role.DPGroup
     var rolePS = role.PSGroup
