@@ -75,9 +75,24 @@ router.get("/training", async(req, res) =>{
 router.get("/roleMatrix", async(req, res) =>{
     var roleMatrix = await jobrolesservice.getRoleMatrix()
     res.render('roleMatrix.html', {
-        jobroles: roleMatrix
-
+        rows: roleMatrix.rows,
+        headers: roleMatrix.headers
     })    
+});
+
+router.get("/jobFamilies", async(req, res) =>{
+    var jobFamilies = await jobrolesservice.getJobFamilies()
+    res.render('jobFamilies.html', {
+        rows: jobFamilies
+    })    
+});
+
+
+router.get("/AllCapabilityLeadInfo", async(req, res) => { 
+    var role =  await jobrolesservice.getAllCapabilityLeadInfo()
+    for(i = 0; i < role.length; i++){
+    }
+    res.render('viewCapabilityLead.html', { jobroles: role })
 });
 
 
