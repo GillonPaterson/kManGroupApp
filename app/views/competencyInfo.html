@@ -20,7 +20,7 @@
 
 {% endblock %} 
 
-{% set link = "http://localhost:3000/training?jobBandLevel=" + jobRoleInfo.bandLevel %}
+{% set link = "http://localhost:3000/training?jobBandLevel=" + jobRoleInfo[0].bandLevel %}
 
 {% block content %}
 {{ govukButton({
