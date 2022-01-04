@@ -72,30 +72,30 @@ exports.getCompetencyData = async(jobRoleID) =>{
 
 }
 
-exports.getJobTrainingDP = async(jobBandLevel) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getJobTrainingDP/' + jobBandLevel)
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
 
-exports.getJobTrainingPS = async(jobBandLevel) =>{
+exports.getJobTraining = async(jobBandLevel) =>{
     try{
-        const response = await axios.get('http://localhost:8080/api/getJobTrainingPS/' + jobBandLevel)
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
+        const response = await axios.get('http://localhost:8080/api/getJobTraining/' + jobBandLevel)
 
-exports.getJobTrainingTS = async(jobBandLevel) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getJobTrainingTS/' + jobBandLevel)
-        return response.data;
+        var coursesDP = [];
+        var coursesPS = [];
+        var coursesTS = [];
+
+        for(let i = 0; i < response.data.length; i++)
+        {
+            if(response.data[i].trainingGroup == "Development programmes")
+                coursesDP.push(response.data[i]);
+
+                if(response.data[i].trainingGroup == "Professional skills")
+                coursesPS.push(response.data[i]);
+
+                if(response.data[i].trainingGroup == "Technical skills")
+                coursesTS.push(response.data[i]);
+        }
+
+        var coursegroups = {DPGroup: coursesDP, PSGroup: coursesPS, TSGroup: coursesTS};
+
+        return coursegroups;
     }catch(e)
     {
         return;
