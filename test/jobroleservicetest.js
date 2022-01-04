@@ -77,23 +77,23 @@ describe("Job Role Service", function() {
         expect(result).to.eql(jobrole);
       });
 
-    it("Should return a list of all job training", async() => {
+    it("Should return an object of all job training in groups", async() => {
         var mock = new MockAdapter(axios);
-        var jt1 = { val: 1 };
-        var jt2 = { val: 2 };
+        var jt1 = { DPGroup: [], PSGroup: [], TSGroup: [] }
+        var jt2 = { DPGroup: [], PSGroup: [], TSGroup: [] }
         var list = [jt1, jt2];
-
 
         mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(200, list);
 
         var result = await employeeservice.getJobTraining("Associate");
 
-        expect(result.length).to.equal(2);
-        expect(result[0].val).to.equal(jt1.val);
-        expect(result[1].val).to.equal(jt2.val);
+        //expect(result.length).to.equal(2);
+        
+        expect(result.TSGroup).to.eql(jt1.TSGroup);
+        expect(result.DPGroup).to.eql(jt2.DPGroup);
     });
 
-    it("Should fail to return a list of all job training", async() => {
+    it("Should fail to return a list of all job training in groups", async() => {
         var mock = new MockAdapter(axios);
         var jt1 = { val: 1 };
         var jt2 = { val: 2 };

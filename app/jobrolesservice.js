@@ -72,9 +72,39 @@ exports.getCompetencyData = async(jobRoleID) =>{
 
 }
 
+
 exports.getJobTraining = async(jobBandLevel) =>{
+
     try{
         const response = await axios.get('http://localhost:8080/api/getJobTraining/' + jobBandLevel)
+        var coursesDP = [];
+        var coursesPS = [];
+        var coursesTS = [];
+
+        for(let i = 0; i < response.data.length; i++)
+        {
+            if(response.data[i].trainingGroup == "Development programmes")
+                coursesDP.push(response.data[i]);
+
+                if(response.data[i].trainingGroup == "Professional skills")
+                coursesPS.push(response.data[i]);
+
+                if(response.data[i].trainingGroup == "Technical skills")
+                coursesTS.push(response.data[i]);
+        }
+
+        var coursegroups = {DPGroup: coursesDP, PSGroup: coursesPS, TSGroup: coursesTS};
+        return coursegroups;
+    }catch(e)
+    {
+        return;
+    }
+}
+
+
+exports.getAllCapabilityLeadsInfo = async() =>{
+    try{
+        const response = await axios.get('http://localhost:8080/api/getAllCapabilityLead')
         return response.data;
     }catch(e)
     {
@@ -87,7 +117,7 @@ exports.getJobFamilies = async() =>{
         const response = await axios.get('http://localhost:8080/api/getJobFamilies/')
 
 
-        
+
         let rows = []
         response.data.capabilities.forEach(capability =>{
             let row = []

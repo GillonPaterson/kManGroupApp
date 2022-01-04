@@ -28,9 +28,7 @@
 
       <h2 class="govuk-heading-m">Before you start</h2>
 
-      <p class="govuk-body">You can also <a class="govuk-link" href="#">register by post</a>.</p>
-
-      <p class="govuk-body">The online service is also available in <a class="govuk-link" href="#">Welsh (Cymraeg)</a>.</p>
+      <p class="govuk-body">The online service will soon be available in <a class="govuk-link" href="#">Welsh (Cymraeg)</a>.</p>
 
       <p class="govuk-body">You cannot register for this service if you’re in the UK illegally.</p>
     </div>
@@ -61,12 +59,27 @@
               </a>
             </li>
             <li>
+              <a class="govuk-link" href="http://localhost:3000/AllCapabilityLeadInfo">
+                View Capability Lead
+              </a>
+            </li>
+            <li>
               <a href="#" class="govuk-link govuk-!-font-weight-bold">
                 More <span class="govuk-visually-hidden">in Subsection</span>
               </a>
             </li>
           </ul>
         </nav>
+        <br><br><br><br>
+        <h2 class="govuk-heading-m" id="subsection-title">
+          Admin
+        </h2>
+        {{ govukButton({
+          text: "Login",
+          href: "http://localhost:3000/adminlogin",
+          classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
+          isStartButton: true
+        }) }}
       </aside>
 
     </div>

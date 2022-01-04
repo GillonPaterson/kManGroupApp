@@ -9,28 +9,61 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="govuk-heading-xl">Available Training Courses</h2> 
+<h2 class="govuk-heading-xl">Available Training Courses for {{jobRoleInfo}}</h2> 
 
-{% if trainingcourses and trainingcourses.length > 0 %}
+
 {% set trainingrows = [] %}
 
-{% for trainingcourse in trainingcourses %}
+{% for DPtrainingcourse in DPtrainingcourses %}
 
-{% set trainingrows = (trainingrows.push([{text: trainingcourse.trainingName}, {text: trainingcourse.trainingLink|safe}]), trainingrows) %}
+{% if loop.first %}
 
+{% set trainingrows = (trainingrows.push([{text: "Development programmes", rowspan:DPtrainingcourses.length }, {text: DPtrainingcourse.trainingName}, {text: DPtrainingcourse.trainingLink|safe}]), trainingrows) %}
+
+{% else %}
+
+{% set trainingrows = (trainingrows.push([{text: DPtrainingcourse.trainingName}, {text: DPtrainingcourse.trainingLink|safe}]), trainingrows) %}
+
+{% endif %}
+{% endfor %}
+
+
+
+{% for PStrainingcourse in PStrainingcourses %}
+
+{% if loop.first %}
+
+{% set trainingrows = (trainingrows.push([{text: "Professional skills", rowspan:PStrainingcourses.length }, {text: PStrainingcourse.trainingName}, {text: PStrainingcourse.trainingLink|safe}]), trainingrows) %}
+
+{% else %}
+
+{% set trainingrows = (trainingrows.push([{text: PStrainingcourse.trainingName}, {text: PStrainingcourse.trainingLink|safe}]), trainingrows) %}
+
+{% endif %}
+{% endfor %}
+
+
+
+{% for TStrainingcourse in TStrainingcourses %}
+
+{% if loop.first %}
+
+{% set trainingrows = (trainingrows.push([{text: "Technical skills", rowspan:TStrainingcourses.length }, {text: TStrainingcourse.trainingName}, {text: TStrainingcourse.trainingLink|safe}]), trainingrows) %}
+
+{% else %}
+
+{% set trainingrows = (trainingrows.push([{text: TStrainingcourse.trainingName}, {text: TStrainingcourse.trainingLink|safe}]), trainingrows) %}
+
+{% endif %}
 {% endfor %}
 
 
 
 {{govukTable({
-head: [{ text: "Course Name" },{text: "Link"}], 
-rows: trainingrows })
-    
+    head: [{text: "Training Group"}, { text: "Training Name" },{text: "Training Link"}], 
+    rows: trainingrows
+    })
 }}
-        
-{% else %}
-        
-There are no training courses.
-        
-{% endif %}
+
+
 {% endblock %}
