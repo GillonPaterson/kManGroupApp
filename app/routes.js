@@ -5,6 +5,7 @@ const app = express();
 const port = 3000;
 
 app.set('view engine', 'pug');
+router.use
 
 
 const NodeCache = require("node-cache");
@@ -84,7 +85,9 @@ router.get("/roleMatrix", async(req, res) =>{
 router.get("/jobFamilies", async(req, res) =>{
     var jobFamilies = await jobrolesservice.getJobFamilies()
     res.render('jobFamilies.html', {
-        rows: jobFamilies
+        rows: jobFamilies,
+        object: "hi" ,
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Emblem-extra-cool.svg/1200px-Emblem-extra-cool.svg.png"
     })    
 });
 
@@ -92,7 +95,7 @@ router.get("/jobFamilies", async(req, res) =>{
 
 router.get("/viewAllCapabilities", async(req, res) => { 
     var role =  await jobrolesservice.getAllCapabilityLeadsInfo()
-    res.render('viewAllCapabilites.html', { jobroles: role })
+    res.render('viewAllCapabilites.html', { jobroles: role})
 });
 
 
