@@ -44,12 +44,12 @@ router.get("/competencyData", async(req, res) =>{
 
 
 router.get("/training", async(req, res) =>{
-
-    var role = await jobrolesservice.getJobTraining(req.query.jobBandLevel)
+    var bandLevel = req.query.jobBandLevel
+    var role = await jobrolesservice.getJobTraining(bandLevel)
     var roleDP = role.DPGroup
     var rolePS = role.PSGroup
     var roleTS = role.TSGroup
-    var bandLevel = req.query.jobBandLevel
+    
 
     for(i = 0; i < roleDP.length; i++){
         roleDP[i].trainingLink = "<a href=" + roleDP[i].trainingLink + ">View course</a>"
