@@ -77,58 +77,118 @@ describe("Job Role Service", function() {
         expect(result).to.eql(jobrole);
       });
 
-    it("Should return a list of all job training", async() => {
+    it("Should return a list of all job training in Development programmes", async() => {
         var mock = new MockAdapter(axios);
         var jt1 = { val: 1 };
         var jt2 = { val: 2 };
         var list = [jt1, jt2];
 
 
-        mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(200, list);
+        mock.onGet('http://localhost:8080/api/getJobTrainingDP/Associate').reply(200, list);
 
-        var result = await employeeservice.getJobTraining("Associate");
+        var result = await employeeservice.getJobTrainingDP("Associate");
 
         expect(result.length).to.equal(2);
         expect(result[0].val).to.equal(jt1.val);
         expect(result[1].val).to.equal(jt2.val);
     });
 
-    it("Should fail to return a list of all job training", async() => {
+    it("Should fail to return a list of all job training in Develpment programmes", async() => {
         var mock = new MockAdapter(axios);
         var jt1 = { val: 1 };
         var jt2 = { val: 2 };
         var list = [jt1, jt2];
 
 
-        mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(404, list);
+        mock.onGet('http://localhost:8080/api/getJobTrainingDP/Associate').reply(404, list);
 
-        var result = await employeeservice.getJobTraining("Associate");
+        var result = await employeeservice.getJobTrainingDP("Associate");
 
         expect(result).to.equal(undefined);
     });
 
-    it("Should return role matrix array from api", async() =>{
+    it("Should return a list of all job training in Professional skills", async() => {
         var mock = new MockAdapter(axios);
-
-        var testArray = [["Test", "Test 2"],["Test 3"]]
-
-        mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(200, testArray)
-
-        var returnedArray = await employeeservice.getRoleMatrix()
-
-        expect(returnedArray).to.eql(testArray)
-    })
+        var jt1 = { val: 1 };
+        var jt2 = { val: 2 };
+        var list = [jt1, jt2];
 
 
-    it("Role matrix Should return false when 400", async() =>{
+        mock.onGet('http://localhost:8080/api/getJobTrainingPS/Associate').reply(200, list);
+
+        var result = await employeeservice.getJobTrainingPS("Associate");
+
+        expect(result.length).to.equal(2);
+        expect(result[0].val).to.equal(jt1.val);
+        expect(result[1].val).to.equal(jt2.val);
+    });
+
+    it("Should fail to return a list of all job training in Professional skills", async() => {
         var mock = new MockAdapter(axios);
+        var jt1 = { val: 1 };
+        var jt2 = { val: 2 };
+        var list = [jt1, jt2];
 
-        var testArray = [["Test", "Test 2"],["Test 3"]]
 
-        mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(400, testArray)
+        mock.onGet('http://localhost:8080/api/getJobTrainingPS/Associate').reply(404, list);
 
-        var result = await employeeservice.getRoleMatrix()
+        var result = await employeeservice.getJobTrainingPS("Associate");
 
-        expect(result).to.be.false;
-    })
+        expect(result).to.equal(undefined);
+    });
+
+    it("Should return a list of all job training in Technical skills", async() => {
+        var mock = new MockAdapter(axios);
+        var jt1 = { val: 1 };
+        var jt2 = { val: 2 };
+        var list = [jt1, jt2];
+
+
+        mock.onGet('http://localhost:8080/api/getJobTrainingTS/Associate').reply(200, list);
+
+        var result = await employeeservice.getJobTrainingTS("Associate");
+
+        expect(result.length).to.equal(2);
+        expect(result[0].val).to.equal(jt1.val);
+        expect(result[1].val).to.equal(jt2.val);
+    });
+
+    it("Should fail to return a list of all job training in Technical skills", async() => {
+        var mock = new MockAdapter(axios);
+        var jt1 = { val: 1 };
+        var jt2 = { val: 2 };
+        var list = [jt1, jt2];
+
+
+        mock.onGet('http://localhost:8080/api/getJobTrainingTS/Associate').reply(404, list);
+
+        var result = await employeeservice.getJobTrainingTS("Associate");
+
+        expect(result).to.equal(undefined);
+    });
+
+    // it("Should return role matrix array from api", async() =>{
+    //     var mock = new MockAdapter(axios);
+
+    //     var testArray = [["Test", "Test 2"],["Test 3"]]
+
+    //     mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(200, testArray)
+
+    //     var returnedArray = await employeeservice.getRoleMatrix()
+
+    //     expect(returnedArray).to.eql(testArray)
+    // })
+
+
+    // it("Role matrix Should return false when 400", async() =>{
+    //     var mock = new MockAdapter(axios);
+
+    //     var testArray = [["Test", "Test 2"],["Test 3"]]
+
+    //     mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(400, testArray)
+
+    //     var result = await employeeservice.getRoleMatrix()
+
+    //     expect(result).to.be.false;
+    // })
 });
