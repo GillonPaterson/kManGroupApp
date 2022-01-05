@@ -11,12 +11,12 @@
 {% block content %}
 <h2 class="govuk-heading-xl">List of Capability Leads</h2> 
 
-{% if jobroles and jobroles.length > 0 %}
+{% if jobroles.length > 0 %}
 {% set jobrolesrows = [] %}
 
 {% for jobrole in jobroles %}
 
-{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.forename },{text: jobrole.surname}, {text: jobrole.capability}]), jobrolesrows) %}
+{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.forename },{text: jobrole.surname}, {text: jobrole.capability}, {text: jobrole.leadID|safe}]), jobrolesrows) %}
 
 {% endfor %}
 

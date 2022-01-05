@@ -1,6 +1,6 @@
 {% extends "layout.html" %} 
 {% block pageTitle %} 
-  List of Job Roles
+  View Capability Lead Info
 {% endblock %} 
 
 {% block beforeContent %}
@@ -9,26 +9,51 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="govuk-heading-xl">List of Job Roles</h2> 
+<h2 class="govuk-heading-xl">View Capability Lead Info</h2> 
 
-{% if jobroles and jobroles.length > 0 %}
-{% set jobrolesrows = [] %}
+<img src={{rows.photoUrl}} width = 250 height = 200 ></img>
 
-{% for jobrole in jobroles %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
-{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.forename },{text: jobrole.surname}, {text: jobrole.message}, {text: jobrole.capability},{text: jobrole.|safe}]), jobrolesrows) %}
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Name"
+      },
+      value: {
+        text: rows.forename + " "+ rows.surname
+      },
+      actions: {
+        items: [
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Message"
+      },
+      value: {
+        text: rows.message
+      },
+      actions: {
+        items: [
+        ]
+      }
+    },
+    {
+      key: {
+        text: "Capability"
+      },
+      value: {
+        text: rows.capability
+      },
+      actions: {
+        items: [
+        ]
+      }
+    }
+  ]
+}) }}
 
-{% endfor %}
-
-{{govukTable({
-head: [{ text: "Forename" },{text: "Surname"}, {text: "Message"}, {text: "capability"},{text:"more Info"}], 
-rows: jobrolesrows })
-
-}}
-
-{% else %}
-
-There are no job roles.
-
-{% endif %}
 {% endblock %}
