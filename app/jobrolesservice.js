@@ -19,10 +19,8 @@ exports.addJobRole = async(role) => {
         const response = await axios.post('http://localhost:8080/api/addJobRole', role);
         return response.data
     } catch (error) {
-        console.error(error);
         return -1;
     }
-    //}
 }
 
 
@@ -55,17 +53,6 @@ exports.getJobFamilyNames = async() => {
     }
 }
 
-/*
-exports.getJobCapabilities = async() => {
-    try{
-    const response = await axios.get('http://localhost:8080/api/getJobCapabilities');
-    return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
-*/
 
 exports.getRoleMatrix = async() => {
     try{
@@ -95,7 +82,6 @@ exports.getRoleMatrix = async() => {
 
             rows.push(row)
         });
-        // console.log(rows)
 
         let roleMatrix = {headers: headers, rows: rows};
 

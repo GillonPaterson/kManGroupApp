@@ -69,17 +69,6 @@
   </div>
 
 
-<!--
-  <div class="govuk-form-group">
-    <label class="govuk-label" for="jobCapability">
-      Capability
-    </label>
-    <select class="govuk-select" id="jobCapability" name="jobCapability">
-    </select>
-  </div>
-  -->
-
-
 
   <div class="govuk-form-group">
     <label class="govuk-label" for="jobFamily">
@@ -118,7 +107,6 @@
 
 <script>
 var bands = {{ jobBandInfo | dump | safe }}
-//var capabilities = {{ jobCapabilitiesInfo | dump | safe }}
 var family = {{ jobFamilyInfo | dump | safe }}
 
     function populateSelect1() {
@@ -127,14 +115,6 @@ var family = {{ jobFamilyInfo | dump | safe }}
             ele.innerHTML = ele.innerHTML +
                 '<option value="' + bands[i] + '">' + bands[i] + '</option>';
         }
-
-        /*
-         var cap = document.getElementById('jobCapability');
-        for (var x = 0; x < capabilities.length; x++) {
-            cap.innerHTML = cap.innerHTML +
-                '<option value="' + x + '">' + capabilities[x] + '</option>';
-        }
-        */
 
         var fam = document.getElementById('jobFamily');
         for (var y = 0; y < family.length; y++) {

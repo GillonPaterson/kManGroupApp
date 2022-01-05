@@ -46,14 +46,11 @@ router.get("/competencyData", async(req, res) =>{
 
 router.get("/addrole", async(req, res) =>{
     var bandLevels = await jobrolesservice.getJobBandLevels()
-    //var capabilities = await jobrolesservice.getJobCapabilities()
     var family = await jobrolesservice.getJobFamilyNames()
-
 
     if(bandLevels != false && family != false){
         res.render('addnewrole.html', {
             jobBandInfo: bandLevels,
-            //jobCapabilitiesInfo: capabilities,
             jobFamilyInfo: family
         })
     
