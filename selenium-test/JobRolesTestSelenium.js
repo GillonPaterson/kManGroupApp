@@ -102,6 +102,20 @@ describe("Selenium test", () => {
       expect(title).to.equal("List of Job Roles");
     })
 
+    it('Asssert the title on view all capability leads webpage is correct', async () => {
+      await driver.get('http://localhost:3000/viewAllCapabilities');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("List of Capabilty Leads");
+    });
+
+    it('Asssert the title on view capability lead webpage is correct', async () => {
+      await driver.get('http://localhost:3000/capabilityLeadInfo?leadID=1');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("View Capability Lead Info");
+    });
+
     after(async () => driver.quit());
   });
 
