@@ -13,6 +13,19 @@ exports.getJobRoles = async() => {
     }
 }
 
+
+exports.addJobRole = async(role) => {
+    try {
+        const response = await axios.post('http://localhost:8080/api/addJobRole', role);
+        return response.data
+    } catch (error) {
+        console.error(error);
+        return -1;
+    }
+    //}
+}
+
+
 exports.getJobRoleSpec = async(jobRoleID) =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobSpec/'+jobRoleID)
@@ -21,6 +34,38 @@ exports.getJobRoleSpec = async(jobRoleID) =>{
         return false;
     }
 }
+
+exports.getJobBandLevels = async() => {
+    try{
+    const response = await axios.get('http://localhost:8080/api/getJobBandLevels');
+    return response.data;
+    }catch(e)
+    {
+        return;
+    }
+}
+
+exports.getJobFamilyNames = async() => {
+    try{
+    const response = await axios.get('http://localhost:8080/api/getJobFamilyNames');
+    return response.data;
+    }catch(e)
+    {
+        return;
+    }
+}
+
+/*
+exports.getJobCapabilities = async() => {
+    try{
+    const response = await axios.get('http://localhost:8080/api/getJobCapabilities');
+    return response.data;
+    }catch(e)
+    {
+        return;
+    }
+}
+*/
 
 exports.getRoleMatrix = async() => {
     try{

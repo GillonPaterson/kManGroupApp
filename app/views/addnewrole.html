@@ -1,0 +1,151 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Add a New Role
+{% endblock %}
+ 
+{% block beforeContent %}
+  <a class="govuk-back-link" href="javascript:window.history.back()">Back</a>
+  <a class="govuk-back-link" href="index">Home</a>
+{% endblock %}
+ 
+{% block content %}
+
+<h2 class="govuk-heading-xl">Add a New Role</h2>
+ 
+<form class="newroleform" action="/addrole" method="post">
+<body onload="populateSelect1()"></body>
+
+
+{% if errormessage %} 
+  <div class="govuk-error-message">{{ errormessage }}</div> 
+  {% if 'role-name' in errormessage %}
+  {% set rolenameError = "true" %}
+  {% endif %}
+{% endif %}
+
+<br>
+ {% if rolenameError %}
+ {{ govukInput({
+ label: {
+ text: "Role Name"
+ },
+ id: "role-name",
+ name: "role-name",
+ value: data["role-name"],
+ hint: {text: "Role name must be no longer than 20 characters long"}, 
+ errorMessage: {text: errormessage}
+ }) }}
+ {% else %}
+ {{ govukInput({
+ label: {
+ text: "Role Name"
+ },
+ id: "role-name",
+ name: "role-name",
+ hint: {text: "Role name must be no longer than 20 characters long"}, 
+ value: data["role-name"]
+ }) }}
+ {% endif %} 
+
+
+
+ {{ govukTextarea({
+   name: "role-spec",
+   id: "role-spec",
+   label: {
+     text: "Role Specification"
+   }
+ }) }}
+
+ 
+
+ <div class="govuk-form-group">
+    <label class="govuk-label" for="jobBandLevel">
+      Band Level
+    </label>
+    <select class="govuk-select" id="jobBandLevel" name="jobBandLevel">
+    </select>
+  </div>
+
+
+<!--
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="jobCapability">
+      Capability
+    </label>
+    <select class="govuk-select" id="jobCapability" name="jobCapability">
+    </select>
+  </div>
+  -->
+
+
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="jobFamily">
+      Job Family
+    </label>
+    <select class="govuk-select" id="jobFamily" name="jobFamily">
+    </select>
+  </div>
+
+
+{{ govukInput({
+ label: {
+ text: "Job Role Link"
+ },
+ id: "role-link",
+ name: "role-link",
+ value: data["role-link"]
+
+}) }}
+
+
+{{ govukTextarea({
+   name: "role-responsibilities",
+   id: "role-responsibilities",
+   label: {
+     text: "Role Responsibilities"
+   }
+ }) }}
+
+
+ 
+ <button type="submit" class="govuk-button" data-module="govuk-button">
+ Submit
+ </button>
+
+
+<script>
+var bands = {{ jobBandInfo | dump | safe }}
+//var capabilities = {{ jobCapabilitiesInfo | dump | safe }}
+var family = {{ jobFamilyInfo | dump | safe }}
+
+    function populateSelect1() {
+        var ele = document.getElementById('jobBandLevel');
+        for (var i = 0; i < bands.length; i++) {
+            ele.innerHTML = ele.innerHTML +
+                '<option value="' + i + '">' + bands[i] + '</option>';
+        }
+
+        /*
+         var cap = document.getElementById('jobCapability');
+        for (var x = 0; x < capabilities.length; x++) {
+            cap.innerHTML = cap.innerHTML +
+                '<option value="' + x + '">' + capabilities[x] + '</option>';
+        }
+        */
+
+        var fam = document.getElementById('jobFamily');
+        for (var y = 0; y < family.length; y++) {
+            fam.innerHTML = fam.innerHTML +
+                '<option value="' + y + '">' + family[y] + '</option>';
+        }
+    }
+</script>
+
+ 
+ </form>
+
+ 
+{% endblock %}
