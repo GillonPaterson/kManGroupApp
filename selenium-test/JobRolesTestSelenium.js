@@ -25,13 +25,14 @@ describe("Selenium test", () => {
     });
   
     it('should have correct first row displayed on job roles page', async () => {
-      expectedFirstRow = ['Software Engineer', 'Engineering', "Associate"];
+      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Associate"];
 
       var elements = (await driver.findElements(By.className("govuk-table__cell")))
       var jobRole = await elements[0].getText()     
-      var jobCapability = await elements[1].getText()      
-      var bandLevel = await elements[2].getText()    
-      var firstRow = [jobRole,jobCapability,bandLevel]
+      var jobCapability = await elements[1].getText()
+      var jobFamily = await elements[2].getText()        
+      var bandLevel = await elements[3].getText()    
+      var firstRow = [jobRole,jobCapability,jobFamily, bandLevel]
 
       expect(firstRow).to.eql(expectedFirstRow);  
     });
@@ -44,7 +45,7 @@ describe("Selenium test", () => {
       expect(title).to.equal("Job Specification");
     });
 
-    it('should click back and display job roles', async () => {
+    it('should click back and display job roles, Tests back button works', async () => {
       driver.findElement(By.linkText('Back')).click();
       await driver.wait(until.titleIs("List of Job Roles"));
       const title = await driver.getTitle();
@@ -53,34 +54,34 @@ describe("Selenium test", () => {
     });
 
     it('should click band level and display band level', async () => {
-      driver.findElement(By.linkText('Associate')).click();
-      await driver.wait(until.titleIs("Job Band Level Competencies"));
+      await driver.findElement(By.linkText('Associate')).click();
       const title = await driver.getTitle();
 
+      var heading = await driver.findElement(By.className('govuk-heading-xl')).getText()
+
+      expect(heading).to.equal("Associate Competency Information")
       expect(title).to.equal("Job Band Level Competencies");
     });
 
-    // it('should click training button and display available training courses', async () => {
-    //   driver.findElement(By.xpath('//*[@id="main-content"]/a')).click();
-    //   await driver.wait(until.titleIs("Job Band Level Training"));
-    //   const title = await driver.getTitle();
+
+
+    it('should click training button and display available training courses', async () => {
+      driver.findElement(By.xpath('//*[@id="main-content"]/a')).click();
+      await driver.wait(until.titleIs("Job Band Level Training"));
+      const title = await driver.getTitle();
       
-    //   expect(title).to.equal("Job Band Level Training");
-    // });
+      expect(title).to.equal("Job Band Level Training");
+    });
 
-    // it('should display link', async () => {
-    //   const link = driver.findElement(By.linkText('View course'));
-    //   expect(link).to.exist;
-    // });
+    it('should display link and heading', async () => {
+      const link = await driver.findElement(By.linkText('View course'));
+      var heading = await driver.findElement(By.className('govuk-heading-xl')).getText()
 
-    // it('should click back and display job roles', async () => {
-    //   driver.findElement(By.linkText('Back')).click();
-    //   await driver.wait(until.titleIs("Job Band Level Training"));
+      expect(heading).to.equal("Available Training Courses for Associate")
+      expect(link).to.exist;
+    });
 
-    //   const title = await driver.getTitle();
-
-    //   expect(title).to.equal("Job Band Level Training");
-    // });
+    //put in bit for clicking training link
 
     it('should click home and display home', async () => {
       driver.findElement(By.linkText('Home')).click();
@@ -101,15 +102,21 @@ describe("Selenium test", () => {
       expect(title).to.equal("List of Job Roles");
     })
 
+    it('should click on a role and go to job spec page', async () => {
+      var elements = await driver.findElements(By.linkText('Software Engineer'))
+      await elements[elements.length -1].click()
+      const title =  await driver.getTitle();
+
+      var heading = await driver.findElement(By.className('govuk-heading-xl')).getText()
+
+      expect(title).to.equal("Job Specification")
+      expect(heading).to.equal("Software Engineer Spec")
+    })
+
     it('should click home and then click job Families button and confirm table', async () => {
-      driver.findElement(By.linkText('Home')).click();
-      await driver.wait(until.titleIs("Home"));
-      const titleHome = await driver.getTitle();
+      await driver.findElement(By.linkText('Home')).click();
 
-      expect(titleHome).to.equal("Home");
-
-      driver.findElement(By.linkText("View Job Families")).click();
-      await driver.wait(until.titleIs("Job Families"));
+      await driver.findElement(By.linkText("View Job Families")).click();
       const titleJobFamily = await driver.getTitle();
       
       expect(titleJobFamily).to.equal("Job Families");
@@ -123,18 +130,32 @@ describe("Selenium test", () => {
       expect(jobFamily).to.equal("Engineering Strategy and Planning")
     });
 
-    it('Asssert the title on view all capability leads webpage is correct', async () => {
-      await driver.get('http://localhost:3000/viewAllCapabilities');
+    it('should click on view capability lead and confirm table', async () => {
+      await driver.findElement(By.linkText('Home')).click();
+      await driver.findElement(By.linkText('View Capability Lead')).click();
       const title = await driver.getTitle();
-      console.log(title)
       expect(title).to.equal("List of Capabilty Leads");
+
+      expectedFirstRow = ['Dave', 'Boats', 'Engineering'];
+
+      var elements = (await driver.findElements(By.className("govuk-table__cell")))
+      var forename = await elements[0].getText()     
+      var surname = await elements[1].getText()
+      var capability = await elements[2].getText()        
+      var firstRow = [forename,surname,capability]
+
+      expect(firstRow).to.eql(expectedFirstRow);  
+
     });
 
-    it('Asssert the title on view capability lead webpage is correct', async () => {
-      await driver.get('http://localhost:3000/capabilityLeadInfo?leadID=1');
+    it('should click on capability lead more info link and get right page', async () => {
+      await driver.findElement(By.linkText('More Info')).click()
       const title = await driver.getTitle();
-      console.log(title)
       expect(title).to.equal("View Capability Lead Info");
+
+      var text = await driver.findElement(By.className('govuk-summary-list__value')).getText()
+
+      expect(text).to.equal("Dave Boats")
     });
 
     after(async () => driver.quit());
