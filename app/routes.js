@@ -92,7 +92,18 @@ router.get("/jobFamilies", async(req, res) =>{
 
 router.get("/viewAllCapabilities", async(req, res) => { 
     var role =  await jobrolesservice.getAllCapabilityLeadsInfo()
+    for(i = 0; i < role.length; i++){
+        role[i].leadID = '<a href="http://localhost:3000/capabilityLeadInfo?leadID='+role[i].leadID+'">More Info</a>'
+    }
     res.render('viewAllCapabilites.html', { jobroles: role })
+});
+
+router.get("/capabilityLeadInfo", async(req, res) =>{
+    var capInfo = await jobrolesservice.getCapabilityLeadInfo(req.query.leadID)
+    res.render('viewCapabilityLead.html', {
+        rows: capInfo
+    })   
+ 
 });
 
 
