@@ -3,26 +3,19 @@
   Job Band Level Competencies
 {% endblock %} 
 
-{% block beforeContent %}
-  <a class="govuk-back-link" href="javascript:window.history.back()">Back</a>
-  <a class="govuk-back-link" href="home.html">Home</a>
-
-  <h2 class="govuk-heading-xl">{{jobRoleInfo.bandLevel}} Competency Information</h2>
+{% block content %}
+<h2 class="govuk-heading-xl">{{jobRoleInfo.bandLevel}} Competency Information</h2>
 
 
 {% for i in jobRoleInfo.competencyStage %}
 
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{{ govukDetails({summaryText:"Competency "+loop.index,text:i}) }}
+{{ govukDetails({summaryText:"Competency "+loop.index,text:i, open: true}) }}
 
 {% endfor %}
 
+{% set link = "http://localhost:3000/training?jobBandLevel=" + jobRoleInfo.bandLevel %}
 
-{% endblock %} 
-
-{% set link = "http://localhost:3000/training?jobBandLevel=" + jobRoleInfo[0].bandLevel %}
-
-{% block content %}
 {{ govukButton({
   text: "View available training",
   href: link,
