@@ -44,9 +44,38 @@ router.get("/competencyData", async(req, res) =>{
 });
 
 
+router.get("/addrole", async(req, res) =>{
+    var bandLevels = await jobrolesservice.getJobBandLevels()
+    //var capabilities = await jobrolesservice.getJobCapabilities()
+    var family = await jobrolesservice.getJobFamilyNames()
+
+
+    if(bandLevels != false && family != false){
+        res.render('addnewrole.html', {
+            jobBandInfo: bandLevels,
+            //jobCapabilitiesInfo: capabilities,
+            jobFamilyInfo: family
+        })
+    
+    }else{
+        res.render('pageNotFound.html')
+    }
+});
+
+router.post("/addrole", async(req, res) => {
+    var id = await employeeservice.addJobRole(req.body)
+
+    var roles =  await jobrolesservice.getJobRoles()
+    for(i = 0; i < roles.length; i++){
+        roles[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID="+roles[i].jobRoleID+">"+roles[i].jobBandLevel+"</a>"
+        roles[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+roles[i].jobRoleID+">More Info</a>"
+    }
+    res.render('jobroles.html', { jobroles: roles })
+});
+
+
 router.get("/training", async(req, res) =>{
     var bandLevel = req.query.jobBandLevel
-    console.log(bandLevel)
     var role = await jobrolesservice.getJobTraining(bandLevel)
     var roleDP = role.DPGroup
     var rolePS = role.PSGroup
