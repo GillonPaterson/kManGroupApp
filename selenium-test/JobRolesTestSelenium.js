@@ -25,7 +25,7 @@ describe("Selenium test", () => {
     });
   
     it('should have correct first row displayed on job roles page', async () => {
-      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Associate"];
+      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Apprentice"];
 
       var elements = (await driver.findElements(By.className("govuk-table__cell")))
       var jobRole = await elements[0].getText()     
@@ -156,6 +156,15 @@ describe("Selenium test", () => {
       var text = await driver.findElement(By.className('govuk-summary-list__value')).getText()
 
       expect(text).to.equal("Dave Boats")
+    });
+
+    it('should wait until add role page opens', async () => {
+      await driver.get('http://localhost:3000/addrole');
+      const title = await driver.getTitle();
+      const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).getText();
+
+      expect(title).to.equal("Add a New Role");
+      expect(button).to.equal("Submit");
     });
 
     after(async () => driver.quit());

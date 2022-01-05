@@ -19,7 +19,7 @@
 
 {% if errormessage %} 
   <div class="govuk-error-message">{{ errormessage }}</div> 
-  {% if 'role-name' in errormessage %}
+  {% if 'jobRole' in errormessage %}
   {% set rolenameError = "true" %}
   {% endif %}
 {% endif %}
@@ -30,9 +30,9 @@
  label: {
  text: "Role Name"
  },
- id: "role-name",
- name: "role-name",
- value: data["role-name"],
+ id: "jobRole",
+ name: "jobRole",
+ value: data["jobRole"],
  hint: {text: "Role name must be no longer than 20 characters long"}, 
  errorMessage: {text: errormessage}
  }) }}
@@ -41,18 +41,18 @@
  label: {
  text: "Role Name"
  },
- id: "role-name",
- name: "role-name",
+ id: "jobRole",
+ name: "jobRole",
  hint: {text: "Role name must be no longer than 20 characters long"}, 
- value: data["role-name"]
+ value: data["jobRole"]
  }) }}
  {% endif %} 
 
 
 
  {{ govukTextarea({
-   name: "role-spec",
-   id: "role-spec",
+   name: "jobSpec",
+   id: "jobSpec",
    label: {
      text: "Role Specification"
    }
@@ -94,16 +94,16 @@
  label: {
  text: "Job Role Link"
  },
- id: "role-link",
- name: "role-link",
- value: data["role-link"]
+ id: "jobLink",
+ name: "jobLink",
+ value: data["jobLink"]
 
 }) }}
 
 
 {{ govukTextarea({
-   name: "role-responsibilities",
-   id: "role-responsibilities",
+   name: "jobResponsibilities",
+   id: "jobResponsibilities",
    label: {
      text: "Role Responsibilities"
    }
@@ -125,7 +125,7 @@ var family = {{ jobFamilyInfo | dump | safe }}
         var ele = document.getElementById('jobBandLevel');
         for (var i = 0; i < bands.length; i++) {
             ele.innerHTML = ele.innerHTML +
-                '<option value="' + i + '">' + bands[i] + '</option>';
+                '<option value="' + bands[i] + '">' + bands[i] + '</option>';
         }
 
         /*
@@ -139,7 +139,7 @@ var family = {{ jobFamilyInfo | dump | safe }}
         var fam = document.getElementById('jobFamily');
         for (var y = 0; y < family.length; y++) {
             fam.innerHTML = fam.innerHTML +
-                '<option value="' + y + '">' + family[y] + '</option>';
+                '<option value="' + family[y] + '">' + family[y] + '</option>';
         }
     }
 </script>
