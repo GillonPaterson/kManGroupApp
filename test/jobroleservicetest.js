@@ -1,4 +1,4 @@
-const employeeservice = require("../app/jobrolesservice")
+const employeeservice = require("../app/services/jobrolesservice")
 const chai = require('chai')
 const expect = chai.expect;
 const sinon = require("sinon");

@@ -137,6 +137,14 @@ describe("Selenium test", () => {
       expect(title).to.equal("View Capability Lead Info");
     });
 
+    it('Asssert the title on create capability webpage is correct', async () => {
+      await driver.get('http://localhost:3000/createCapabilityForm');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("Create a Capabilty");
+    });
+
+
     after(async () => driver.quit());
 
   });

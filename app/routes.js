@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const jobrolesservice = require("./jobrolesservice.js");
+const jobrolesservice = require("./services/jobrolesservice.js");
 const app = express();
 const port = 3000;
-
+const capabilityValidator = require("./Validators/addCapabilityValidator")
+const capabilityService = require("./services/CapapbiltyService")
 app.set('view engine', 'pug');
 router.use
 
@@ -94,7 +95,7 @@ router.get("/jobFamilies", async(req, res) =>{
 
 
 router.get("/viewAllCapabilities", async(req, res) => { 
-    var role =  await jobrolesservice.getAllCapabilityLeadsInfo()
+    var role =  await capabilityService.getAllCapabilityLeadsInfo()
     for(i = 0; i < role.length; i++){
         role[i].leadID = '<a href="http://localhost:3000/capabilityLeadInfo?leadID='+role[i].leadID+'">More Info</a>'
     }
@@ -102,12 +103,28 @@ router.get("/viewAllCapabilities", async(req, res) => {
 });
 
 router.get("/capabilityLeadInfo", async(req, res) =>{
-    var capInfo = await jobrolesservice.getCapabilityLeadInfo(req.query.leadID)
+    var capInfo = await capabilityService.getCapabilityLeadInfo(req.query.leadID)
     res.render('viewCapabilityLead.html', {
         rows: capInfo
-    })   
+    })  
  
 });
 
+router.get("/createCapabilityForm", async(req,res) =>{
+    res.render("createCapabilityForm.html")
+})
+
+router.post("/addCapabiltiy", async(req,res) =>{
+    var capabilty = req.body
+    var val = await capabilityValidator.checkCapability(capabilty)
+    if (val == true){
+        console.log("failed")
+    }else{
+       var id =  await capabilityService.addCapabilty(capabilty)
+    }
+    res.render("home.html")
+
+})
 
 module.exports = router;
+ 
