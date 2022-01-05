@@ -116,17 +116,13 @@ exports.getJobFamilies = async() =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobFamilies/')
 
-
-
         let rows = []
-        response.data.capabilities.forEach(capability =>{
+        response.data.forEach(capability =>{
             let row = []
-            row.push(capability)
+            row.push(capability.jobCapability)
 
-            response.data.jobFamilyModels.forEach(jobFamily =>{
-                if(jobFamily.jobCapability == capability){
-                    row.push(jobFamily.jobFamily)
-                }
+            capability.jobFamily.forEach(jobFamily =>{
+                row.push(jobFamily)
             })
             rows.push(row)
         })

@@ -1,6 +1,6 @@
 {% extends "layout.html" %} 
 {% block pageTitle %} 
-  Job Roles
+  Home
 {% endblock %} 
 
 
@@ -63,6 +63,11 @@
                 View Capability Lead
               </a>
             </li>
+             <li>
+              <a class="govuk-link" href="http://localhost:3000/jobFamilies">
+                View Job Families
+              </a>
+            </li>
             <li>
               <a href="#" class="govuk-link govuk-!-font-weight-bold">
                 More <span class="govuk-visually-hidden">in Subsection</span>
@@ -76,7 +81,7 @@
         </h2>
         {{ govukButton({
           text: "Login",
-          href: "http://localhost:3000/adminlogin",
+          href: "http://localhost:3000/login",
           classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
           isStartButton: true
         }) }}

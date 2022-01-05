@@ -11,29 +11,28 @@
 
 {% block content %}
 {% set table = [] %}
-{% set roleMatrixRow = [] %}
-{% set length = 1%}
+{% set length = 0%}
 {% set head = []%}
 
+
 {% for row in rows %}
-  {% set jobFamilyRow = [] %}
   {% for cell in row %}
-    {% set jobFamilyRow = (jobFamilyRow.push({text: cell|safe}), jobFamilyRow )%}
+  {% set tableRow = [] %}
+    {%if loop.first %}
+    {% set tableRow = (tableRow.push({text: cell|safe, rowspan: row.length-1}, {text: row[1]|safe}), tableRow )%}
+    {% set table = (table.push(tableRow), table )%}
+    {% elif loop.index == 2%}
+    {%else%}
+    {% set tableRow = (tableRow.push({text: cell|safe}), tableRow )%}
+    {% set table = (table.push(tableRow), table )%}
+    {%endif%}
   {% endfor %}
-    {%if jobFamilyRow.length > length%}
-        {% set length = jobFamilyRow.length %}
-    {% endif %}
-  {% set table = (table.push(jobFamilyRow), table )%}
 {% endfor %}
 
-{% set length = length -1 %}
-
-{% set head = [{text: "Capability"}, {text: "Job Families", colspan: length}]%}
-
+{% set head = [{text: "Capability"}, {text: "Job Families"}]%}
 
 
 {{govukTable({
-    firstCellIsHeader: true,
     head: head,
     rows: table
  })
