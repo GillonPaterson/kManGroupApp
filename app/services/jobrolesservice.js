@@ -72,26 +72,6 @@ exports.getCompetencyData = async(jobRoleID) =>{
 
 }
 
-exports.getCapabilityLeadInfo = async(leadID) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getCapabilityLead/'+leadID)
-        console.log(response.data)
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
-
-exports.getAllCapabilityLeadsInfo = async() =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getAllCapabilityLead')
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
 
 
 exports.getJobTraining = async(jobBandLevel) =>{
