@@ -63,7 +63,7 @@ router.get("/addrole", async(req, res) =>{
 });
 
 router.post("/addrole", async(req, res) => {
-    var id = await employeeservice.addJobRole(req.body)
+    var id = await jobrolesservice.addJobRole(req.body)
 
     var roles =  await jobrolesservice.getJobRoles()
     for(i = 0; i < roles.length; i++){
