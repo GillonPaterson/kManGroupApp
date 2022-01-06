@@ -167,6 +167,27 @@ describe("Selenium test", () => {
       expect(button).to.equal("Submit");
     });
 
+    it('Asssert the title on view all capability leads webpage is correct', async () => {
+      await driver.get('http://localhost:3000/viewAllCapabilities');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("List of Capabilty Leads");
+    });
+
+    it('Asssert the title on view capability lead webpage is correct', async () => {
+      await driver.get('http://localhost:3000/capabilityLeadInfo?leadID=1');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("View Capability Lead Info");
+    });
+
+    it('Asssert the title on create capability webpage is correct', async () => {
+      await driver.get('http://localhost:3000/createCapabilityForm');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("Create A Capability");
+    });
+
     after(async () => driver.quit());
 
   });

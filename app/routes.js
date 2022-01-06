@@ -3,6 +3,7 @@ const router = express.Router();
 const jobrolesservice = require("./jobrolesservice.js");
 const app = express();
 const port = 3000;
+const capabilityValidator = require("./validator/capabilityValidator")
 
 app.set('view engine', 'pug');
 router.use
@@ -137,6 +138,22 @@ router.get("/capabilityLeadInfo", async(req, res) =>{
     })   
  
 });
+
+router.get("/createCapabilityForm", async(req,res) =>{
+    res.render("createCapabilityForm.html")
+})
+
+router.post("/addCapabiltiy", async(req,res) =>{
+    var capabilty = req.body
+    var val = await capabilityValidator.checkCapability(capabilty)
+    if (val == true){
+        console.log("failed")
+    }else{
+       var id =  await jobrolesservice.addCapabilty(capabilty)
+    }
+    res.render("home.html")
+
+})
 
 
 module.exports = router;
