@@ -4,10 +4,16 @@
 {% endblock %} 
 
 {% block content %}
+<div class="govuk-width-container">
+
 <h2 class="govuk-heading-xl">{{jobRoleInfo.jobRole}} Spec</h2> 
-<p class="govuk-body">{{jobRoleInfo.jobSpec}}</p>
+
+<p class="govuk-body" style="max-width:1000px; word-wrap:break-word;">{{jobRoleInfo.jobSpec}}</p>
+
 <a href={{jobRoleInfo.jobLink}}>More Info</a>
 <p></p>
 <p class="govuk-body-l">Job Responsibilities</p>
-<p class="govuk-body">{{jobRoleInfo.jobResponsibilities}}</p>
+<p class="govuk-body" style="max-width:1000px; word-wrap:break-word;">{{jobRoleInfo.jobResponsibilities}}</p>
+
+</div>
 {% endblock %} 
