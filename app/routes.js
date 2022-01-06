@@ -144,12 +144,10 @@ router.post("/addCapability", async(req,res) =>{
     try{
         var capabilty = req.body
         var val = await capabilityValidator.checkCapability(capabilty)
-        console.log(val)
         if (val == "no error"){
             var id =  await jobrolesservice.addCapabilty(capabilty)
             res.render("home.html")
         }else{
-            console.log("in else")
            req.body["errormessage"] = val
            res.render('createCapabilityForm.html', req.body)  
         }
