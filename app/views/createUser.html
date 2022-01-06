@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Create User
+{% endblock %}
+ 
+{% block beforeContent %}
+{% endblock %}
+ 
+{% block content %}
+ 
+<form class="createUser" action="/createUser" method="post">
+
+{% if errormessage %} 
+  <div class="govuk-error-message">{{ errormessage }}</div> 
+{% endif %}
+
+<h1 class="govuk-heading-l">Create User</h1>
+
+<br> 
+
+  {{ govukInput({
+ label: {
+ text: "Username"
+ },
+ id: "username",
+ name: "username",
+ value: data["username"]
+ }) }}
+
+ {{ govukInput({
+ label: {
+ text: "Password"
+ },
+ id: "password",
+ name: "password",
+ value: data["password"],
+ type: "password"
+ }) }}
+ 
+ <button type="submit" class="govuk-button" data-module="govuk-button">
+ Create
+ </button>
+ 
+ </form>
+ 
+{% endblock %}
