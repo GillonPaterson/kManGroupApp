@@ -179,14 +179,25 @@ exports.getJobFamilies = async() =>{
     }
 }
 
-
-
 exports.getCapabilityLeadInfo = async(leadID) =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getCapabilityLead/'+leadID)
         return response.data;
     }catch(e)
     {
+        return;
+    }
+}
+
+exports.addCapabilty= async(capabilty) =>{
+    console.log(capabilty)
+    try{
+        const response = await axios.post('http://localhost:8080/api/createCapability',capabilty)
+        console.log(response)
+        return response.data;
+    }catch(e)
+    {
+        console.log(e)
         return;
     }
 }
