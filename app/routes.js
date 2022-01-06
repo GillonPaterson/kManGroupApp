@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jobrolesservice = require("./jobrolesservice.js");
+const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
 const cookieParser = require("cookie-parser");
