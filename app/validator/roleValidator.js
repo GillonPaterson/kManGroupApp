@@ -6,8 +6,10 @@ exports.checkrole= async(role) => {
             return "The role name must not contain a number"
     }
 
-    if (role.jobRole.length > 40 || role.jobRole.length == 0)
-        return "The role name must be present and less than 40 characters"
+    if (role.jobRole.length > 40)
+        return "The role name must be less than 40 characters"
+    else if (role.jobRole.length == 0)
+        return "The role name must be entered"
     else if(role.jobRole.charAt(0) == ' ' || role.jobRole.charAt(role.jobRole.length - 1) == ' ')
         return "The role name must not contain spaces at the start or end"
     else if (role.jobSpec.length == 0)
