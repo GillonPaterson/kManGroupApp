@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jobrolesservice = require("./jobrolesservice.js");
+const roleValidator = require("./roleValidator");
 const app = express();
 const port = 3000;
 const capabilityValidator = require("./validator/capabilityValidator")
@@ -61,6 +62,21 @@ router.get("/addrole", async(req, res) =>{
 });
 
 router.post("/addrole", async(req, res) => {
+    var link = req.body.jobLink
+
+    if(link.includes("https://https://"))
+        link = link.slice(8, link.length)
+    else if(link.includes("https://http://"))
+        link = link.replace("http://", "")
+
+    req.body.jobLink = link;
+
+    
+    var role = req.body
+
+    var val = await roleValidator.checkrole(role)
+
+if (val == "No error") {
     var id = await jobrolesservice.addJobRole(req.body)
 
     var roles =  await jobrolesservice.getJobRoles()
@@ -69,6 +85,38 @@ router.post("/addrole", async(req, res) => {
         roles[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+roles[i].jobRoleID+">More Info</a>"
     }
     res.render('jobroles.html', { jobroles: roles })
+}
+else {
+    req.body["errormessage"] = val
+    //res.render('addnewrole.html', req.body)
+
+    var bandLevels = await jobrolesservice.getJobBandLevels()
+    var family = await jobrolesservice.getJobFamilyNames()
+
+        res.render('addnewrole.html', {
+            errormessage: req.body.errormessage,
+            jobBandInfo: bandLevels,
+            jobFamilyInfo: family
+        })
+
+}
+});
+
+
+
+router.get("/editrole", async(req, res) =>{
+    var bandLevels = await jobrolesservice.getJobBandLevels()
+    var family = await jobrolesservice.getJobFamilyNames()
+
+    if(bandLevels != false && family != false){
+        res.render('addnewrole.html', {
+            jobBandInfo: bandLevels,
+            jobFamilyInfo: family
+        })
+    
+    }else{
+        res.render('pageNotFound.html')
+    }
 });
 
 
