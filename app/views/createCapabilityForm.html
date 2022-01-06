@@ -6,14 +6,32 @@ Create A Capability
  
 {% block beforeContent %}
   <a class="govuk-back-link" href="javascript:window.history.back()">Back</a>
-  <a class="govuk-back-link" href="index">Home</a>
+  <a class="govuk-back-link" href="home.html">Home</a>
 {% endblock %}  
  
 {% block content %}
 <h2 class="govuk-heading-xl">Create A Capability</h2> 
  
-<form class="Capability Form" action="/addCapabiltiy" method="post">
+<form class="Capability Form" action="/addCapability" method="post">
 
+
+{% if errormessage %} 
+  {% if 'Capability Name' in errormessage %}
+  {% set capabilityNameError = "true" %}
+  {% endif %}
+{% endif %}
+
+ {% if capabilityNameError %}
+ {{ govukInput({
+ label: {
+ text: "Capability Name"
+ },
+ id: "capabilityName",
+ name: "capabilityName",
+ value: data["capabilityName"], 
+ errorMessage: {text: errormessage}
+ }) }}
+ {% else %}
  {{ govukInput({
  label: {
  text: "Capability Name"
@@ -22,8 +40,8 @@ Create A Capability
  id: "capabilityName",
  name: "capabilityName",
  value: data["capabilityName"]
-
  }) }}
+{% endif %} 
 
  
  <button type="submit" class="govuk-button" data-module="govuk-button">
