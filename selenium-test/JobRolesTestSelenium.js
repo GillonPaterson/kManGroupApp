@@ -6,8 +6,18 @@ require('chromedriver');
 describe("Selenium test", () => {
     const driver = new Builder().forBrowser('chrome').build();
 
-    it('should wait until home page opens', async () => {
+    it('should wait until login page opens', async () => {
       await driver.get('http://localhost:3000/home');
+      const title = await driver.getTitle();
+      await driver.findElement(By.id('username')).sendKeys("admin");
+      await driver.findElement(By.id('password')).sendKeys("password");
+
+      const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()
+      await driver.wait(until.titleIs("Home"));
+      expect(title).to.equal("Login");
+    });
+
+    it('should wait until home page opens', async () => {
       const title = await driver.getTitle();
       const button = await driver.findElement(By.xpath('//*[@id="main-content"]/div/div[1]/a')).getText();
 
