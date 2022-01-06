@@ -5,7 +5,6 @@ const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
 const cookieParser = require("cookie-parser");
-const roleValidator = require("./roleValidator");
 const capabilityValidator = require("./validator/capabilityValidator")
 
 
