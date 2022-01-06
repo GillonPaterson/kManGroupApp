@@ -1,5 +1,6 @@
 exports.checkCapability = async(capability) =>{
     capName = capability.capabilityName
+    console.log("capname "+capName)
     error = "no error"
 
     const regex = /\d/;

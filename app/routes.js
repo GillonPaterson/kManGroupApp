@@ -159,4 +159,45 @@ router.post("/addCapability", async(req,res) =>{
 })
 
 
+router.post("/UpdateCapability", async(req,res) =>{
+    try{
+        console.log("res "+req.body.capabilityID)
+        var capabilityID = req.body.capabilityID
+        var capabilityName = req.body.capabilityName
+        console.log(capabilityName)
+        var capability = {capabilityID: capabilityID, capabilityName: capabilityName}
+        var val = await capabilityValidator.checkCapability(capability)
+        if (val == "no error"){
+            var id =  await jobrolesservice.updateCapabilites(capability)
+            res.render("home.html")
+        }else{
+           req.body["errormessage"] = val
+           res.render('updateCapabilities.html', req.body)  
+        }
+    } catch (e){
+        console.log(e)
+    }
+
+
+})
+
+router.get("/viewAllCapabilitiesforUpdate", async(req, res) => { 
+    var role =  await jobrolesservice.getAllCapabilitesInfo()
+    console.log("kmfkd "+role)
+    for(i = 0; i < role.length; i++){
+        role[i].leadID = '<a href="http://localhost:3000/updateCapabilityInfo?capabilityID='+role[i].capabilityID+'">More Info</a>'
+    }
+    res.render('viewAllCapabilities.html', { jobroles: role })
+});
+
+router.get("/updateCapabilityInfo", async(req, res) =>{
+    var capInfo = await jobrolesservice.getCapabilityLeadInfo(req.query.capabilityID)
+    console.log(req.query.capabilityID)
+    res.render('updateCapabilities.html', {
+        capabilityID: req.query.capabilityID
+    })   
+ 
+});
+
+
 module.exports = router;

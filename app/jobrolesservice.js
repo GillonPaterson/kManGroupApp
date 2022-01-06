@@ -185,3 +185,29 @@ exports.addCapabilty= async(capabilty) =>{
         return;
     }
 }
+
+
+exports.getAllCapabilitesInfo = async(leadID) =>{
+    try{
+        const response = await axios.get('http://localhost:8080/api/getAllCapabilities')
+        return response.data;
+    }catch(e)
+    {
+        return;
+    }
+}   
+
+
+
+exports.updateCapabilites= async(capability) =>{
+    try{
+        console.log(capability)
+        const response = await axios.post('http://localhost:8080/api/updateCapability',capabilty)
+        return response.data;
+    }catch(e)
+    {
+        console.log(e)
+        return;
+    }
+}
+

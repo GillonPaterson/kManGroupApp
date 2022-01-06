@@ -58,4 +58,16 @@ describe("Capability Service", function() {
         expect(result).to.eql(lead);
     });
 
+    it("Should return capability info info", async() => {
+        var mock = new MockAdapter(axios);
+        var capability = {capabilityID: 1,capabilityName: "Engineering"};
+
+
+        mock.onGet('http://localhost:8080/api/updateCapability').reply(200, capability);
+
+        var result = await capabilityService.getCapabilityLeadInfo(1)
+
+        expect(result).to.eql(lead);
+    });
+
     });

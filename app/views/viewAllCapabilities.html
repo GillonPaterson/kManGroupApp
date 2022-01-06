@@ -1,0 +1,29 @@
+{% extends "layout.html" %} 
+{% block pageTitle %} 
+  List of Capabilities
+{% endblock %} 
+
+{% block content %}
+<h2 class="govuk-heading-xl">List of Capabilities</h2> 
+
+{% if jobroles.length > 0 %}
+{% set jobrolesrows = [] %}
+
+{% for jobrole in jobroles %}
+
+{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.capabilityName }, {text: jobrole.leadID|safe}]), jobrolesrows) %}
+
+{% endfor %}
+
+{{govukTable({
+head: [{ text: "Capability Name" },{text: "Edit"}], 
+rows: jobrolesrows })
+
+}}
+
+{% else %}
+
+There are no job roles.
+
+{% endif %}
+{% endblock %}
