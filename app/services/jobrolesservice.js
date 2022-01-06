@@ -102,15 +102,7 @@ exports.getJobTraining = async(jobBandLevel) =>{
     }
 }
 
-exports.getAllCapabilityLeadsInfo = async() =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getAllCapabilityLead')
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
+
 
 
 exports.getJobFamilies = async() =>{
@@ -132,17 +124,5 @@ exports.getJobFamilies = async() =>{
     }catch(e)
     {
         return false;
-    }
-}
-
-
-exports.getCapabilityLeadInfo = async(leadID) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getCapabilityLead/'+leadID)
-        console.log(response.data)
-        return response.data;
-    }catch(e)
-    {
-        return;
     }
 }
