@@ -16,7 +16,7 @@ const authoriser = (req, res, next, isAdmin) => {
       }
     } catch(e) {
         console.log(e)
-      return res.sendStatus(403);
+      return res.redirect("login");
     }
   };
 
