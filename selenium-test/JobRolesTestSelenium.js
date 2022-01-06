@@ -25,7 +25,7 @@ describe("Selenium test", () => {
     });
   
     it('should have correct first row displayed on job roles page', async () => {
-      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Associate"];
+      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Apprentice"];
 
       var elements = (await driver.findElements(By.className("govuk-table__cell")))
       var jobRole = await elements[0].getText()     
@@ -156,6 +156,36 @@ describe("Selenium test", () => {
       var text = await driver.findElement(By.className('govuk-summary-list__value')).getText()
 
       expect(text).to.equal("Dave Boats")
+    });
+
+    it('should wait until add role page opens', async () => {
+      await driver.get('http://localhost:3000/addrole');
+      const title = await driver.getTitle();
+      const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).getText();
+
+      expect(title).to.equal("Add a New Role");
+      expect(button).to.equal("Submit");
+    });
+
+    it('Asssert the title on view all capability leads webpage is correct', async () => {
+      await driver.get('http://localhost:3000/viewAllCapabilities');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("List of Capabilty Leads");
+    });
+
+    it('Asssert the title on view capability lead webpage is correct', async () => {
+      await driver.get('http://localhost:3000/capabilityLeadInfo?leadID=1');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("View Capability Lead Info");
+    });
+
+    it('Asssert the title on create capability webpage is correct', async () => {
+      await driver.get('http://localhost:3000/createCapabilityForm');
+      const title = await driver.getTitle();
+      console.log(title)
+      expect(title).to.equal("Create A Capability");
     });
 
     after(async () => driver.quit());

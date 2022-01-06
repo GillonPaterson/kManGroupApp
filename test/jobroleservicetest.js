@@ -166,4 +166,28 @@ describe("Job Role Service", function() {
 
         expect(result).to.be.false;
     })
+
+    it("Should add a job role if credentials are correct and return ID", async() => {
+        var mock = new MockAdapter(axios);
+        var id = 10;
+        var newJobRole = {jobRole: "test"};
+
+        mock.onPost('http://localhost:8080/api/addJobRole', newJobRole).reply(200, id);
+
+        var result = await employeeservice.addJobRole(newJobRole);
+
+        expect(result).to.equal(id);
+    });
+    
+    it("Fails to add a job role and return -1", async() => {
+        var mock = new MockAdapter(axios);
+        var id = 1;
+        mock.onPost('http://localhost:8080/api/addJobRole').reply(400, id);
+
+        var newJobRole = {jobRole: "test"};
+        var result = await employeeservice.addJobRole(newJobRole);
+
+        expect(result).to.equal(-1);
+    });
+    
 });
