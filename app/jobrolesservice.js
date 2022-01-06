@@ -176,7 +176,6 @@ exports.getCapabilityLeadInfo = async(leadID) =>{
 }
 
 exports.addCapabilty= async(capabilty) =>{
-    console.log(capabilty)
     try{
         const response = await axios.post('http://localhost:8080/api/createCapability',capabilty)
         return response.data;
