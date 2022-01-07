@@ -37,6 +37,18 @@ describe("Capability Validator", function() {
 
 
     });
+    it("Should add a capability if credentials are correct and return ID", async() => {
+        var mock = new MockAdapter(axios);
+        var id = 10;
+        var newCapability = {capabilityName: "test"};
+
+        mock.onPost('http://localhost:8080/api/createCapability', newCapability).reply(200, id);
+
+        var result = await jobrolesservice.addCapabilty(newCapability);
+
+        expect(result).to.equal(id);
+    });
+    
 
 
 });
