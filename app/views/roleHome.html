@@ -10,14 +10,14 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">K Man Group (The Better Team)</h1>
+      <h1 class="govuk-heading-l">Job Roles</h1>
 
       <p class="govuk-body">Use this service to:</p>
 
       <ul class="govuk-list govuk-list--bullet">
         <li>see a list of job roles available</li>
-        <li>view job specifications</li>
-        <li>navigate the kainos career lattice</li>
+        <li>Add New Job Roles</li>
+        <li>Update Job Roles</li>
       </ul>
 
       <p class="govuk-body">Quick and simple!</p>
@@ -47,8 +47,8 @@
         <nav role="navigation" aria-labelledby="subsection-title">
           <ul class="govuk-list govuk-!-font-size-16">
             <li>
-              <a class="govuk-link" href="http://localhost:3000/apprenticecompetencies.html">
-                View Apprentice Competencies
+              <a class="govuk-link" href="http://localhost:3000/addRole">
+                addRole
               </a>
             </li>
             <li>
@@ -72,6 +72,11 @@
               </a>
             </li>
             <li>
+              <a class="govuk-link" href="http://localhost:3000/createCapabilityForm">
+                Create Capability
+              </a>
+            </li>
+            <li>
               <a href="#" class="govuk-link govuk-!-font-weight-bold">
                 More <span class="govuk-visually-hidden">in Subsection</span>
               </a>
@@ -79,17 +84,14 @@
           </ul>
         </nav>
         <br><br><br><br>
-        <h2 class="govuk-heading-m" id="subsection-title">
-          Admin
-        </h2>
         {{ govukButton({
-          text: "Logout",
-          href: "http://localhost:3000/logout",
+          text: "Login",
+          href: "http://localhost:3000/login",
           classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
           isStartButton: true
         }) }}
       </aside>
+
     </div>
   </div>
 {% endblock %}
-

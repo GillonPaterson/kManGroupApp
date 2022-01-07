@@ -227,7 +227,7 @@ router.post("/createUser",[auth.isAdmin]  ,async(req,res) =>{
     return res
       .clearCookie("access_token")
       .status(200)
-      .json({ message: "Successfully logged out 😏 🍀" });
+      .render("logout.html");
   });
 
 router.get("/createCapabilityForm", [auth.isAdmin], async(req,res) =>{
