@@ -15,7 +15,7 @@ const authoriser = (req, res, next, isAdmin) => {
         next()
       }
     } catch(e) {
-        console.log(e)
+        console.log("error while parsing cookie: " + e)
       return res.redirect("login");
     }
   };
