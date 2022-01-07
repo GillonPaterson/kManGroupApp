@@ -44,7 +44,7 @@ describe("Capability Validator", function() {
 
         mock.onPost('http://localhost:8080/api/createCapability', newCapability).reply(200, id);
 
-        var result = await employeeservice.addJobRole(newJobRole);
+        var result = await jobrolesservice.addCapabilty(newCapability);
 
         expect(result).to.equal(id);
     });
