@@ -50,6 +50,7 @@
         "nunjucks": "^3.2.1",
         "portscanner": "^2.1.1",
         "prettier": "^2.5.1",
+        "prettier-eslint": "^13.0.0",
         "request": "^2.88.2",
         "require-dir": "^1.0.0",
         "selenium-webdriver": "4.1.0",
