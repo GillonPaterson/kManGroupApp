@@ -10,7 +10,7 @@
 {% for i in jobRoleInfo.competencyStage %}
 
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{{ govukDetails({summaryText:"Competency "+loop.index,text:i, open: true}) }}
+{{ govukDetails({summaryText:"Competency "+loop.index,text:i}) }}
 
 {% endfor %}
 

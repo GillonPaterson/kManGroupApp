@@ -1,16 +1,23 @@
 const { expect } = require('chai');
-const {Builder, By, until} = require('selenium-webdriver');
+const {Builder, By, until, Key} = require('selenium-webdriver');
 const { default: isEqual } = require('webdriverio/build/commands/element/isEqual');
+const fs = require('fs');
+const { Console } = require('console');
 require('chromedriver');
 
 describe("Selenium test", () => {
     const driver = new Builder().forBrowser('chrome').build();
 
     it('should wait until login page opens', async () => {
+      fs.readFile('selenium-test/seleniumConfig.json', (err, data) => {
+        if (err) throw err;
+        config = JSON.parse(data);
+      });
+
       await driver.get('http://localhost:3000/home');
       const title = await driver.getTitle();
-      await driver.findElement(By.id('username')).sendKeys("employee");
-      await driver.findElement(By.id('password')).sendKeys("password");
+      await driver.findElement(By.id('username')).sendKeys(config.employeeUser.username);
+      await driver.findElement(By.id('password')).sendKeys(config.employeeUser.password);
 
       const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()
       await driver.wait(until.titleIs("Home"));
@@ -168,15 +175,6 @@ describe("Selenium test", () => {
       expect(text).to.equal("Dave Boats")
     });
 
-    it('should wait until add role page opens', async () => {
-      await driver.get('http://localhost:3000/addrole');
-      const title = await driver.getTitle();
-      const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).getText();
-
-      expect(title).to.equal("Add a New Role");
-      expect(button).to.equal("Submit");
-    });
-
     it('Asssert the title on view all capability leads webpage is correct', async () => {
       await driver.get('http://localhost:3000/viewAllCapabilities');
       const title = await driver.getTitle();
@@ -189,6 +187,55 @@ describe("Selenium test", () => {
       const title = await driver.getTitle();
       console.log(title)
       expect(title).to.equal("View Capability Lead Info");
+    });
+
+    it('should logout and login as admin', async () => {
+      fs.readFile('selenium-test/seleniumConfig.json', (err, data) => {
+        if (err) throw err;
+        config = JSON.parse(data);
+      });
+
+      await driver.get('http://localhost:3000/home');
+      var title = await driver.getTitle();
+      expect(title).to.equal("Home");
+
+      const button = await driver.findElement(By.xpath('//*[@id="main-content"]/div/div[2]/aside/a')).click()
+      title = await driver.getTitle();
+      expect(title).to.equal("Logged Out");
+
+      const button2 = await driver.findElement(By.xpath('//*[@id="main-content"]/a')).click()
+
+      title = await driver.getTitle();
+      expect(title).to.equal("Login");
+      console.log(config.adminUser.username)
+      const username = await driver.findElement(By.id('username'))
+      await username.sendKeys("aaa")
+      for(var i = 0; i < 20; i ++){
+        await username.sendKeys(Key.BACK_SPACE)
+      }
+      console.log(config.adminUser)
+      await username.sendKeys(config.adminUser.username)
+      const password = await driver.findElement(By.id('password'));
+      await password.sendKeys("aaa")
+      for(var i = 0; i < 20; i ++){
+        await password.sendKeys(Key.BACK_SPACE)
+      }
+      await password.sendKeys(config.adminUser.password)
+
+      const button3 = await driver.findElement(By.xpath('/html/body/div[1]/main/form/button')).click()
+      
+      var title = await driver.getTitle();
+      expect(title).to.equal("Home");
+    
+    });
+
+    it('should wait until add role page opens', async () => {
+      await driver.get('http://localhost:3000/addrole');
+      const title = await driver.getTitle();
+      const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).getText();
+
+      expect(title).to.equal("Add a New Role");
+      expect(button).to.equal("Submit");
     });
 
     it('Asssert the title on create capability webpage is correct', async () => {
