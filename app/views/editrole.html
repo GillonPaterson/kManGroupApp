@@ -11,11 +11,22 @@
 <form class="editroleform" action="/editrole" method="post">
 <body onload="populateSelect1()"></body>
 
+<input type="hidden" id = "jobRoleID" name="jobRoleID" value = {{jobRoleID}}>
+
 
 {% if errormessage %} 
-  <div class="govuk-error-message">{{ errormessage }}</div> 
-  {% if 'jobRole' in errormessage %}
+ <div class="govuk-error-message">{{ errormessage }}</div>
+  {% if 'role name' in errormessage %}
   {% set rolenameError = "true" %}
+  {% endif %}
+  {% if 'link' in errormessage %}
+  {% set rolelinkError = "true" %}
+  {% endif %}
+  {% if 'job specification' in errormessage %}
+  {% set rolespecError = "true" %}
+  {% endif %}
+  {% if 'job responsibilities' in errormessage %}
+  {% set rolerespError = "true" %}
   {% endif %}
 {% endif %}
 
@@ -27,9 +38,8 @@
  },
  id: "jobRole",
  name: "jobRole",
- value: data["jobRole"],
- hint: {text: "Role name must be no longer than 20 characters long"}, 
- errorMessage: {text: errormessage}
+ value: data["jobRole"], 
+ errorMessage: {text: errormessage }
  }) }}
  {% else %}
  {{ govukInput({
@@ -38,21 +48,31 @@
  },
  id: "jobRole",
  name: "jobRole",
- hint: {text: "Role name must be no longer than 20 characters long"}, 
+ hint: {text: "Role name must be no longer than 40 characters long"}, 
  value: data["jobRole"]
  }) }}
  {% endif %} 
 
 
-
+ {% if rolespecError %}
  {{ govukTextarea({
    name: "jobSpec",
    id: "jobSpec",
+    errorMessage: {text: errormessage },
    label: {
      text: "Role Specification"
    }
  }) }}
-
+  {% else %}
+{{ govukTextarea({
+   name: "jobSpec",
+   id: "jobSpec",
+   value: data["jobSpec"],
+   label: {
+     text: "Role Specification"
+   }
+ }) }}
+  {% endif %} 
  
 
  <div class="govuk-form-group">
@@ -73,25 +93,58 @@
     </select>
   </div>
 
-
+ {% if rolelinkError %}
+ {{ govukInput({
+ label: {
+ text: "Job Role Link"
+ },
+ id: "jobLink",
+ name: "jobLink",
+ value: data["jobLink"],
+ errorMessage: {text: errormessage }
+ }) }}
+ {% elif errormessage %}
+ {{ govukInput({
+ label: {
+ text: "Job Role Link"
+ },
+ id: "jobLink",
+ name: "jobLink",
+ value: data["jobLink"],
+ hint: {text: "The link must start with 'https://'"}
+ }) }}
+ {% else %}
 {{ govukInput({
  label: {
  text: "Job Role Link"
  },
  id: "jobLink",
  name: "jobLink",
- value: data["jobLink"]
-
+ value: "https://",
+hint: {text: "The link must start with 'https://'"}
 }) }}
+ {% endif %} 
 
 
+{% if rolerespError %}
 {{ govukTextarea({
    name: "jobResponsibilities",
    id: "jobResponsibilities",
+   errorMessage: {text: errormessage },
    label: {
      text: "Role Responsibilities"
    }
  }) }}
+  {% else %}
+ {{ govukTextarea({
+   name: "jobResponsibilities",
+   id: "jobResponsibilities",
+   value: data["jobResponsibilities"],
+   label: {
+     text: "Role Responsibilities"
+   }
+ }) }}
+  {% endif %} 
 
 
  
