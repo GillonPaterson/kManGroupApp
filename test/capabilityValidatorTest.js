@@ -18,9 +18,9 @@ describe("Capability Validator", function() {
     it("Should validate the capabilty name and return error because length is too long or is empty string", async() => {
         var newCapability = {capabilityName: "sdvjsbvjdsbvjksbvskdbvksvbskvsdkskvsdjvbjkvbsdkjvbsdkv"};
 
-        expect(await capabilityValidator.checkCapability(newCapability)).to.equal("Capability Name can only be 20 characters long")
+        expect(await capabilityValidator.checkCapability(newCapability)).to.equal("Capability Name can be A maximum of 20 characters and must be populated")
         newCapability.capabilityName = ""
-        expect(await capabilityValidator.checkCapability(newCapability)).to.equal("Capability Name can only be 20 characters long")
+        expect(await capabilityValidator.checkCapability(newCapability)).to.equal("Capability Name can be A maximum of 20 characters and must be populated")
 
     });
 

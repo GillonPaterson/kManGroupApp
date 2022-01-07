@@ -185,7 +185,7 @@ router.get("/viewAllCapabilities",[auth.isAuthorised], async(req, res) => {
     for(i = 0; i < role.length; i++){
         role[i].leadID = '<a href="http://localhost:3000/capabilityLeadInfo?leadID='+role[i].leadID+'">More Info</a>'
     }
-    res.render('viewAllCapabilites.html', { jobroles: role })
+    res.render('viewAllCapabilityLeads.html', { jobroles: role })
 });
 
 router.get("/capabilityLeadInfo",[auth.isAuthorised], async(req, res) =>{
@@ -240,7 +240,7 @@ router.post("/addCapability",[auth.isAdmin], async(req,res) =>{
         var val = await capabilityValidator.checkCapability(capabilty)
         if (val == "no error"){
             var id =  await jobrolesservice.addCapabilty(capabilty)
-            res.render("home.html")
+            res.redirect("/viewAllCapabilitiesforUpdate")
         }else{
            req.body["errormessage"] = val
            res.render('createCapabilityForm.html', req.body)  
@@ -260,9 +260,11 @@ router.post("/UpdateCapability", [auth.isAdmin], async(req,res) =>{
         console.log(capabilityName)
         var capability = {capabilityID: capabilityID, capabilityName: capabilityName}
         var val = await capabilityValidator.checkCapability(capability)
+
         if (val == "no error"){
             var id =  await jobrolesservice.updateCapabilites(capability)
-            res.render("home.html")
+            console.log("Hello")
+            res.redirect("/viewAllCapabilitiesforUpdate")
         }else{
            req.body["errormessage"] = val
            res.render('updateCapabilities.html', req.body)  
