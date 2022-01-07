@@ -9,7 +9,7 @@ describe("Selenium test", () => {
     it('should wait until login page opens', async () => {
       await driver.get('http://localhost:3000/home');
       const title = await driver.getTitle();
-      await driver.findElement(By.id('username')).sendKeys("admin");
+      await driver.findElement(By.id('username')).sendKeys("employee");
       await driver.findElement(By.id('password')).sendKeys("password");
 
       const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Logged Out
+{% endblock %}
+ 
+{% block beforeContent %}
+{% endblock %}
+ 
+{% block content %}
+
+{% if errormessage %} 
+  <div class="govuk-error-message">{{ errormessage }}</div> 
+{% endif %}
+
+<h1 class="govuk-heading-l">Sucessfully Logged Out</h1>
+
+<br> 
+ 
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{{ govukButton({
+  text: "Login",
+  href: "http://localhost:3000/login",
+  isStartButton: true
+}) }}
+ 
+ </form>
+ 
+{% endblock %}
