@@ -48,6 +48,18 @@ describe("Capability Validator", function() {
 
         expect(result).to.equal(id);
     });
+
+    it("Should update a capability if credentials are correct and return ID", async() => {
+        var mock = new MockAdapter(axios);
+        var id = 10;
+        var updatedCapability = {capabilityID: 1,capabilityName: "test"};
+
+        mock.onPost('http://localhost:8080/api/updateCapability', updatedCapability).reply(200, id);
+
+        var result = await jobrolesservice.updateCapabilites(updatedCapability);
+
+        expect(result).to.equal(id);
+    });
     
 
 
