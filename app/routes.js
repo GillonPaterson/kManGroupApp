@@ -15,10 +15,18 @@ const NodeCache = require("node-cache");
 const myCache = new NodeCache();
 
 router.get("/",[auth.isAuthorised], async(req, res) =>{
-    res.render('home.html')
+    res.redirect('home')
 });
 
 router.get("/home",[auth.isAuthorised], async(req, res) =>{
+    if(auth.tokenVerifier(req.cookies.access_token).isAdmin){
+        res.render('adminHome.html')
+    }else{
+        res.render('home.html')
+    }
+});
+
+router.get("/employeeHome",[auth.isAdmin], async(req, res) =>{
     res.render('home.html')
 });
 
@@ -202,7 +210,7 @@ router.post("/login", async(req,res) =>{
         httpOnly: true,
         })
         .status(200)
-        .render("home.html")
+        .redirect("home")
     }
 })
 
@@ -244,7 +252,7 @@ router.post("/addCapability",[auth.isAdmin], async(req,res) =>{
 
 })
 
-router.post("/UpdateCapability", async(req,res) =>{
+router.post("/UpdateCapability", [auth.isAdmin], async(req,res) =>{
     try{
         console.log("res "+req.body.capabilityID)
         var capabilityID = req.body.capabilityID
@@ -268,16 +276,15 @@ router.post("/UpdateCapability", async(req,res) =>{
 
 })
 
-router.get("/viewAllCapabilitiesforUpdate", async(req, res) => { 
+router.get("/viewAllCapabilitiesforUpdate",[auth.isAdmin],  async(req, res) => { 
     var role =  await jobrolesservice.getAllCapabilitesInfo()
-    console.log("kmfkd "+role)
     for(i = 0; i < role.length; i++){
-        role[i].leadID = '<a href="http://localhost:3000/updateCapabilityInfo?capabilityID='+role[i].capabilityID+'">More Info</a>'
+        role[i].leadID = '<a href="http://localhost:3000/updateCapabilityInfo?capabilityID='+role[i].capabilityID+'">Update Capability</a>'
     }
     res.render('viewAllCapabilities.html', { jobroles: role })
 });
 
-router.get("/updateCapabilityInfo", async(req, res) =>{
+router.get("/updateCapabilityInfo",[auth.isAdmin],  async(req, res) =>{
     var capInfo = await jobrolesservice.getCapabilityLeadInfo(req.query.capabilityID)
     console.log(req.query.capabilityID)
     res.render('updateCapabilities.html', {
