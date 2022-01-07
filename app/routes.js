@@ -110,7 +110,6 @@ else {
             jobBandInfo: bandLevels,
             jobFamilyInfo: family
         })
-
 }
 });
 
@@ -121,7 +120,7 @@ router.get("/editrole",[auth.isAdmin], async(req, res) =>{
     var family = await jobrolesservice.getJobFamilyNames()
 
     if(bandLevels != false && family != false){
-        res.render('addnewrole.html', {
+        res.render('editrole.html', {
             jobBandInfo: bandLevels,
             jobFamilyInfo: family
         })
@@ -129,6 +128,47 @@ router.get("/editrole",[auth.isAdmin], async(req, res) =>{
     }else{
         res.render('pageNotFound.html')
     }
+});
+
+
+router.post("/editrole",[auth.isAdmin], async(req, res) => {
+    var link = req.body.jobLink
+
+    if(link.includes("https://https://"))
+        link = link.slice(8, link.length)
+    else if(link.includes("https://http://"))
+        link = link.replace("http://", "")
+
+    req.body.jobLink = link;
+
+    
+    var role = req.body
+
+    var val = await roleValidator.checkrole(role)
+
+if (val == "No error") {
+    var id = await jobrolesservice.editJobRole(req.body)
+
+    var roles =  await jobrolesservice.getJobRoles()
+    for(i = 0; i < roles.length; i++){
+        roles[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID="+roles[i].jobRoleID+">"+roles[i].jobBandLevel+"</a>"
+        roles[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+roles[i].jobRoleID+">More Info</a>"
+    }
+    res.render('jobroles.html', { jobroles: roles })
+}
+else {
+    req.body["errormessage"] = val
+    //res.render('addnewrole.html', req.body)
+
+    var bandLevels = await jobrolesservice.getJobBandLevels()
+    var family = await jobrolesservice.getJobFamilyNames()
+
+        res.render('editrole.html', {
+            errormessage: req.body.errormessage,
+            jobBandInfo: bandLevels,
+            jobFamilyInfo: family
+        })
+}
 });
 
 
