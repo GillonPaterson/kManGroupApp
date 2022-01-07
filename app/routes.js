@@ -333,4 +333,8 @@ router.get("/updateCapabilityInfo",[auth.isAdmin],  async(req, res) =>{
  
 });
 
+router.get("/gillonsMess", [auth.isAdmin], async(req,res) =>{
+    res.render("gillonsMess.html")
+})
+
 module.exports = router;
