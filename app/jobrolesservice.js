@@ -201,7 +201,7 @@ exports.getAllCapabilitesInfo = async(leadID) =>{
 
 exports.updateCapabilites= async(capability) =>{
     try{
-        console.log(capability)
+        console.log("yo")
         const response = await axios.post('http://localhost:8080/api/updateCapability',capabilty)
         return response.data;
     }catch(e)
