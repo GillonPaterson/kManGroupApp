@@ -4,6 +4,8 @@ const jobrolesservice = require("./jobrolesservice.js");
 const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
+const loginService = require("./loginService.js");
+const tempService = require("./tempservice.js");
 const cookieParser = require("cookie-parser");
 const capabilityValidator = require("./validator/capabilityValidator")
 
@@ -116,7 +118,7 @@ else {
 
 
 router.get("/editrole",[auth.isAdmin], async(req, res) =>{
-    var role = await jobrolesservice.getJobRole(req.query.jobRoleID)
+    var role = await tempservice.getJobRole(req.query.jobRoleID)
     var bandLevels = await jobrolesservice.getJobBandLevels()
     var family = await jobrolesservice.getJobFamilyNames()
 
@@ -164,7 +166,7 @@ else {
     req.body["errormessage"] = val
 
     console.log(req.body.jobRoleID)
-    var role = await jobrolesservice.getJobRole(req.body.jobRoleID)
+    var role = await tempservice.getJobRole(req.body.jobRoleID)
     var bandLevels = await jobrolesservice.getJobBandLevels()
     var family = await jobrolesservice.getJobFamilyNames()
 
