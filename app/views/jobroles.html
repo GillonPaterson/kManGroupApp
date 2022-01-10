@@ -11,12 +11,12 @@
 
 {% for jobrole in jobroles %}
 
-{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.jobRole },{text: jobrole.jobCapability}, {text: jobrole.jobFamilyName}, {text: jobrole.jobBandLevel|safe}, {text: jobrole.viewSpecURL|safe}]), jobrolesrows) %}
+{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.jobRole },{text: jobrole.jobCapability}, {text: jobrole.jobFamilyName}, {text: jobrole.jobBandLevel|safe}, {text: jobrole.viewSpecURL|safe}, {text: jobrole.editURL|safe}]), jobrolesrows) %}
 
 {% endfor %}
 
 {{govukTable({
-head: [{ text: "Job Role" },{text: "Job Capability"}, {text: "Job Family"}, {text: "Band Level"}, {text: "View Job Spec"}], 
+head: [{ text: "Job Role" },{text: "Job Capability"}, {text: "Job Family"}, {text: "Band Level"}, {text: "View Job Spec"}, {text: "Edit"}], 
 rows: jobrolesrows })
 
 }}

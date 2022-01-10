@@ -3,7 +3,7 @@ const expect = chai.expect;
 const sinon = require("sinon");
 const axios = require('axios').default;
 const MockAdapter = require("axios-mock-adapter");
-const jobrolesservice = require("../app/jobrolesservice")
+const capabilityService = require("../app/services/capabilityService")
 const capabilityValidator = require("../app/validator/capabilityValidator")
 
 const mochaaxios = require('mocha-axios');
@@ -44,7 +44,7 @@ describe("Capability Validator", function() {
 
         mock.onPost('http://localhost:8080/api/createCapability', newCapability).reply(200, id);
 
-        var result = await jobrolesservice.addCapabilty(newCapability);
+        var result = await capabilityService.addCapabilty(newCapability);
 
         expect(result).to.equal(id);
     });
@@ -56,7 +56,7 @@ describe("Capability Validator", function() {
 
         mock.onPost('http://localhost:8080/api/updateCapability', updatedCapability).reply(200, id);
 
-        var result = await jobrolesservice.updateCapabilites(updatedCapability);
+        var result = await capabilityService.updateCapabilites(updatedCapability);
 
         expect(result).to.equal(id);
     });

@@ -33,16 +33,6 @@ exports.getJobRoleSpec = async(jobRoleID,token) =>{
     }
 }
 
-exports.getJobBandLevels = async(token) => {
-    try{
-    const response = await axios.get('http://localhost:8080/api/getJobBandLevels',{headers: {'Authorization': "Bearer " + token}});
-    return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
-
 exports.getJobFamilyNames = async(token) => {
     try{
     const response = await axios.get('http://localhost:8080/api/getJobFamilyNames',{headers: {'Authorization': "Bearer " + token}});
@@ -52,7 +42,6 @@ exports.getJobFamilyNames = async(token) => {
         return;
     }
 }
-
 
 exports.getRoleMatrix = async(token) => {
     try{
@@ -91,19 +80,6 @@ exports.getRoleMatrix = async(token) => {
     }
 }
 
-exports.getCompetencyData = async(jobRoleID,token) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getJobCompetency/'+jobRoleID,{headers: {'Authorization': "Bearer " + token}})
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-
-
-}
-
-
 exports.getJobTraining = async(jobBandLevel,token) =>{
 
     try{
@@ -132,17 +108,6 @@ exports.getJobTraining = async(jobBandLevel,token) =>{
     }
 }
 
-
-exports.getAllCapabilityLeadsInfo = async(token) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getAllCapabilityLead',{headers: {'Authorization': "Bearer " + token}})
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
-
 exports.getJobFamilies = async(token) =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobFamilies/',{headers: {'Authorization': "Bearer " + token}})
@@ -164,50 +129,3 @@ exports.getJobFamilies = async(token) =>{
         return false;
     }
 }
-
-exports.getCapabilityLeadInfo = async(leadID,token) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getCapabilityLead/'+leadID,{headers: {'Authorization': "Bearer " + token}})
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
-
-exports.addCapabilty= async(capabilty,token) =>{
-    try{
-        const response = await axios.post('http://localhost:8080/api/createCapability',capabilty,{headers: {'Authorization': "Bearer " + token}})
-        return response.data;
-    }catch(e)
-    {
-        console.log(e)
-        return;
-    }
-}
-
-
-exports.getAllCapabilitesInfo = async(leadID,token) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getAllCapabilities',{headers: {'Authorization': "Bearer " + token}})
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}   
-
-
-
-exports.updateCapabilites= async(capability,token) =>{
-    try{
-        console.log(capability)
-        const response = await axios.post('http://localhost:8080/api/updateCapability',capability,{headers: {'Authorization': "Bearer " + token}})
-        return response.data;
-    }catch(e)
-    {
-        console.log(e)
-        return;
-    }
-}
-
