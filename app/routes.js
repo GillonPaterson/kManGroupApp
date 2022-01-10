@@ -4,7 +4,6 @@ const jobrolesservice = require("./services/jobrolesservice.js");
 const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
-const loginService = require("./loginService.js");
 const tempService = require("./tempservice.js");
 const cookieParser = require("cookie-parser");
 const capabilityValidator = require("./validator/capabilityValidator")
@@ -36,7 +35,7 @@ router.get("/employeeHome",[auth.isAdmin], async(req, res) =>{
 });
 
 router.get("/jobroles",[auth.isAuthorised], async(req, res) => { 
-    var role =  await jobrolesservice.getJobRoles()
+    var role =  await jobrolesservice.getJobRoles(req.cookies.access_token)
     for(i = 0; i < role.length; i++){
         role[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID="+role[i].jobRoleID+">"+role[i].jobBandLevel+"</a>"
         role[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+role[i].jobRoleID+">More Info</a>"
@@ -46,7 +45,7 @@ router.get("/jobroles",[auth.isAuthorised], async(req, res) => {
 });
 
 router.get("/jobSpec", [auth.isAuthorised],async(req, res) =>{
-    var role = await jobrolesservice.getJobRoleSpec(req.query.jobRoleID)
+    var role = await jobrolesservice.getJobRoleSpec(req.query.jobRoleID,req.cookies.access_token)
     if(role != false){
         res.render('jobSpec.html', {
             jobRoleInfo: role
@@ -57,7 +56,7 @@ router.get("/jobSpec", [auth.isAuthorised],async(req, res) =>{
 });    
 
 router.get("/competencyData", [auth.isAuthorised],async(req, res) =>{
-    var role = await competencyService.getCompetencyData(req.query.jobRoleID)
+    var role = await competencyService.getCompetencyData(req.query.jobRoleID,req.cookies.access_token)
     res.render('competencyInfo.html', {
         jobRoleInfo: role
     })    
@@ -65,8 +64,8 @@ router.get("/competencyData", [auth.isAuthorised],async(req, res) =>{
 
 
 router.get("/addrole", [auth.isAdmin],async(req, res) =>{
-    var bandLevels = await bandLevelService.getJobBandLevels()
-    var family = await jobrolesservice.getJobFamilyNames()
+    var bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
+    var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
 
     if(bandLevels != false && family != false){
         res.render('addnewrole.html', {
@@ -95,7 +94,7 @@ router.post("/addrole",[auth.isAdmin], async(req, res) => {
     var val = await roleValidator.checkrole(role)
 
 if (val == "No error") {
-    var id = await jobrolesservice.addJobRole(req.body)
+    var id = await jobrolesservice.addJobRole(req.body,req.cookies.access_token)
 
     var roles =  await jobrolesservice.getJobRoles()
     for(i = 0; i < roles.length; i++){
@@ -107,8 +106,8 @@ if (val == "No error") {
 else {
     req.body["errormessage"] = val
 
-    var bandLevels = await jobrolesservice.getJobBandLevels()
-    var family = await jobrolesservice.getJobFamilyNames()
+    var bandLevels = await jobrolesservice.getJobBandLevels(req.cookies.access_token)
+    var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
 
         res.render('addnewrole.html', {
             errormessage: req.body.errormessage,
@@ -121,9 +120,9 @@ else {
 
 
 router.get("/editrole",[auth.isAdmin], async(req, res) =>{
-    var role = await tempservice.getJobRole(req.query.jobRoleID)
-    var bandLevels = await jobrolesservice.getJobBandLevels()
-    var family = await jobrolesservice.getJobFamilyNames()
+    var role = await tempservice.getJobRole(req.query.jobRoleID,req.cookies.access_token)
+    var bandLevels = await jobrolesservice.getJobBandLevels(req.cookies.access_token)
+    var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
 
     bandLevels = bandLevels.reverse();
 
@@ -156,9 +155,9 @@ router.post("/editrole",[auth.isAdmin], async(req, res) => {
     var val = await roleValidator.checkrole(role)
 
 if (val == "No error") {
-    var id = await jobrolesservice.editJobRole(req.body)
+    var id = await jobrolesservice.editJobRole(req.body,req.cookies.access_token)
 
-    var roles =  await jobrolesservice.getJobRoles()
+    var roles =  await jobrolesservice.getJobRoles(req.cookies.access_token)
     for(i = 0; i < roles.length; i++){
         roles[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID="+roles[i].jobRoleID+">"+roles[i].jobBandLevel+"</a>"
         roles[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+roles[i].jobRoleID+">More Info</a>"
@@ -169,9 +168,9 @@ else {
     req.body["errormessage"] = val
 
     console.log(req.body.jobRoleID)
-    var role = await tempservice.getJobRole(req.body.jobRoleID)
-    var bandLevels = await jobrolesservice.getJobBandLevels()
-    var family = await jobrolesservice.getJobFamilyNames()
+    var role = await tempservice.getJobRole(req.body.jobRoleID,req.cookies.access_token)
+    var bandLevels = await jobrolesservice.getJobBandLevels(req.cookies.access_token)
+    var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
 
     bandLevels = bandLevels.reverse();
 
@@ -187,7 +186,7 @@ else {
 
 router.get("/training",[auth.isAuthorised], async(req, res) =>{
     var bandLevel = req.query.jobBandLevel
-    var role = await jobrolesservice.getJobTraining(bandLevel)
+    var role = await jobrolesservice.getJobTraining(bandLevel,req.cookies.access_token)
     var roleDP = role.DPGroup
     var rolePS = role.PSGroup
     var roleTS = role.TSGroup
@@ -215,7 +214,7 @@ router.get("/training",[auth.isAuthorised], async(req, res) =>{
 
 
 router.get("/roleMatrix", [auth.isAuthorised],async(req, res) =>{
-    var roleMatrix = await jobrolesservice.getRoleMatrix()
+    var roleMatrix = await jobrolesservice.getRoleMatrix(req.cookies.access_token)
     res.render('roleMatrix.html', {
         rows: roleMatrix.rows,
         headers: roleMatrix.headers
@@ -223,7 +222,7 @@ router.get("/roleMatrix", [auth.isAuthorised],async(req, res) =>{
 });
 
 router.get("/jobFamilies", [auth.isAuthorised],async(req, res) =>{
-    var jobFamilies = await jobrolesservice.getJobFamilies()
+    var jobFamilies = await jobrolesservice.getJobFamilies(req.cookies.access_token)
     res.render('jobFamilies.html', {
         rows: jobFamilies,
         object: "hi" ,
@@ -234,7 +233,7 @@ router.get("/jobFamilies", [auth.isAuthorised],async(req, res) =>{
 
 
 router.get("/viewAllCapabilities",[auth.isAuthorised], async(req, res) => { 
-    var role =  await capabilityService.getAllCapabilityLeadsInfo()
+    var role =  await capabilityService.getAllCapabilityLeadsInfo(req.cookies.access_token)
     for(i = 0; i < role.length; i++){
         role[i].leadID = '<a href="http://localhost:3000/capabilityLeadInfo?leadID='+role[i].leadID+'">More Info</a>'
     }
@@ -242,7 +241,7 @@ router.get("/viewAllCapabilities",[auth.isAuthorised], async(req, res) => {
 });
 
 router.get("/capabilityLeadInfo",[auth.isAuthorised], async(req, res) =>{
-    var capInfo = await capabilityService.getCapabilityLeadInfo(req.query.leadID)
+    var capInfo = await capabilityService.getCapabilityLeadInfo(req.query.leadID,req.cookies.access_token)
     res.render('viewCapabilityLead.html', {
         rows: capInfo
     })   
@@ -272,7 +271,7 @@ router.get("/createUser",[auth.isAdmin] , async(req,res) =>{
 })
 
 router.post("/createUser",[auth.isAdmin]  ,async(req,res) =>{
-    var response = loginService.createUser(req.body)
+    var response = loginService.createUser(req.body,req.cookies.access_token)
     res.redirect("home")
 })
 
@@ -292,7 +291,7 @@ router.post("/addCapability",[auth.isAdmin], async(req,res) =>{
         var capabilty = req.body
         var val = await capabilityValidator.checkCapability(capabilty)
         if (val == "no error"){
-            var id =  await capabilityService.addCapabilty(capabilty)
+            var id =  await capabilityService.addCapabilty(capabilty,req.cookies.access_token)
             res.redirect("/viewAllCapabilitiesforUpdate")
         }else{
            req.body["errormessage"] = val
@@ -315,7 +314,7 @@ router.post("/UpdateCapability", [auth.isAdmin], async(req,res) =>{
         var val = await capabilityValidator.checkCapability(capability)
 
         if (val == "no error"){
-            var id =  await capabilityService.updateCapabilites(capability)
+            var id =  await capabilityService.updateCapabilites(capability,req.cookies.access_token)
             console.log("Hello")
             res.redirect("/viewAllCapabilitiesforUpdate")
         }else{
@@ -330,7 +329,7 @@ router.post("/UpdateCapability", [auth.isAdmin], async(req,res) =>{
 })
 
 router.get("/viewAllCapabilitiesforUpdate",[auth.isAdmin],  async(req, res) => { 
-    var role =  await capabilityService.getAllCapabilitesInfo()
+    var role =  await capabilityService.getAllCapabilitesInfo(req.cookies.access_token)
     for(i = 0; i < role.length; i++){
         role[i].leadID = '<a href="http://localhost:3000/updateCapabilityInfo?capabilityID='+role[i].capabilityID+'">Update Capability</a>'
     }
@@ -338,7 +337,7 @@ router.get("/viewAllCapabilitiesforUpdate",[auth.isAdmin],  async(req, res) => {
 });
 
 router.get("/updateCapabilityInfo",[auth.isAdmin],  async(req, res) =>{
-    var capInfo = await capabilityService.getCapabilityLeadInfo(req.query.capabilityID)
+    var capInfo = await capabilityService.getCapabilityLeadInfo(req.query.capabilityID,req.cookies.access_token)
     console.log(req.query.capabilityID)
     res.render('updateCapabilities.html', {
         capabilityID: req.query.capabilityID
