@@ -3,7 +3,7 @@ const expect = chai.expect;
 const sinon = require("sinon");
 const axios = require('axios').default;
 const MockAdapter = require("axios-mock-adapter");
-const jobrolesservice = require("../app/jobrolesservice")
+const jobrolesservice = require("../app/services/jobrolesservice")
 const roleValidator = require("../app/validator/roleValidator")
 
 const mochaaxios = require('mocha-axios');

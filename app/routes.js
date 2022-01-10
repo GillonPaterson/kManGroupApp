@@ -1,11 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const jobrolesservice = require("./jobrolesservice.js");
+const jobrolesservice = require("./services/jobrolesservice.js");
 const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
 const cookieParser = require("cookie-parser");
 const capabilityValidator = require("./validator/capabilityValidator")
+const bandLevelService = require("./services/bandlevelsservice")
+const competencyService = require("./services/competencyService")
+const capabilityService = require("./services/capabilityService")
 
 
 router.use(cookieParser())
@@ -51,7 +54,7 @@ router.get("/jobSpec", [auth.isAuthorised],async(req, res) =>{
 });    
 
 router.get("/competencyData", [auth.isAuthorised],async(req, res) =>{
-    var role = await jobrolesservice.getCompetencyData(req.query.jobRoleID)
+    var role = await competencyService.getCompetencyData(req.query.jobRoleID)
     res.render('competencyInfo.html', {
         jobRoleInfo: role
     })    
@@ -59,7 +62,7 @@ router.get("/competencyData", [auth.isAuthorised],async(req, res) =>{
 
 
 router.get("/addrole", [auth.isAdmin],async(req, res) =>{
-    var bandLevels = await jobrolesservice.getJobBandLevels()
+    var bandLevels = await bandLevelService.getJobBandLevels()
     var family = await jobrolesservice.getJobFamilyNames()
 
     if(bandLevels != false && family != false){
@@ -221,7 +224,7 @@ router.get("/jobFamilies", [auth.isAuthorised],async(req, res) =>{
 
 
 router.get("/viewAllCapabilities",[auth.isAuthorised], async(req, res) => { 
-    var role =  await jobrolesservice.getAllCapabilityLeadsInfo()
+    var role =  await capabilityService.getAllCapabilityLeadsInfo()
     for(i = 0; i < role.length; i++){
         role[i].leadID = '<a href="http://localhost:3000/capabilityLeadInfo?leadID='+role[i].leadID+'">More Info</a>'
     }
@@ -229,7 +232,7 @@ router.get("/viewAllCapabilities",[auth.isAuthorised], async(req, res) => {
 });
 
 router.get("/capabilityLeadInfo",[auth.isAuthorised], async(req, res) =>{
-    var capInfo = await jobrolesservice.getCapabilityLeadInfo(req.query.leadID)
+    var capInfo = await capabilityService.getCapabilityLeadInfo(req.query.leadID)
     res.render('viewCapabilityLead.html', {
         rows: capInfo
     })   
@@ -279,7 +282,7 @@ router.post("/addCapability",[auth.isAdmin], async(req,res) =>{
         var capabilty = req.body
         var val = await capabilityValidator.checkCapability(capabilty)
         if (val == "no error"){
-            var id =  await jobrolesservice.addCapabilty(capabilty)
+            var id =  await capabilityService.addCapabilty(capabilty)
             res.redirect("/viewAllCapabilitiesforUpdate")
         }else{
            req.body["errormessage"] = val
@@ -302,7 +305,7 @@ router.post("/UpdateCapability", [auth.isAdmin], async(req,res) =>{
         var val = await capabilityValidator.checkCapability(capability)
 
         if (val == "no error"){
-            var id =  await jobrolesservice.updateCapabilites(capability)
+            var id =  await capabilityService.updateCapabilites(capability)
             console.log("Hello")
             res.redirect("/viewAllCapabilitiesforUpdate")
         }else{
@@ -317,7 +320,7 @@ router.post("/UpdateCapability", [auth.isAdmin], async(req,res) =>{
 })
 
 router.get("/viewAllCapabilitiesforUpdate",[auth.isAdmin],  async(req, res) => { 
-    var role =  await jobrolesservice.getAllCapabilitesInfo()
+    var role =  await capabilityService.getAllCapabilitesInfo()
     for(i = 0; i < role.length; i++){
         role[i].leadID = '<a href="http://localhost:3000/updateCapabilityInfo?capabilityID='+role[i].capabilityID+'">Update Capability</a>'
     }
@@ -325,7 +328,7 @@ router.get("/viewAllCapabilitiesforUpdate",[auth.isAdmin],  async(req, res) => {
 });
 
 router.get("/updateCapabilityInfo",[auth.isAdmin],  async(req, res) =>{
-    var capInfo = await jobrolesservice.getCapabilityLeadInfo(req.query.capabilityID)
+    var capInfo = await capabilityService.getCapabilityLeadInfo(req.query.capabilityID)
     console.log(req.query.capabilityID)
     res.render('updateCapabilities.html', {
         capabilityID: req.query.capabilityID
