@@ -32,15 +32,7 @@ exports.addJobRole = async(role) => {
     }
 }
 
-exports.editJobRole = async(ID, role) => {
-    try {
-        console.log(role)
-        const response = await axios.post('http://localhost:8080/api/editJobRole/' + ID, role);
-        return response.data
-    } catch (error) {
-        return -1;
-    }
-}
+
 
 exports.getJobRoleSpec = async(jobRoleID) =>{
     try{

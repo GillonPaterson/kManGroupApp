@@ -4,6 +4,7 @@ const jobrolesservice = require("./services/jobrolesservice.js");
 const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
+const tempservice = require("./tempservice.js");
 const cookieParser = require("cookie-parser");
 const capabilityValidator = require("./validator/capabilityValidator")
 const bandLevelService = require("./services/bandlevelsservice")
@@ -157,7 +158,7 @@ router.post("/editrole",[auth.isAdmin], async(req, res) => {
     var val = await roleValidator.checkrole(role)
 
 if (val == "No error") {
-    var id = await jobrolesservice.editJobRole(role.jobRoleID, edit)
+    var id = await tempservice.editJobRole(role.jobRoleID, edit)
 
     var roles =  await jobrolesservice.getJobRoles()
     for(i = 0; i < roles.length; i++){
