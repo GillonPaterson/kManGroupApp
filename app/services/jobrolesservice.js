@@ -15,6 +15,7 @@ exports.getJobRoles = async(token) => {
 
 
 exports.addJobRole = async(role,token) => {
+
     try {
         const response = await axios.post('http://localhost:8080/api/addJobRole', role, {headers: {'Authorization': "Bearer " + token}});
         return response.data
@@ -22,7 +23,6 @@ exports.addJobRole = async(role,token) => {
         return -1;
     }
 }
-
 
 exports.getJobRoleSpec = async(jobRoleID,token) =>{
     try{
