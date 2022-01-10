@@ -3,10 +3,10 @@ const myCache = new NodeCache();
 const axios = require('axios').default;
 
 // User Story 1
-exports.getJobRoles = async() => {
+exports.getJobRoles = async(token) => {
     try{
-    const response = await axios.get('http://localhost:8080/api/getJobRoles');
-    return response.data;
+        const response = await axios.get('http://localhost:8080/api/getJobRoles',{headers: {'Authorization': "Bearer " + token}});
+        return response.data;
     }catch(e)
     {
         return;
@@ -14,9 +14,9 @@ exports.getJobRoles = async() => {
 }
 
 
-exports.addJobRole = async(role) => {
+exports.addJobRole = async(role,token) => {
     try {
-        const response = await axios.post('http://localhost:8080/api/addJobRole', role);
+        const response = await axios.post('http://localhost:8080/api/addJobRole', role, {headers: {'Authorization': "Bearer " + token}});
         return response.data
     } catch (error) {
         return -1;
@@ -24,18 +24,18 @@ exports.addJobRole = async(role) => {
 }
 
 
-exports.getJobRoleSpec = async(jobRoleID) =>{
+exports.getJobRoleSpec = async(jobRoleID,token) =>{
     try{
-        const response = await axios.get('http://localhost:8080/api/getJobSpec/'+jobRoleID)
+        const response = await axios.get('http://localhost:8080/api/getJobSpec/'+jobRoleID,{headers: {'Authorization': "Bearer " + token}})
         return response.data;
     }catch(err){
         return false;
     }
 }
 
-exports.getJobBandLevels = async() => {
+exports.getJobBandLevels = async(token) => {
     try{
-    const response = await axios.get('http://localhost:8080/api/getJobBandLevels');
+    const response = await axios.get('http://localhost:8080/api/getJobBandLevels',{headers: {'Authorization': "Bearer " + token}});
     return response.data;
     }catch(e)
     {
@@ -43,9 +43,9 @@ exports.getJobBandLevels = async() => {
     }
 }
 
-exports.getJobFamilyNames = async() => {
+exports.getJobFamilyNames = async(token) => {
     try{
-    const response = await axios.get('http://localhost:8080/api/getJobFamilyNames');
+    const response = await axios.get('http://localhost:8080/api/getJobFamilyNames',{headers: {'Authorization': "Bearer " + token}});
     return response.data;
     }catch(e)
     {
@@ -54,9 +54,9 @@ exports.getJobFamilyNames = async() => {
 }
 
 
-exports.getRoleMatrix = async() => {
+exports.getRoleMatrix = async(token) => {
     try{
-        const response = await axios.get('http://localhost:8080/api/getRoleMatrix')
+        const response = await axios.get('http://localhost:8080/api/getRoleMatrix',{headers: {'Authorization': "Bearer " + token}})
         let rows = []
         let headers = []
         
@@ -91,9 +91,9 @@ exports.getRoleMatrix = async() => {
     }
 }
 
-exports.getCompetencyData = async(jobRoleID) =>{
+exports.getCompetencyData = async(jobRoleID,token) =>{
     try{
-        const response = await axios.get('http://localhost:8080/api/getJobCompetency/'+jobRoleID)
+        const response = await axios.get('http://localhost:8080/api/getJobCompetency/'+jobRoleID,{headers: {'Authorization': "Bearer " + token}})
         return response.data;
     }catch(e)
     {
@@ -104,10 +104,10 @@ exports.getCompetencyData = async(jobRoleID) =>{
 }
 
 
-exports.getJobTraining = async(jobBandLevel) =>{
+exports.getJobTraining = async(jobBandLevel,token) =>{
 
     try{
-        const response = await axios.get('http://localhost:8080/api/getJobTraining/' + jobBandLevel)
+        const response = await axios.get('http://localhost:8080/api/getJobTraining/' + jobBandLevel,{headers: {'Authorization': "Bearer " + token}})
         var coursesDP = [];
         var coursesPS = [];
         var coursesTS = [];
@@ -133,9 +133,9 @@ exports.getJobTraining = async(jobBandLevel) =>{
 }
 
 
-exports.getAllCapabilityLeadsInfo = async() =>{
+exports.getAllCapabilityLeadsInfo = async(token) =>{
     try{
-        const response = await axios.get('http://localhost:8080/api/getAllCapabilityLead')
+        const response = await axios.get('http://localhost:8080/api/getAllCapabilityLead',{headers: {'Authorization': "Bearer " + token}})
         return response.data;
     }catch(e)
     {
@@ -143,9 +143,9 @@ exports.getAllCapabilityLeadsInfo = async() =>{
     }
 }
 
-exports.getJobFamilies = async() =>{
+exports.getJobFamilies = async(token) =>{
     try{
-        const response = await axios.get('http://localhost:8080/api/getJobFamilies/')
+        const response = await axios.get('http://localhost:8080/api/getJobFamilies/',{headers: {'Authorization': "Bearer " + token}})
 
         let rows = []
         response.data.forEach(capability =>{
@@ -165,9 +165,9 @@ exports.getJobFamilies = async() =>{
     }
 }
 
-exports.getCapabilityLeadInfo = async(leadID) =>{
+exports.getCapabilityLeadInfo = async(leadID,token) =>{
     try{
-        const response = await axios.get('http://localhost:8080/api/getCapabilityLead/'+leadID)
+        const response = await axios.get('http://localhost:8080/api/getCapabilityLead/'+leadID,{headers: {'Authorization': "Bearer " + token}})
         return response.data;
     }catch(e)
     {
@@ -175,9 +175,9 @@ exports.getCapabilityLeadInfo = async(leadID) =>{
     }
 }
 
-exports.addCapabilty= async(capabilty) =>{
+exports.addCapabilty= async(capabilty,token) =>{
     try{
-        const response = await axios.post('http://localhost:8080/api/createCapability',capabilty)
+        const response = await axios.post('http://localhost:8080/api/createCapability',capabilty,{headers: {'Authorization': "Bearer " + token}})
         return response.data;
     }catch(e)
     {
@@ -187,9 +187,9 @@ exports.addCapabilty= async(capabilty) =>{
 }
 
 
-exports.getAllCapabilitesInfo = async(leadID) =>{
+exports.getAllCapabilitesInfo = async(leadID,token) =>{
     try{
-        const response = await axios.get('http://localhost:8080/api/getAllCapabilities')
+        const response = await axios.get('http://localhost:8080/api/getAllCapabilities',{headers: {'Authorization': "Bearer " + token}})
         return response.data;
     }catch(e)
     {
@@ -199,10 +199,10 @@ exports.getAllCapabilitesInfo = async(leadID) =>{
 
 
 
-exports.updateCapabilites= async(capability) =>{
+exports.updateCapabilites= async(capability,token) =>{
     try{
         console.log(capability)
-        const response = await axios.post('http://localhost:8080/api/updateCapability',capability)
+        const response = await axios.post('http://localhost:8080/api/updateCapability',capability,{headers: {'Authorization': "Bearer " + token}})
         return response.data;
     }catch(e)
     {
