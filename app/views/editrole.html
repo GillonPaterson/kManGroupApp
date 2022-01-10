@@ -11,7 +11,7 @@
 <form class="editroleform" action="/editrole" method="post">
 <body onload="populateSelect1()"></body>
 
-<input type="hidden" id = "jobRoleID" name="jobRoleID" value = {{jobRoleID}}>
+<input type="hidden" id = "jobRoleID" name="jobRoleID" value = {{jobRoleInfo.jobRoleID}}>
 
 
 {% if errormessage %} 
@@ -41,6 +41,16 @@
  value: data["jobRole"], 
  errorMessage: {text: errormessage }
  }) }}
+ {% elif errormessage %}
+ {{ govukInput({
+ label: {
+ text: "Role Name"
+ },
+ id: "jobRole",
+ name: "jobRole",
+ value: data["jobRole"],
+ hint: {text: "Role name must be no longer than 40 characters long"}
+ }) }}
  {% else %}
  {{ govukInput({
  label: {
@@ -49,7 +59,7 @@
  id: "jobRole",
  name: "jobRole",
  hint: {text: "Role name must be no longer than 40 characters long"}, 
- value: data["jobRole"]
+ value: jobRoleInfo.jobRole
  }) }}
  {% endif %} 
 
@@ -63,11 +73,20 @@
      text: "Role Specification"
    }
  }) }}
-  {% else %}
+  {% elif errormessage %}
 {{ govukTextarea({
    name: "jobSpec",
    id: "jobSpec",
    value: data["jobSpec"],
+   label: {
+     text: "Role Specification"
+   }
+ }) }}
+  {% else %}
+{{ govukTextarea({
+   name: "jobSpec",
+   id: "jobSpec",
+   value: jobRoleInfo.jobSpec,
    label: {
      text: "Role Specification"
    }
@@ -120,7 +139,7 @@
  },
  id: "jobLink",
  name: "jobLink",
- value: "https://",
+ value: jobRoleInfo.jobLink,
 hint: {text: "The link must start with 'https://'"}
 }) }}
  {% endif %} 
@@ -135,11 +154,20 @@ hint: {text: "The link must start with 'https://'"}
      text: "Role Responsibilities"
    }
  }) }}
-  {% else %}
+   {% elif errormessage %}
  {{ govukTextarea({
    name: "jobResponsibilities",
    id: "jobResponsibilities",
    value: data["jobResponsibilities"],
+   label: {
+     text: "Role Responsibilities"
+   }
+ }) }}
+  {% else %}
+ {{ govukTextarea({
+   name: "jobResponsibilities",
+   id: "jobResponsibilities",
+   value: jobRoleInfo.jobResponsibilities,
    label: {
      text: "Role Responsibilities"
    }
@@ -154,20 +182,33 @@ hint: {text: "The link must start with 'https://'"}
 
 
 <script>
-var bands = {{ jobBandInfo | dump | safe }}
-var family = {{ jobFamilyInfo | dump | safe }}
 
     function populateSelect1() {
+      var bands = {{ jobBandInfo | dump | safe }}
+      var family = {{ jobFamilyInfo | dump | safe }}
+      var selectBand = {{ jobRoleInfo.jobBandLevelID | dump | safe}}
+      var selectFamily = {{ jobRoleInfo.jobFamilyID | dump | safe }}
+
         var ele = document.getElementById('jobBandLevel');
-        for (var i = 0; i < bands.length; i++) {
+        for (var i = bands.length - 1; i >= 0; i--) {
+            if(i == (selectBand - 1)){
             ele.innerHTML = ele.innerHTML +
+                '<option value="' + bands[i] + '" selected>' + bands[i] + '</option>';
+            }else{
+                ele.innerHTML = ele.innerHTML +
                 '<option value="' + bands[i] + '">' + bands[i] + '</option>';
+            }
         }
 
         var fam = document.getElementById('jobFamily');
         for (var y = 0; y < family.length; y++) {
+            if(y == (selectFamily - 1)){
             fam.innerHTML = fam.innerHTML +
+                '<option value="' + family[y] + '" selected>' + family[y] + '</option>';
+            } else{
+                fam.innerHTML = fam.innerHTML +
                 '<option value="' + family[y] + '">' + family[y] + '</option>';
+            }
         }
     }
 </script>

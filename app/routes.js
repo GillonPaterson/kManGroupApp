@@ -4,6 +4,8 @@ const jobrolesservice = require("./services/jobrolesservice.js");
 const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
+const loginService = require("./loginService.js");
+const tempService = require("./tempservice.js");
 const cookieParser = require("cookie-parser");
 const capabilityValidator = require("./validator/capabilityValidator")
 const bandLevelService = require("./services/bandlevelsservice")
@@ -38,6 +40,7 @@ router.get("/jobroles",[auth.isAuthorised], async(req, res) => {
     for(i = 0; i < role.length; i++){
         role[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID="+role[i].jobRoleID+">"+role[i].jobBandLevel+"</a>"
         role[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+role[i].jobRoleID+">More Info</a>"
+        role[i].editURL = "<a href=http://localhost:3000/editRole?jobRoleID="+role[i].jobRoleID+">Edit</a>"
     }
     res.render('jobroles.html', { jobroles: role })
 });
@@ -103,7 +106,6 @@ if (val == "No error") {
 }
 else {
     req.body["errormessage"] = val
-    //res.render('addnewrole.html', req.body)
 
     var bandLevels = await jobrolesservice.getJobBandLevels()
     var family = await jobrolesservice.getJobFamilyNames()
@@ -119,11 +121,15 @@ else {
 
 
 router.get("/editrole",[auth.isAdmin], async(req, res) =>{
+    var role = await tempservice.getJobRole(req.query.jobRoleID)
     var bandLevels = await jobrolesservice.getJobBandLevels()
     var family = await jobrolesservice.getJobFamilyNames()
 
+    bandLevels = bandLevels.reverse();
+
     if(bandLevels != false && family != false){
         res.render('editrole.html', {
+            jobRoleInfo: role,
             jobBandInfo: bandLevels,
             jobFamilyInfo: family
         })
@@ -161,13 +167,17 @@ if (val == "No error") {
 }
 else {
     req.body["errormessage"] = val
-    //res.render('addnewrole.html', req.body)
 
+    console.log(req.body.jobRoleID)
+    var role = await tempservice.getJobRole(req.body.jobRoleID)
     var bandLevels = await jobrolesservice.getJobBandLevels()
     var family = await jobrolesservice.getJobFamilyNames()
 
+    bandLevels = bandLevels.reverse();
+
         res.render('editrole.html', {
             errormessage: req.body.errormessage,
+            jobRoleInfo: role,
             jobBandInfo: bandLevels,
             jobFamilyInfo: family
         })
