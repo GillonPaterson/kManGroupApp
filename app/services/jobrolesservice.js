@@ -13,7 +13,6 @@ exports.getJobRoles = async() => {
     }
 }
 
-
 exports.addJobRole = async(role) => {
     try {
         const response = await axios.post('http://localhost:8080/api/addJobRole', role);
@@ -23,23 +22,12 @@ exports.addJobRole = async(role) => {
     }
 }
 
-
 exports.getJobRoleSpec = async(jobRoleID) =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobSpec/'+jobRoleID)
         return response.data;
     }catch(err){
         return false;
-    }
-}
-
-exports.getJobBandLevels = async() => {
-    try{
-    const response = await axios.get('http://localhost:8080/api/getJobBandLevels');
-    return response.data;
-    }catch(e)
-    {
-        return;
     }
 }
 
@@ -52,7 +40,6 @@ exports.getJobFamilyNames = async() => {
         return;
     }
 }
-
 
 exports.getRoleMatrix = async() => {
     try{
@@ -91,19 +78,6 @@ exports.getRoleMatrix = async() => {
     }
 }
 
-exports.getCompetencyData = async(jobRoleID) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getJobCompetency/'+jobRoleID)
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-
-
-}
-
-
 exports.getJobTraining = async(jobBandLevel) =>{
 
     try{
@@ -132,17 +106,6 @@ exports.getJobTraining = async(jobBandLevel) =>{
     }
 }
 
-
-exports.getAllCapabilityLeadsInfo = async() =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getAllCapabilityLead')
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
-
 exports.getJobFamilies = async() =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobFamilies/')
@@ -165,49 +128,13 @@ exports.getJobFamilies = async() =>{
     }
 }
 
-exports.getCapabilityLeadInfo = async(leadID) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getCapabilityLead/'+leadID)
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}
-
-exports.addCapabilty= async(capabilty) =>{
-    try{
-        const response = await axios.post('http://localhost:8080/api/createCapability',capabilty)
-        return response.data;
-    }catch(e)
-    {
-        console.log(e)
-        return;
-    }
-}
-
-
-exports.getAllCapabilitesInfo = async(leadID) =>{
-    try{
-        const response = await axios.get('http://localhost:8080/api/getAllCapabilities')
-        return response.data;
-    }catch(e)
-    {
-        return;
-    }
-}   
 
 
 
-exports.updateCapabilites= async(capability) =>{
-    try{
-        console.log(capability)
-        const response = await axios.post('http://localhost:8080/api/updateCapability',capability)
-        return response.data;
-    }catch(e)
-    {
-        console.log(e)
-        return;
-    }
-}
+
+  
+
+
+
+
 
