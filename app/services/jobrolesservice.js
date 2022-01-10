@@ -13,9 +13,29 @@ exports.getJobRoles = async() => {
     }
 }
 
+exports.getJobRole = async(roleID) => {
+    try{
+    const response = await axios.get('http://localhost:8080/api/getJobRole/' + roleID);
+    return response.data;
+    }catch(e)
+    {
+        return;
+    }
+}
+
 exports.addJobRole = async(role) => {
     try {
         const response = await axios.post('http://localhost:8080/api/addJobRole', role);
+        return response.data
+    } catch (error) {
+        return -1;
+    }
+}
+
+exports.editJobRole = async(ID, role) => {
+    try {
+        console.log(role)
+        const response = await axios.post('http://localhost:8080/api/editJobRole/' + ID, role);
         return response.data
     } catch (error) {
         return -1;

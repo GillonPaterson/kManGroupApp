@@ -4,8 +4,6 @@ const jobrolesservice = require("./services/jobrolesservice.js");
 const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
-const loginService = require("./loginService.js");
-const tempService = require("./tempservice.js");
 const cookieParser = require("cookie-parser");
 const capabilityValidator = require("./validator/capabilityValidator")
 const bandLevelService = require("./services/bandlevelsservice")
@@ -89,7 +87,6 @@ router.post("/addrole",[auth.isAdmin], async(req, res) => {
 
     req.body.jobLink = link;
 
-    
     var role = req.body
 
     var val = await roleValidator.checkrole(role)
@@ -121,11 +118,15 @@ else {
 
 
 router.get("/editrole",[auth.isAdmin], async(req, res) =>{
-    var role = await tempservice.getJobRole(req.query.jobRoleID)
-    var bandLevels = await jobrolesservice.getJobBandLevels()
+    var role = await jobrolesservice.getJobRole(req.query.jobRoleID)
+    var bandLevels = await bandLevelService.getJobBandLevels()
     var family = await jobrolesservice.getJobFamilyNames()
 
     bandLevels = bandLevels.reverse();
+
+    console.log(bandLevels)
+    console.log(family)
+    console.log(role)
 
     if(bandLevels != false && family != false){
         res.render('editrole.html', {
@@ -150,13 +151,13 @@ router.post("/editrole",[auth.isAdmin], async(req, res) => {
 
     req.body.jobLink = link;
 
-    
     var role = req.body
+    var edit = { jobRole: role.jobRole, jobBandLevelID: role.jobBandLevel, jobSpec: role.jobSpec, jobLink: role.jobLink, jobResponsibilities: role.jobResponsibilities, jobFamilyID: role.jobFamily }
 
     var val = await roleValidator.checkrole(role)
 
 if (val == "No error") {
-    var id = await jobrolesservice.editJobRole(req.body)
+    var id = await jobrolesservice.editJobRole(role.jobRoleID, edit)
 
     var roles =  await jobrolesservice.getJobRoles()
     for(i = 0; i < roles.length; i++){
@@ -168,9 +169,8 @@ if (val == "No error") {
 else {
     req.body["errormessage"] = val
 
-    console.log(req.body.jobRoleID)
-    var role = await tempservice.getJobRole(req.body.jobRoleID)
-    var bandLevels = await jobrolesservice.getJobBandLevels()
+    var role = await jobrolesservice.getJobRole(req.body.jobRoleID)
+    var bandLevels = await bandLevelService.getJobBandLevels()
     var family = await jobrolesservice.getJobFamilyNames()
 
     bandLevels = bandLevels.reverse();
