@@ -10,6 +10,8 @@ exports.editJobRole = async(ID, role) => {
         return response.data
     } catch (error) {
         return -1;
+    }
+}
 
 exports.getJobRole = async(roleID,token) => {
     try{
