@@ -200,7 +200,7 @@ describe("Job Role Service", function() {
         mock.onPost('http://localhost:8080/api/editJobRole/' + id).reply(400, -1);
 
         var JobRole = {jobRole: "test"};
-        var result = await tempservice.editJobRole(JobRole);
+        var result = await tempservice.editJobRole(id, JobRole);
 
         expect(result).to.equal(-1);
     });
