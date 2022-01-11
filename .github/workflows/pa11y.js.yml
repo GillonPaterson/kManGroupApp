@@ -1,0 +1,23 @@
+language: node_js
+
+node_js: 8
+
+git:
+  depth: 8
+
+install: npm install
+
+before_script: npm run build
+
+script:
+  - npm test
+  - npm run serve-ci & sleep 5; npm run pa11y-ci;
+  - pa11y-ci app/assets/snapshots/addRoles-snapshot.html
+  - pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html
+  - pa11y-ci app/assets/snapshots/competencies-snapshot.html
+  - pa11y-ci app/assets/snapshots/createCapabilty-snapshot.html
+  - pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
+  - pa11y-ci app/assets/snapshots/jobRoles-snapshot.html
+  - pa11y-ci app/assets/snapshots/jobSpec-snapshot.html
+  - pa11y-ci app/assets/snapshots/login-snapshot.html
+  - pa11y-ci app/assets/snapshots/viewCapabilityLead-snapshot.html
