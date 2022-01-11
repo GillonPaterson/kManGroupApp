@@ -1,11 +1,14 @@
 const axios = require('axios').default;
-const auth = require("./authoriser.js");
+const auth = require("../lib/middleware/authentication/authoriser.js");
 
 exports.login = async(loginInfo) =>{
     try{
         const response = await axios.post('http://localhost:8080/api/login', loginInfo)
         var token = response.headers.authorization.split(" ")[1]
-        auth.tokenVerifier(token)
+
+        const secret = Buffer.from("2w0lavt3CFAAqAY1z4q+LpZfCNW5gLH+udmMfi/Tl6g=", 'base64')
+        const jwt = require('jsonwebtoken');
+        jwt.verify(token,secret)
 
         return token
     }catch(e){
@@ -14,9 +17,12 @@ exports.login = async(loginInfo) =>{
     }
 }
 
-exports.createUser = async(userInfo) =>{
+exports.createUser = async(userInfo,token) =>{
     try{
-        const response = await axios.post('http://localhost:8080/api/createUser', userInfo)
+        if(userInfo.roles == "_unchecked"){
+            userInfo.roles = "['']"
+        }
+        const response = await axios.post('http://localhost:8080/api/createUser', userInfo,{headers: {'Authorization': "Bearer " + token}})
         return response
     }catch(e){
         return false;
