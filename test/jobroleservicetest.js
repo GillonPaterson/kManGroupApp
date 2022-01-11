@@ -204,5 +204,28 @@ describe("Job Role Service", function() {
 
         expect(result).to.equal(-1);
     });
+
+    it("Should delete a job role and return 1", async() => {
+        var mock = new MockAdapter(axios);
+        
+        var jobRoleID = 100 
+
+        mock.onPost('http://localhost:8080/api/deleteJobRole/' + jobRoleID).reply(200, 1);
+
+        var result = await employeeservice.deleteJobRole(jobRoleID);
+
+        expect(result).to.equal(1);
+    });
+    
+    it("Fails to delete a job role and return -1", async() => {
+        var mock = new MockAdapter(axios);
+        
+        var id = 100;
+        mock.onPost('http://localhost:8080/api/deleteJobRole/' + id).reply(400, -1);
+
+        var result = await employeeservice.deleteJobRole(id);
+
+        expect(result).to.equal(-1);
+    });
     
 });

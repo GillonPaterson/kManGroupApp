@@ -24,6 +24,19 @@ exports.addJobRole = async(role,token) => {
     }
 }
 
+
+exports.deleteJobRole = async(id,token) => {
+
+    try {
+        const response = await axios.post('http://localhost:8080/api/deleteJobRole/' + id, {headers: {'Authorization': "Bearer " + token}});
+        return response.data
+    } catch (error) {
+        return -1;
+    }
+}
+
+
+
 exports.getJobRoleSpec = async(jobRoleID,token) =>{
     try{
         const response = await axios.get('http://localhost:8080/api/getJobSpec/'+jobRoleID,{headers: {'Authorization': "Bearer " + token}})
