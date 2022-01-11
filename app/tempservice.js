@@ -19,6 +19,6 @@ exports.getJobRole = async(roleID,token) => {
     return response.data;
     }catch(e)
     {
-        return;
+        return -1;
     }
 }
