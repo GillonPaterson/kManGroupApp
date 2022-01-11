@@ -1,4 +1,5 @@
 const employeeservice = require("../app/services/jobrolesservice")
+const tempservice = require("../app/tempservice")
 const chai = require('chai')
 const expect = chai.expect;
 const sinon = require("sinon");
@@ -175,6 +176,31 @@ describe("Job Role Service", function() {
 
         var newJobRole = {jobRole: "test"};
         var result = await employeeservice.addJobRole(newJobRole);
+
+        expect(result).to.equal(-1);
+    });
+
+    it("Should edit a job role if credentials are correct and return 1", async() => {
+        var mock = new MockAdapter(axios);
+        
+        var jobRoleID = 100 
+        var JobRole = {jobRole: "test"};
+
+        mock.onPost('http://localhost:8080/api/editJobRole/' + jobRoleID, JobRole).reply(200, 1);
+
+        var result = await tempservice.editJobRole(jobRoleID, JobRole);
+
+        expect(result).to.equal(1);
+    });
+    
+    it("Fails to edit a job role and return -1", async() => {
+        var mock = new MockAdapter(axios);
+        
+        var id = 100;
+        mock.onPost('http://localhost:8080/api/editJobRole/' + id).reply(400, -1);
+
+        var JobRole = {jobRole: "test"};
+        var result = await tempservice.editJobRole(id, JobRole);
 
         expect(result).to.equal(-1);
     });
