@@ -1,14 +1,19 @@
-language: node_js
+name: pa11y
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  pa11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run pa11y-ci
 
-node_js: 8
-
-git:
-  depth: 8
-
-install: npm install
-
-before_script: npm run build
-
-script:
-  - npm test
-  - npm run pa11y-ci;
