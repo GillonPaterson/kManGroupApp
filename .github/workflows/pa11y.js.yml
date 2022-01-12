@@ -11,4 +11,13 @@ before_script: npm run build
 
 script:
   - npm test
-  - npm run pa11y-ci;
+  - npm run serve-ci & sleep 5; npm run pa11y-ci;
+  - npm run pa11y-ci app/assets/snapshots/addRoles-snapshot.html
+  - npm run pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html
+  - npm run pa11y-ci app/assets/snapshots/competencies-snapshot.html
+  - npm run pa11y-ci app/assets/snapshots/createCapabilty-snapshot.html
+  - npm run pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
+  - npm run pa11y-ci app/assets/snapshots/jobRoles-snapshot.html
+  - npm run pa11y-ci app/assets/snapshots/jobSpec-snapshot.html
+  - npm run pa11y-ci app/assets/snapshots/login-snapshot.html
+  - npm run pa11y-ci app/assets/snapshots/viewCapabilityLead-snapshot.html

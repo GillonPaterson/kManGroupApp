@@ -28,7 +28,7 @@ describe("Selenium test", () => {
       expect(title).to.equal("Login");
 
       var htmlSource = await driver.getPageSource()
-      fs.appendFile('app/assets/snapshots/login-snapshot.html', htmlSource, function (err) {
+      fs.appendFile('app/assets/snapshots/home-snapshot.html', htmlSource, function (err) {
         if (err) throw err;
         console.log('Saved!');
       });
