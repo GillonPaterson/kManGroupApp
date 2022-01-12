@@ -120,7 +120,7 @@ else {
 
 
 
-router.get("/editrole",[auth.isAdmin], async(req, res) =>{
+router.get("/editrole", isAdmin, async(req, res) =>{
 
     var role = await tempservice.getJobRole(req.query.jobRoleID,req.cookies.access_token)
     var bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
