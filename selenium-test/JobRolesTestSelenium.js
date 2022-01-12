@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const {Builder, By, until, Key} = require('selenium-webdriver');
+const {Builder, By, until, Key, WebElement} = require('selenium-webdriver');
 const { default: isEqual } = require('webdriverio/build/commands/element/isEqual');
 const fs = require('fs');
 const { Console } = require('console');
@@ -42,7 +42,7 @@ describe("Selenium test", () => {
     });
   
     it('should have correct first row displayed on job roles page', async () => {
-      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Apprentice"];
+      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Associate"];
 
       var elements = (await driver.findElements(By.className("govuk-table__cell")))
       var jobRole = await elements[0].getText()     
@@ -238,12 +238,96 @@ describe("Selenium test", () => {
       expect(button).to.equal("Submit");
     });
 
-    it('Asssert the title on create capability webpage is correct', async () => {
+    it('Should add, edit and delete a job role and return to the job roles page after each', async () => {
+      // adding a role
+      await driver.findElement(By.xpath('//*[@id="jobRole"]')).sendKeys("seleniumtestname");
+      await driver.findElement(By.xpath('//*[@id="jobSpec"]')).sendKeys("seleniumtestspec");
+      await driver.findElement(By.xpath('//*[@id="jobLink"]')).sendKeys("seleniumtestlink");
+      await driver.findElement(By.xpath('//*[@id="jobResponsibilities"]')).sendKeys("seleniumtestresponsibilities");
+      driver.findElement(By.xpath('//*[@id="jobBandLevel"]/option[2]')).click();
+      driver.findElement(By.xpath('//*[@id="jobFamily"]/option[3]')).click();
+      await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()
+    
+      const title = await driver.getTitle();
+      expect(title).to.equal("List of Job Roles");
+      
+      var elements = (await driver.findElements(By.className("govuk-table__cell")));
+      var rows = (await driver.findElements(By.className("govuk-table__row")));
+      var columns = elements.length/(rows.length - 1);
+
+      for(i = 0; i < elements.length; i++)
+     {
+        if(await elements[i].getText() == "seleniumtestname"){
+          expect(true);
+          var link = await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i/columns) + 1) + ']/td[6]')).getText();
+          expect(link).to.equal("Edit");
+          await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i/columns) + 1) + ']/td[6]/a')).click();
+          break;
+        }
+     }
+
+     const title2 = await driver.getTitle();
+     expect(title2).to.equal("Edit a Role");
+
+     await driver.findElement(By.xpath('//*[@id="jobLink"]')).sendKeys(".com");
+     await driver.findElement(By.xpath('//*[@id="jobRole"]')).clear();
+     await driver.findElement(By.xpath('//*[@id="jobRole"]')).sendKeys("selenium");
+     await driver.findElement(By.xpath('//*[@id="jobResponsibilities"]')).sendKeys("hello");
+     await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click();
+     
+     const title3 = await driver.getTitle();
+     expect(title3).to.equal("List of Job Roles");
+
+     var elements2 = (await driver.findElements(By.className("govuk-table__cell")));
+      var rows2 = (await driver.findElements(By.className("govuk-table__row")));
+      var columns2 = elements2.length/(rows2.length - 1);
+
+      for(i = 0; i < elements2.length; i++)
+     {
+        if(await elements2[i].getText() == "selenium"){
+          expect(true);
+          var link2 = await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i/columns2) + 1) + ']/td[7]')).getText();
+          expect(link2).to.equal("Delete");
+          await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i/columns2) + 1) + ']/td[7]/a')).click();
+          break;
+        }
+     }
+
+     const title4 = await driver.getTitle();
+     console.log(title4)
+     expect(title4).to.equal("Delete a Role");
+     const check = await driver.findElement(By.xpath('//*[@id="main-content"]/h2')).getText();
+     console.log(check)
+     expect(check).to.equal("Delete selenium");
+
+     await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click();
+     var alert = await driver.switchTo().alert().getText();
+     console.log(alert)
+     expect(alert).to.equal("Are you sure you want to delete this role?");
+     await driver.switchTo().alert().accept();
+
+     const title5 = await driver.getTitle();
+     console.log(title5)
+     expect(title5).to.equal("List of Job Roles");
+
+     var elements3 = (await driver.findElements(By.className("govuk-table__cell")));
+
+      for(i = 0; i < elements3.length; i++)
+     {
+        if(await elements3[i].getText() == "selenium"){
+          expect(1).to.equal(2);
+          break;
+        }
+     }
+    });
+
+    it('Assert the title on create capability webpage is correct', async () => {
       await driver.get('http://localhost:3000/createCapabilityForm');
       const title = await driver.getTitle();
-      console.log(title)
       expect(title).to.equal("Create A Capability");
     });
+
+    
 
     after(async () => driver.quit());
 

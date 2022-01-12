@@ -10,7 +10,7 @@
         "start": "node start.js",
         "lint": "standard",
         "test": "mocha",
-        "selenium": "npx mocha selenium-test/jobRolesTestSelenium.js --timeout 5000"
+        "selenium": "npx mocha selenium-test/jobRolesTestSelenium.js --timeout 10000"
     },
     "dependencies": {
         "acorn": "^7.4.1",
