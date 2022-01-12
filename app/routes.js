@@ -4,9 +4,7 @@ const jobrolesservice = require("./services/jobrolesservice.js");
 const roleValidator = require("./validator/roleValidator");
 const auth = require("./authoriser.js");
 const loginService = require("./loginService.js");
-
 const tempservice = require("./tempservice.js");
-
 const cookieParser = require("cookie-parser");
 const capabilityValidator = require("./validator/capabilityValidator")
 const bandLevelService = require("./services/bandlevelsservice")
@@ -15,7 +13,6 @@ const capabilityService = require("./services/capabilityService")
 
 
 router.use(cookieParser())
-
 
 const NodeCache = require("node-cache");
 const myCache = new NodeCache();
