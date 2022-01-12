@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends "layout.html" %}
 
 {% block pageTitle %}
@@ -37,6 +38,24 @@
  value: data["password"],
  type: "password"
  }) }}
+
+ {{ govukCheckboxes({
+  idPrefix: "roles",
+  name: "roles",
+  fieldset: {
+    legend: {
+      text: "Select the user roles that apply",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "Admin",
+      text: "Admin"
+    }
+  ]
+}) }}
  
  <button type="submit" class="govuk-button" data-module="govuk-button">
  Create
