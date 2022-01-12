@@ -9,7 +9,7 @@ const express = require('express')
 const nunjucks = require('nunjucks')
 const sessionInCookie = require('client-sessions')
 const sessionInMemory = require('express-session')
-const cookieParser = require("cookie-parser");
+const cookieParser = require('cookie-parser')
 
 // Run before other code to make sure variables from .env are available
 dotenv.config()
@@ -41,7 +41,7 @@ if (fs.existsSync('./app/v6/routes.js')) {
 const app = express()
 const documentationApp = express()
 
-//cookies parser
+// cookies parser
 app.use(cookieParser())
 
 if (useV6) {
