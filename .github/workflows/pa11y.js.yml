@@ -15,12 +15,13 @@ jobs:
           node-version: 12.x
       - run: npm ci
       - run: npm run build --if-present
-      - run: npm run pa11y-ci app/assets/snapshots/addRoles-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/competencies-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/createCapabilty-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/jobRoles-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/jobSpec-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/home-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/viewCapabilityLeads-snapshot.html
+      - run: |
+            npm run pa11y-ci app/assets/snapshots/addRoles-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/competencies-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/createCapabilty-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/jobRoles-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/jobSpec-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/home-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/viewCapabilityLeads-snapshot.html
