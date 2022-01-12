@@ -295,10 +295,6 @@ describe("Selenium test", () => {
       expect(title).to.equal("Add a New Role");
       expect(button).to.equal("Submit");
 
-
-
-      });
-
     });
 
     it('Asssert the title on create capability webpage is correct', async () => {

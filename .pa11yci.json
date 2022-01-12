@@ -5,7 +5,6 @@
       "standard": "WCAG2A",
       "timeout": 2000,
       "wait": 2000
-    },
-    "ignore": ["WCAG2AA.Principle3.Guideline3_1.3_1_1.H93"]
+    }
     
   }
