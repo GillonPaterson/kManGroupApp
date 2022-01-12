@@ -296,10 +296,7 @@ describe("Selenium test", () => {
       expect(button).to.equal("Submit");
 
 
-      var htmlSource = await driver.getPageSource()
-      fs.appendFile('app/assets/snapshots/addRoles-snapshot.html', htmlSource, function (err) {
-        if (err) throw err;
-        console.log('Saved!');
+
       });
 
     });
