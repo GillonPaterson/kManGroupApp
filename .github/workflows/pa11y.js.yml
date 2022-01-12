@@ -16,7 +16,7 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: |
-            npm run pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html --ignore Principle4.Guideline4_1.4_1_1.F77
             npm run pa11y-ci app/assets/snapshots/competencies-snapshot.html
             npm run pa11y-ci app/assets/snapshots/createCapabilty-snapshot.html
             npm run pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
