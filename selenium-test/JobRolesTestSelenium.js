@@ -1,3 +1,4 @@
+
 const { expect } = require('chai')
 const { Builder, By, until, Key } = require('selenium-webdriver')
 require('webdriverio/build/commands/element/isEqual')
@@ -19,84 +20,117 @@ describe('Selenium test', () => {
     await driver.findElement(By.id('username')).sendKeys(config.employeeUser.username)
     await driver.findElement(By.id('password')).sendKeys(config.employeeUser.password)
 
+
     const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()
     await driver.wait(until.titleIs('Home'))
     expect(title).to.equal('Login')
-  })
+ 
+      var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/home-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!')
+      })
+    })
 
-  it('should wait until home page opens', async () => {
-    const title = await driver.getTitle()
-    const button = await driver.findElement(By.xpath('//*[@id="main-content"]/div/div[1]/a')).getText()
 
-    expect(title).to.equal('Home')
-    expect(button).to.equal('Search jobs')
-  })
 
-  it('should click button and open job roles', async () => {
-    driver.findElement(By.xpath('//*[@id="main-content"]/div/div[1]/a')).click()
-    await driver.wait(until.titleIs('List of Job Roles'))
+    it('should wait until home page opens', async () => {
+      const title = await driver.getTitle()
+      const button = await driver.findElement(By.xpath('//*[@id="main-content"]/div/div[1]/a')).getText()
 
-    const title = await driver.getTitle()
+      expect(title).to.equal('Home')
+      expect(button).to.equal('Search jobs')
+    })
 
-    expect(title).to.equal('List of Job Roles')
-  })
+    it('should click button and open job roles', async () => {
+      driver.findElement(By.xpath('//*[@id="main-content"]/div/div[1]/a')).click()
+      await driver.wait(until.titleIs('List of Job Roles'))
 
-  it('should have correct first row displayed on job roles page', async () => {
-    expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', 'Associate']
+      const title = await driver.getTitle()
 
-    var elements = (await driver.findElements(By.className('govuk-table__cell')))
-    var jobRole = await elements[0].getText()
-    var jobCapability = await elements[1].getText()
-    var jobFamily = await elements[2].getText()
-    var bandLevel = await elements[3].getText()
-    var firstRow = [jobRole, jobCapability, jobFamily, bandLevel]
+      expect(title).is.equal('List of Job Roles')
 
-    expect(firstRow).to.eql(expectedFirstRow)
-  })
+      var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/jobRoles-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!')
+      })
+    })
+  
+    it('should have correct first row displayed on job roles page', async () => {
+      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Associate"];
 
-  it('should click more info and display job spec', async () => {
-    driver.findElement(By.linkText('More Info')).click()
-    await driver.wait(until.titleIs('Job Specification'))
-    const title = await driver.getTitle()
+      var elements = (await driver.findElements(By.className("govuk-table__cell")))
+      var jobRole = await elements[0].getText()     
+      var jobCapability = await elements[1].getText()
+      var jobFamily = await elements[2].getText()        
+      var bandLevel = await elements[3].getText()    
+      var firstRow = [jobRole,jobCapability,jobFamily, bandLevel]
 
-    expect(title).to.equal('Job Specification')
-  })
+      expect(firstRow).to.eql(expectedFirstRow)
 
-  it('should click back and display job roles, Tests back button works', async () => {
-    driver.findElement(By.linkText('Back')).click()
-    await driver.wait(until.titleIs('List of Job Roles'))
-    const title = await driver.getTitle()
+    })
 
-    expect(title).to.equal('List of Job Roles')
-  })
+    it('should click more info and display job spec', async () => {
+      driver.findElement(By.linkText('More Info')).click()
+      await driver.wait(until.titleIs('Job Specification'))
+      const title = await driver.getTitle()
 
-  it('should click band level and display band level', async () => {
-    await driver.findElement(By.linkText('Associate')).click()
-    const title = await driver.getTitle()
+      expect(title).to.equal('Job Specification')
 
-    var heading = await driver.findElement(By.className('govuk-heading-xl')).getText()
+      var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/jobSpec-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!')
+      })
+    })
 
-    expect(heading).to.equal('Associate Competency Information')
-    expect(title).to.equal('Job Band Level Competencies')
-  })
+    it('should click back and display job roles, Tests back button works', async () => {
+      driver.findElement(By.linkText('Back')).click()
+      await driver.wait(until.titleIs('List of Job Roles'))
+      const title = await driver.getTitle()
 
-  it('should click training button and display available training courses', async () => {
-    driver.findElement(By.xpath('//*[@id="main-content"]/a')).click()
-    await driver.wait(until.titleIs('Job Band Level Training'))
-    const title = await driver.getTitle()
+      expect(title).to.equal('List of Job Roles')
+    })
 
-    expect(title).to.equal('Job Band Level Training')
-  })
+    it('should click band level and display band level', async () => {
+      await driver.findElement(By.linkText('Associate')).click()
+      const title = await driver.getTitle()
 
-  it('should display link and heading', async () => {
-    const link = await driver.findElement(By.linkText('View course'))
-    var heading = await driver.findElement(By.className('govuk-heading-xl')).getText()
+      var heading = await driver.findElement(By.className('govuk-heading-xl')).getText()
 
-    expect(heading).to.equal('Available Training Courses for Associate')
-    expect(link).to.exist
-  })
+      expect(heading).to.equal("Associate Competency Information")
+      expect(title).to.equal("Job Band Level Competencies")
 
-  // put in bit for clicking training link
+
+      var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/competencies-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!')
+      })
+    })
+
+
+
+    it('should click training button and display available training courses', async () => {
+      driver.findElement(By.xpath('//*[@id="main-content"]/a')).click();
+      await driver.wait(until.titleIs("Job Band Level Training"));
+      const title = await driver.getTitle();
+      
+      expect(title).to.equal("Job Band Level Training");
+
+
+    });
+
+    it('should display link and heading', async () => {
+      const link = await driver.findElement(By.linkText('View course'));
+      var heading = await driver.findElement(By.className('govuk-heading-xl')).getText()
+
+      expect(heading).to.equal("Available Training Courses for Associate")
+      expect(link).to.exist;
+    })
+
+
 
   it('should click home and display home', async () => {
     driver.findElement(By.linkText('Home')).click()
@@ -116,6 +150,7 @@ describe('Selenium test', () => {
     expect(jobRole).to.equal('Software Engineer')
     expect(title).to.equal('List of Job Roles')
   })
+
 
   it('should click on a role and go to job spec page', async () => {
     var elements = await driver.findElements(By.linkText('Software Engineer'))
@@ -143,7 +178,14 @@ describe('Selenium test', () => {
 
     expect(jobCapability).to.equal('Engineering')
     expect(jobFamily).to.equal('Engineering Strategy and Planning')
+
+    var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/jobFamilies-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!')
+      })
   })
+
 
   it('should click on view capability lead and confirm table', async () => {
     await driver.findElement(By.linkText('Home')).click()
@@ -160,6 +202,12 @@ describe('Selenium test', () => {
     var firstRow = [forename, surname, capability]
 
     expect(firstRow).to.eql(expectedFirstRow)
+
+    var htmlSource = await driver.getPageSource()
+  fs.appendFile('app/assets/snapshots/capabilityLeads-snapshot.html', htmlSource, function (err) {
+    if (err) throw err;
+    console.log('Saved!')
+  })
   })
 
   it('should click on capability lead more info link and get right page', async () => {
@@ -170,6 +218,12 @@ describe('Selenium test', () => {
     var text = await driver.findElement(By.className('govuk-summary-list__value')).getText()
 
     expect(text).to.equal('Dave Boats')
+
+    var htmlSource = await driver.getPageSource()
+  fs.appendFile('app/assets/snapshots/viewCapabilityLeads-snapshot.html', htmlSource, function (err) {
+    if (err) throw err;
+    console.log('Saved!')
+  })
   })
 
   it('Asssert the title on view all capability leads webpage is correct', async () => {
@@ -200,7 +254,13 @@ describe('Selenium test', () => {
     title = await driver.getTitle()
     expect(title).to.equal('Logged Out')
 
-    const button2 = await driver.findElement(By.xpath('//*[@id="main-content"]/a')).click()
+    var htmlSource = await driver.getPageSource()
+    fs.appendFile('app/assets/snapshots/logout-snapshot.html', htmlSource, function (err) {
+      if (err) throw err;
+      console.log('Saved!')
+    })
+
+    await driver.findElement(By.xpath('//*[@id="main-content"]/a')).click()
 
     title = await driver.getTitle()
     expect(title).to.equal('Login')
@@ -223,6 +283,12 @@ describe('Selenium test', () => {
 
     var title = await driver.getTitle()
     expect(title).to.equal('Home')
+
+    var htmlSource = await driver.getPageSource()
+  fs.appendFile('app/assets/snapshots/adminHome-snapshot.html', htmlSource, function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  })
   })
 
   it('should wait until add role page opens', async () => {
@@ -232,6 +298,12 @@ describe('Selenium test', () => {
 
     expect(title).to.equal('Add a New Role')
     expect(button).to.equal('Submit')
+
+    var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/addRoles-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!')
+      })
   })
 
   it('Should add, edit and delete a job role and return to the job roles page after each', async () => {
@@ -310,15 +382,26 @@ describe('Selenium test', () => {
       if (await elements3[i].getText() == 'selenium') {
         expect(1).to.equal(2)
         break
-      }
-    }
+      }}
   })
 
-  it('Assert the title on create capability webpage is correct', async () => {
-    await driver.get('http://localhost:3000/createCapabilityForm')
-    const title = await driver.getTitle()
-    expect(title).to.equal('Create A Capability')
-  })
 
-  after(async () => driver.quit())
+    it('Assert the title on create capability webpage is correct', async () => {
+      await driver.get('http://localhost:3000/createCapabilityForm');
+      const title = await driver.getTitle();
+      expect(title).to.equal("Create A Capability");
+
+      var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/createCapabilty-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!')
+      })
+
+    })
+
+    
+
+    after(async () => driver.quit());
+
+  
 })

@@ -9,6 +9,7 @@ const express = require('express')
 const nunjucks = require('nunjucks')
 const sessionInCookie = require('client-sessions')
 const sessionInMemory = require('express-session')
+const cookieParser = require("cookie-parser");
 
 // Run before other code to make sure variables from .env are available
 dotenv.config()
@@ -16,6 +17,7 @@ dotenv.config()
 // Local dependencies
 const middleware = [
   require('./lib/middleware/authentication/authentication.js'),
+  require('./lib/middleware/authentication/authoriser.js'),
   require('./lib/middleware/extensions/extensions.js')
 ]
 const config = require('./app/config.js')
@@ -38,6 +40,9 @@ if (fs.existsSync('./app/v6/routes.js')) {
 
 const app = express()
 const documentationApp = express()
+
+//cookies parser
+app.use(cookieParser())
 
 if (useV6) {
   console.log('/app/v6/routes.js detected - using v6 compatibility mode')
