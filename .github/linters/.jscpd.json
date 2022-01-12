@@ -1,0 +1,5 @@
+{
+    "ignore": [
+        "../app/assets/snapshots/addRoles-snapshot.html"
+        ]
+}
