@@ -1,23 +1,31 @@
-language: node_js
+name: pa11y
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  pa11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run pa11y-ci app/assets/snapshots/addRoles-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/competencies-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/createCapabilty-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/jobRoles-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/jobSpec-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/login-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/viewCapabilityLeads-snapshot.html
 
-node_js: 8
 
-git:
-  depth: 8
 
-install: npm install
 
-before_script: npm run build
 
-script:
-  - npm test
-  - npm run serve-ci & sleep 5; npm run pa11y-ci;
-  - npm run pa11y-ci app/assets/snapshots/addRoles-snapshot.html
-  - npm run pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html
-  - npm run pa11y-ci app/assets/snapshots/competencies-snapshot.html
-  - npm run pa11y-ci app/assets/snapshots/createCapabilty-snapshot.html
-  - npm run pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
-  - npm run pa11y-ci app/assets/snapshots/jobRoles-snapshot.html
-  - npm run pa11y-ci app/assets/snapshots/jobSpec-snapshot.html
-  - npm run pa11y-ci app/assets/snapshots/login-snapshot.html
-  - npm run pa11y-ci app/assets/snapshots/viewCapabilityLead-snapshot.html
