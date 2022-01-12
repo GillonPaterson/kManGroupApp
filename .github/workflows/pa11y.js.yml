@@ -22,7 +22,7 @@ jobs:
       - run: npm run pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
       - run: npm run pa11y-ci app/assets/snapshots/jobRoles-snapshot.html
       - run: npm run pa11y-ci app/assets/snapshots/jobSpec-snapshot.html
-      - run: npm run pa11y-ci app/assets/snapshots/login-snapshot.html
+      - run: npm run pa11y-ci app/assets/snapshots/home-snapshot.html
       - run: npm run pa11y-ci app/assets/snapshots/viewCapabilityLeads-snapshot.html
 
 
