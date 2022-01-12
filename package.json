@@ -10,7 +10,7 @@
         "start": "node start.js",
         "lint": "standard",
         "test": "mocha",
-        "selenium": "npx mocha selenium-test/jobRolesTestSelenium.js --timeout 10000"
+        "selenium": "npx mocha selenium-test/jobRolesTestSelenium.js --timeout 10000",
         "pa11y-ci": "pa11y-ci --config .pa11yci.json"
     },
     "dependencies": {
