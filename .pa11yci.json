@@ -4,9 +4,9 @@
     "defaults": {
       "standard": "WCAG2A",
       "timeout": 2000,
-      "wait": 2000
-    },
+      "wait": 2000,
       "ignore": [
-      "Principle4.Guideline4_1.4_1_1.F77"
-      ]
+        "WCAG2A.Principle4.Guideline4_1.4_1_1.F77"
+]
+    }
   }

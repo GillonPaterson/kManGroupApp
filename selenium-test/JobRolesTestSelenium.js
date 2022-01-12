@@ -295,6 +295,12 @@ describe("Selenium test", () => {
       expect(title).to.equal("Add a New Role");
       expect(button).to.equal("Submit");
 
+      var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/addRoles-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+      });
+
     });
 
     it('Asssert the title on create capability webpage is correct', async () => {
