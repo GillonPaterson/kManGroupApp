@@ -7,6 +7,6 @@
       "wait": 2000
     },
       "ignore": [
-      "WCAG2AA.Principle1.Guideline1_4.1_4_3.H93.Fail"
+      "Principle4.Guideline4_1.4_1_1.F77"
       ]
   }
