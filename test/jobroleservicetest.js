@@ -1,5 +1,4 @@
 const employeeservice = require("../app/services/jobrolesservice")
-const tempservice = require("../app/tempservice")
 const chai = require('chai')
 const expect = chai.expect;
 const sinon = require("sinon");
@@ -188,7 +187,7 @@ describe("Job Role Service", function() {
 
         mock.onPost('http://localhost:8080/api/editJobRole/' + jobRoleID, JobRole).reply(200, 1);
 
-        var result = await tempservice.editJobRole(jobRoleID, JobRole);
+        var result = await employeeservice.editJobRole(jobRoleID, JobRole);
 
         expect(result).to.equal(1);
     });
@@ -200,7 +199,7 @@ describe("Job Role Service", function() {
         mock.onPost('http://localhost:8080/api/editJobRole/' + id).reply(400, -1);
 
         var JobRole = {jobRole: "test"};
-        var result = await tempservice.editJobRole(id, JobRole);
+        var result = await employeeservice.editJobRole(id, JobRole);
 
         expect(result).to.equal(-1);
     });

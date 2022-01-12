@@ -58,7 +58,7 @@ describe("Selenium test", () => {
     });
   
     it('should have correct first row displayed on job roles page', async () => {
-      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Associate"];
+      expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', "Apprentice"];
 
       var elements = (await driver.findElements(By.className("govuk-table__cell")))
       var jobRole = await elements[0].getText()     
