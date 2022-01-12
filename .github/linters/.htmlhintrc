@@ -2,5 +2,8 @@
     "id-class-value": false,
     "attr-lowercase": false,
     "id-unique": false
+    "ignore": [
+    "../app/assets/snapshots/addRoles-snapshot.html"
+    ]
 }
 
