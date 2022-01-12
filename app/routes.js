@@ -94,21 +94,21 @@ router.post("/addrole", isAdmin, async (req, res) => {
     if (val == "No error") {
         var id = await jobrolesservice.addJobRole(req.body, req.cookies.access_token)
 
-        var roles = await jobrolesservice.getJobRoles()
-        for (i = 0; i < roles.length; i++) {
-            roles[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID=" + roles[i].jobRoleID + ">" + roles[i].jobBandLevel + "</a>"
-            roles[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID=" + roles[i].jobRoleID + ">More Info</a>"
-            roles[i].editURL = "<a href=http://localhost:3000/editRole?jobRoleID=" + role[i].jobRoleID + ">Edit</a>"
-            roles[i].deleteURL = "<a href=http://localhost:3000/deleteRole?jobRoleID=" + role[i].jobRoleID + ">Delete</a>"
-        }
-        res.render('jobroles.html', {
-            jobroles: roles
-        })
-    } else {
-        req.body["errormessage"] = val
 
-        var bandLevels = await jobrolesservice.getJobBandLevels(req.cookies.access_token)
-        var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
+    var roles =  await jobrolesservice.getJobRoles()
+    for(i = 0; i < roles.length; i++){
+        roles[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID="+roles[i].jobRoleID+">"+roles[i].jobBandLevel+"</a>"
+        roles[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+roles[i].jobRoleID+">More Info</a>"
+        roles[i].editURL = "<a href=http://localhost:3000/editRole?jobRoleID="+roles[i].jobRoleID+">Edit</a>"
+        roles[i].deleteURL = "<a href=http://localhost:3000/deleteRole?jobRoleID=" + roles[i].jobRoleID + ">Delete</a>"
+    }
+    res.render('jobroles.html', { jobroles: roles })
+}
+else {
+    req.body["errormessage"] = val
+
+    var bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
+    var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
 
         res.render('addnewrole.html', {
             errormessage: req.body.errormessage,
@@ -120,9 +120,10 @@ router.post("/addrole", isAdmin, async (req, res) => {
 
 
 
-router.get("/editrole", isAdmin, async (req, res) => {
-    var role = await tempservice.getJobRole(req.query.jobRoleID, req.cookies.access_token)
-    var bandLevels = await jobrolesservice.getJobBandLevels(req.cookies.access_token)
+router.get("/editrole",[auth.isAdmin], async(req, res) =>{
+
+    var role = await tempservice.getJobRole(req.query.jobRoleID,req.cookies.access_token)
+    var bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
     var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
 
 
@@ -171,24 +172,24 @@ router.post("/editrole", isAdmin, async (req, res) => {
 
         var id = await tempservice.editJobRole(role.jobRoleID, edit, req.cookies.access_token)
 
-        var roles = await tempservice.getJobRoles(req.cookies.access_token)
-        for (i = 0; i < roles.length; i++) {
-            roles[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID=" + roles[i].jobRoleID + ">" + roles[i].jobBandLevel + "</a>"
-            roles[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID=" + roles[i].jobRoleID + ">More Info</a>"
-            roles[i].editURL = "<a href=http://localhost:3000/editRole?jobRoleID=" + role[i].jobRoleID + ">Edit</a>"
-            roles[i].deleteURL = "<a href=http://localhost:3000/deleteRole?jobRoleID=" + role[i].jobRoleID + ">Delete</a>"
-        }
-        res.render('jobroles.html', {
-            jobroles: roles
-        })
-    } else {
-        req.body["errormessage"] = val
+
+    var roles =  await jobrolesservice.getJobRoles(req.cookies.access_token)
+    for(i = 0; i < roles.length; i++){
+        roles[i].jobBandLevel = "<a href=http://localhost:3000/competencyData?jobRoleID="+roles[i].jobRoleID+">"+roles[i].jobBandLevel+"</a>"
+        roles[i].viewSpecURL = "<a href=http://localhost:3000/jobSpec?jobRoleID="+roles[i].jobRoleID+">More Info</a>"
+        roles[i].editURL = "<a href=http://localhost:3000/editRole?jobRoleID="+roles[i].jobRoleID+">Edit</a>"
+        roles[i].deleteURL = "<a href=http://localhost:3000/deleteRole?jobRoleID=" + roles[i].jobRoleID + ">Delete</a>"
+    }
+    res.render('jobroles.html', { jobroles: roles })
+}
+else {
+    req.body["errormessage"] = val
 
 
-        console.log(req.body.jobRoleID)
-        var role = await tempservice.getJobRole(req.body.jobRoleID, req.cookies.access_token)
-        var bandLevels = await jobrolesservice.getJobBandLevels(req.cookies.access_token)
-        var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
+    console.log(req.body.jobRoleID)
+    var role = await tempservice.getJobRole(req.body.jobRoleID,req.cookies.access_token)
+    var bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
+    var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
 
 
         bandLevels = bandLevels.reverse();
