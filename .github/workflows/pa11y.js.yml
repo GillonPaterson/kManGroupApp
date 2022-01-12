@@ -16,7 +16,7 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: |
-            npm run pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html, {ignore: ['WCAG2AA.Principle3.Guideline3_1.3_1_1.H93']}
+            npm run (pa11y-ci app/assets/snapshots/capabilityLeads-snapshot.html, {ignore: ['WCAG2AA.Principle3.Guideline3_1.3_1_1.H93']})
             npm run pa11y-ci app/assets/snapshots/competencies-snapshot.html
             npm run pa11y-ci app/assets/snapshots/createCapabilty-snapshot.html
             npm run pa11y-ci app/assets/snapshots/jobFamilies-snapshot.html
