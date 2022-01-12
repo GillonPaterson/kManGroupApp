@@ -25,3 +25,5 @@ jobs:
             npm run pa11y-ci app/assets/snapshots/jobSpec-snapshot.html
             npm run pa11y-ci app/assets/snapshots/home-snapshot.html
             npm run pa11y-ci app/assets/snapshots/viewCapabilityLeads-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/logout-snapshot.html
+            npm run pa11y-ci app/assets/snapshots/adminHome-snapshot.html

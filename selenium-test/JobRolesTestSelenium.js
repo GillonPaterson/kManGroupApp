@@ -261,6 +261,12 @@ describe("Selenium test", () => {
       title = await driver.getTitle();
       expect(title).to.equal("Logged Out");
 
+      var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/logout-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+      });
+
       const button2 = await driver.findElement(By.xpath('//*[@id="main-content"]/a')).click()
 
       title = await driver.getTitle();
@@ -284,6 +290,13 @@ describe("Selenium test", () => {
       
       var title = await driver.getTitle();
       expect(title).to.equal("Home");
+
+      var htmlSource = await driver.getPageSource()
+      fs.appendFile('app/assets/snapshots/adminHome-snapshot.html', htmlSource, function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+      });
+      
     
     });
 
