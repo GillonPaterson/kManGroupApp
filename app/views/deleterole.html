@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Delete a Role
+{% endblock %}
+ 
+{% block content %}
+
+<h2 class="govuk-heading-xl">Delete {{jobRoleInfo.jobRole}}</h2>
+ 
+<form class="deleteroleform" action="/deleterole" method="post">
+ 
+ <input type="hidden" id = "jobRoleID" name="jobRoleID" value = {{jobRoleInfo.jobRoleID}}>
+
+ <button type="submit" class="govuk-button" data-module="govuk-button" onclick="return confirm('Are you sure you want to delete this role?')">
+Delete
+ </button>
+
+ {% endblock %}
