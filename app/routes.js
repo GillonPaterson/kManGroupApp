@@ -11,12 +11,10 @@ const secret = Buffer.from('2w0lavt3CFAAqAY1z4q+LpZfCNW5gLH+udmMfi/Tl6g=', 'base
 const jwt = require('jsonwebtoken')
 const isAdmin = require('../lib/middleware/authentication/isAdmin.js')
 
-router.use(cookieParser())
-
 const NodeCache = require('node-cache')
 const myCache = new NodeCache()
 
-router.get('/', [auth.isAuthorised], async (req, res) => {
+router.get('/', async (req, res) => {
   res.redirect('home')
 })
 
