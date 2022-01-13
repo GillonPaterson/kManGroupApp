@@ -39,6 +39,16 @@
  value: data["jobRole"], 
  errorMessage: {text: errormessage }
  }) }}
+ {% elif errormessage %}
+ {{ govukInput({
+ label: {
+ text: "Role Name"
+ },
+ id: "jobRole",
+ name: "jobRole",
+ hint: {text: "Role name must be no longer than 40 characters long"},
+  value: data["jobRole"]
+ }) }}
  {% else %}
  {{ govukInput({
  label: {
@@ -46,8 +56,7 @@
  },
  id: "jobRole",
  name: "jobRole",
- hint: {text: "Role name must be no longer than 40 characters long"}, 
- value: data["jobRole"]
+ hint: {text: "Role name must be no longer than 40 characters long"} 
  }) }}
  {% endif %} 
 
@@ -61,11 +70,19 @@
      text: "Role Specification"
    }
  }) }}
+ {% elif errormessage %}
+ {{ govukTextarea({
+   name: "jobSpec",
+   id: "jobSpec",
+   value: data["jobSpec"],
+   label: {
+     text: "Role Specification"
+   }
+ }) }}
   {% else %}
 {{ govukTextarea({
    name: "jobSpec",
    id: "jobSpec",
-   value: data["jobSpec"],
    label: {
      text: "Role Specification"
    }
@@ -133,11 +150,19 @@ hint: {text: "The link must start with 'https://'"}
      text: "Role Responsibilities"
    }
  }) }}
+  {% elif errormessage %}
+  {{ govukTextarea({
+   name: "jobResponsibilities",
+   id: "jobResponsibilities",
+   value: data["jobResponsibilities"],
+   label: {
+     text: "Role Responsibilities"
+   }
+ }) }}
   {% else %}
  {{ govukTextarea({
    name: "jobResponsibilities",
    id: "jobResponsibilities",
-   value: data["jobResponsibilities"],
    label: {
      text: "Role Responsibilities"
    }
