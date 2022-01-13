@@ -63,8 +63,6 @@ if (!sessionDataDefaultsFileExists) {
     .pipe(fs.createWriteStream(sessionDataDefaultsFile))
 }
 
-
-
 // Run gulp
 function runGulp () {
   const spawn = require('cross-spawn')
