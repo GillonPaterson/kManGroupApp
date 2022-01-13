@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Add a New Band
+{% endblock %}
+ 
+{% block content %}
+
+<h2 class="govuk-heading-xl">Add a New Band</h2>
+ 
+<form class="newroleform" action="/createBandLevel" method="post">
+<body onload="populateSelect1()"></body>
+
+{% if errormessage %} 
+ <div class="govuk-error-message">{{ errormessage }}</div>
+  {% if 'role name' in errormessage %}
+  {% set rolenameError = "true" %}
+  {% endif %}
+  {% if 'link' in errormessage %}
+  {% set rolelinkError = "true" %}
+  {% endif %}
+  {% if 'job specification' in errormessage %}
+  {% set rolespecError = "true" %}
+  {% endif %}
+  {% if 'job responsibilities' in errormessage %}
+  {% set rolerespError = "true" %}
+  {% endif %}
+{% endif %}
+
+<br>
+ {% if rolenameError %}
+ {{ govukInput({
+ label: {
+ text: "Band Level"
+ },
+ id: "jobBandLevel",
+ name: "jobBandLevel",
+ value: data["jobBandLevel"], 
+ errorMessage: {text: errormessage }
+ }) }}
+ {% else %}
+ {{ govukInput({
+ label: {
+ text: "Band Level"
+ },
+ id: "jobBandLevel",
+ name: "jobBandLevel",
+ hint: {text: "Band Level must be no longer than 40 characters long"}, 
+ value: data["jobBandLevel"]
+ }) }}
+
+ 
+ {% endif %} 
+{% endblock %}

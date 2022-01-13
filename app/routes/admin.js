@@ -231,4 +231,15 @@ router.post("/createUser", isAdmin, async (req, res) => {
     res.redirect("home")
 })
 
+router.get("/createBandLevel", isAdmin, async (req, res) => {
+    var bandlevels = await bandLevelService.getJobBandLevels()
+    console.log(bandlevels)
+    res.render('addBand.html', bandlevels)
+})
+
+router.post("/createBandLevel", isAdmin, async (req, res) => {
+    var response = loginService.createUser(req.body, req.cookies.access_token)
+    res.redirect("home")
+})
+
 module.exports = router;

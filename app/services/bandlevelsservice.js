@@ -11,3 +11,13 @@ exports.getJobBandLevels = async(token) => {
         return;
     }
 }
+
+exports.getJobBandLevelsAndImportance = async(token) => {
+    try{
+    const response = await axios.get('http://localhost:8080/api/getJobBandLevelsAndImportance', {headers: {'Authorization': "Bearer " + token}});
+    return response.data;
+    }catch(e)
+    {
+        return;
+    }
+}

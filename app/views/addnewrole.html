@@ -144,32 +144,16 @@ hint: {text: "The link must start with 'https://'"}
  }) }}
   {% endif %} 
 
+{{govukTable({
+  head: [{ text: "Band Level" },{text: "Importance"}], 
+  rows: jobrolesrows })
+}}
+
 
  
  <button type="submit" class="govuk-button" data-module="govuk-button">
  Submit
  </button>
-
-
-<script>
-var bands = {{ jobBandInfo | dump | safe }}
-var family = {{ jobFamilyInfo | dump | safe }}
-
-    function populateSelect1() {
-        var ele = document.getElementById('jobBandLevel');
-        for (var i = 0; i < bands.length; i++) {
-            ele.innerHTML = ele.innerHTML +
-                '<option value="' + bands[i] + '">' + bands[i] + '</option>';
-        }
-
-        var fam = document.getElementById('jobFamily');
-        for (var y = 0; y < family.length; y++) {
-            fam.innerHTML = fam.innerHTML +
-                '<option value="' + family[y] + '">' + family[y] + '</option>';
-        }
-    }
-</script>
-
  
  </form>
 
