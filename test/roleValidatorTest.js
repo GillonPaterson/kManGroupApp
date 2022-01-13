@@ -43,6 +43,11 @@ describe('Role Validator', function () {
     expect(await roleValidator.checkrole(newRole)).to.equal('The job specification must be entered')
   })
 
+  it('Should validate the role spec and return error because length is too long', async () => {
+    var newRole = { jobRole: 'test', jobSpec: 'What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestestWhat is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestest'}
+    expect(await roleValidator.checkrole(newRole)).to.equal('The job specification must be less than 1000 characters')
+  })
+
   it('Should validate the role link and return error because it doesnt start with https://', async () => {
     var newRole = { jobRole: 'test', jobSpec: 'test', jobLink: 'test.com' }
     expect(await roleValidator.checkrole(newRole)).to.equal("The link must start with 'https://'")
@@ -53,8 +58,18 @@ describe('Role Validator', function () {
     expect(await roleValidator.checkrole(newRole)).to.equal('A link must be entered')
   })
 
+  it('Should validate the role link and return error because length is too long', async () => {
+    var newRole = { jobRole: 'test', jobSpec: 'test', jobLink: 'https://What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestestWhat is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestest'}
+    expect(await roleValidator.checkrole(newRole)).to.equal('The link must be less than 500 characters')
+  })
+
   it('Should validate the role responsibilities and return error because its empty', async () => {
     var newRole = { jobRole: 'test', jobSpec: 'test', jobLink: 'https://test.com', jobResponsibilities: '' }
     expect(await roleValidator.checkrole(newRole)).to.equal('The job responsibilities must be entered')
+  })
+
+  it('Should validate the role responsibilities and return error because length is too long', async () => {
+    var newRole = { jobRole: 'test', jobSpec: 'test', jobLink: 'https://test.com', jobResponsibilities: 'What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestestWhat is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. testestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestesttestestestestest'}
+    expect(await roleValidator.checkrole(newRole)).to.equal('The job responsibilities must be less than 1000 characters')
   })
 })
