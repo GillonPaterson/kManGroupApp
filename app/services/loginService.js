@@ -1,5 +1,4 @@
 const axios = require('axios').default
-const auth = require('../../lib/middleware/authentication/authoriser.js')
 
 exports.login = async (loginInfo) => {
   try {

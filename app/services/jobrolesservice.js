@@ -39,15 +39,6 @@ exports.getJobRoleSpec = async (jobRoleID, token) => {
   }
 }
 
-exports.getJobFamilyNames = async (token) => {
-  try {
-    const response = await axios.get('http://localhost:8080/api/getJobFamilyNames', { headers: { Authorization: 'Bearer ' + token } })
-    return response.data
-  } catch (e) {
-
-  }
-}
-
 exports.getRoleMatrix = async (token) => {
   try {
     const response = await axios.get('http://localhost:8080/api/getRoleMatrix', { headers: { Authorization: 'Bearer ' + token } })
@@ -81,49 +72,6 @@ exports.getRoleMatrix = async (token) => {
 
     return roleMatrix
   } catch (err) {
-    return false
-  }
-}
-
-exports.getJobTraining = async (jobBandLevel, token) => {
-  try {
-    const response = await axios.get('http://localhost:8080/api/getJobTraining/' + jobBandLevel, { headers: { Authorization: 'Bearer ' + token } })
-    var coursesDP = []
-    var coursesPS = []
-    var coursesTS = []
-
-    for (let i = 0; i < response.data.length; i++) {
-      if (response.data[i].trainingGroup == 'Development programmes') { coursesDP.push(response.data[i]) }
-
-      if (response.data[i].trainingGroup == 'Professional skills') { coursesPS.push(response.data[i]) }
-
-      if (response.data[i].trainingGroup == 'Technical skills') { coursesTS.push(response.data[i]) }
-    }
-
-    var coursegroups = { DPGroup: coursesDP, PSGroup: coursesPS, TSGroup: coursesTS }
-    return coursegroups
-  } catch (e) {
-
-  }
-}
-
-exports.getJobFamilies = async (token) => {
-  try {
-    const response = await axios.get('http://localhost:8080/api/getJobFamilies/', { headers: { Authorization: 'Bearer ' + token } })
-
-    const rows = []
-    response.data.forEach(capability => {
-      const row = []
-      row.push(capability.jobCapability)
-
-      capability.jobFamily.forEach(jobFamily => {
-        row.push(jobFamily)
-      })
-      rows.push(row)
-    })
-
-    return rows
-  } catch (e) {
     return false
   }
 }

@@ -63,35 +63,6 @@ describe('Job Role Service', function () {
     expect(result).to.equal(false)
   })
 
-  it('Should return an object of all job training in groups', async () => {
-    var mock = new MockAdapter(axios)
-    var jt1 = { DPGroup: [], PSGroup: [], TSGroup: [] }
-    var jt2 = { DPGroup: [], PSGroup: [], TSGroup: [] }
-    var list = [jt1, jt2]
-
-    mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(200, list)
-
-    var result = await employeeservice.getJobTraining('Associate')
-
-    // expect(result.length).to.equal(2);
-
-    expect(result.TSGroup).to.eql(jt1.TSGroup)
-    expect(result.DPGroup).to.eql(jt2.DPGroup)
-  })
-
-  it('Should fail to return a list of all job training in groups', async () => {
-    var mock = new MockAdapter(axios)
-    var jt1 = { val: 1 }
-    var jt2 = { val: 2 }
-    var list = [jt1, jt2]
-
-    mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(404, list)
-
-    var result = await employeeservice.getJobTraining('Associate')
-
-    expect(result).to.equal(undefined)
-  })
-
   it('Should return role matrix array from api', async () => {
     var mock = new MockAdapter(axios)
 
@@ -122,30 +93,6 @@ describe('Job Role Service', function () {
     mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(400, testArray)
 
     var result = await employeeservice.getRoleMatrix()
-
-    expect(result).to.be.false
-  })
-
-  it('Should create a table array for Job Families from api', async () => {
-    var mock = new MockAdapter(axios)
-    var returnedResponse = [{ jobCapability: 'Engineering', jobFamily: ['Engineering Strategy and Planning', 'Engineering'] }, { jobCapability: 'Cyber Security', jobFamily: [] }, { jobCapability: 'AI', jobFamily: ['Data Science'] }]
-
-    mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(200, returnedResponse)
-
-    var returnedArray = await employeeservice.getJobFamilies()
-
-    var expectedArray = [['Engineering', 'Engineering Strategy and Planning', 'Engineering'], ['Cyber Security'], ['AI', 'Data Science']]
-    expect(returnedArray).to.eql(expectedArray)
-  })
-
-  it('Get Families Should return false when 400', async () => {
-    var mock = new MockAdapter(axios)
-
-    var testObject = { capabilities: ['Test'], jobFamilyModels: [{ jobFamily: 'Test', jobCapability: 'Test' }] }
-
-    mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(400, testObject)
-
-    var result = await employeeservice.getJobFamilies()
 
     expect(result).to.be.false
   })
