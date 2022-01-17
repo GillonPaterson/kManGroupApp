@@ -14,7 +14,7 @@ describe('Job Role Service', function () {
     var mock = new MockAdapter(axios)
     var returnedResponse = [{ jobCapability: 'Engineering', jobFamily: ['Engineering Strategy and Planning', 'Engineering'] }, { jobCapability: 'Cyber Security', jobFamily: [] }, { jobCapability: 'AI', jobFamily: ['Data Science'] }]
 
-    mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(200, returnedResponse)
+    mock.onGet('http://localhost:8080/job-families/getJobFamilies/').reply(200, returnedResponse)
 
     var returnedArray = await jobFamilyService.getJobFamilies()
 
@@ -27,7 +27,7 @@ describe('Job Role Service', function () {
 
     var testObject = { capabilities: ['Test'], jobFamilyModels: [{ jobFamily: 'Test', jobCapability: 'Test' }] }
 
-    mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(400, testObject)
+    mock.onGet('http://localhost:8080/job-families/getJobFamilies/').reply(400, testObject)
 
     var result = await jobFamilyService.getJobFamilies()
 

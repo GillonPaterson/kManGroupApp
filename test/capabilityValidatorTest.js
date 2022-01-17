@@ -35,7 +35,7 @@ describe('Capability Validator', function () {
     var id = 10
     var newCapability = { capabilityName: 'test' }
 
-    mock.onPost('http://localhost:8080/api/createCapability', newCapability).reply(200, id)
+    mock.onPost('http://localhost:8080/capability/createCapability', newCapability).reply(200, id)
 
     var result = await capabilityService.addCapabilty(newCapability)
 
@@ -47,7 +47,7 @@ describe('Capability Validator', function () {
     var id = 10
     var updatedCapability = { capabilityID: 1, capabilityName: 'test' }
 
-    mock.onPost('http://localhost:8080/api/updateCapability', updatedCapability).reply(200, id)
+    mock.onPost('http://localhost:8080/capability/updateCapability', updatedCapability).reply(200, id)
 
     var result = await capabilityService.updateCapabilites(updatedCapability)
 
