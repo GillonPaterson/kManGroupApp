@@ -39,6 +39,16 @@
  value: data["jobRole"], 
  errorMessage: {text: errormessage }
  }) }}
+ {% elif errormessage %}
+ {{ govukInput({
+ label: {
+ text: "Role Name"
+ },
+ id: "jobRole",
+ name: "jobRole",
+ hint: {text: "Role name must be no longer than 40 characters long"},
+  value: data["jobRole"]
+ }) }}
  {% else %}
  {{ govukInput({
  label: {
@@ -46,8 +56,7 @@
  },
  id: "jobRole",
  name: "jobRole",
- hint: {text: "Role name must be no longer than 40 characters long"}, 
- value: data["jobRole"]
+ hint: {text: "Role name must be no longer than 40 characters long"} 
  }) }}
  {% endif %} 
 
@@ -61,11 +70,19 @@
      text: "Role Specification"
    }
  }) }}
+ {% elif errormessage %}
+ {{ govukTextarea({
+   name: "jobSpec",
+   id: "jobSpec",
+   value: data["jobSpec"],
+   label: {
+     text: "Role Specification"
+   }
+ }) }}
   {% else %}
 {{ govukTextarea({
    name: "jobSpec",
    id: "jobSpec",
-   value: data["jobSpec"],
    label: {
      text: "Role Specification"
    }
@@ -133,8 +150,8 @@ hint: {text: "The link must start with 'https://'"}
      text: "Role Responsibilities"
    }
  }) }}
-  {% else %}
- {{ govukTextarea({
+  {% elif errormessage %}
+  {{ govukTextarea({
    name: "jobResponsibilities",
    id: "jobResponsibilities",
    value: data["jobResponsibilities"],
@@ -142,20 +159,40 @@ hint: {text: "The link must start with 'https://'"}
      text: "Role Responsibilities"
    }
  }) }}
+  {% else %}
+ {{ govukTextarea({
+   name: "jobResponsibilities",
+   id: "jobResponsibilities",
+   label: {
+     text: "Role Responsibilities"
+   }
+ }) }}
   {% endif %} 
-
-{{govukTable({
-  head: [{ text: "Band Level" },{text: "Importance"}], 
-  rows: jobrolesrows })
-}}
 
 
  
  <button type="submit" class="govuk-button" data-module="govuk-button">
  Submit
  </button>
- 
- </form>
 
- 
+
+<script>
+var bands = {{ jobBandInfo | dump | safe }}
+var family = {{ jobFamilyInfo | dump | safe }}
+
+    function populateSelect1() {
+        var ele = document.getElementById('jobBandLevel');
+        for (var i = 0; i < bands.length; i++) {
+            ele.innerHTML = ele.innerHTML +
+                '<option value="' + bands[i] + '">' + bands[i] + '</option>';
+        }
+
+        var fam = document.getElementById('jobFamily');
+        for (var y = 0; y < family.length; y++) {
+            fam.innerHTML = fam.innerHTML +
+                '<option value="' + family[y] + '">' + family[y] + '</option>';
+        }
+    }
+</script>
+ </form>
 {% endblock %}

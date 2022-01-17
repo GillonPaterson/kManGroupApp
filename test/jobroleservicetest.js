@@ -5,10 +5,6 @@ const sinon = require('sinon')
 const axios = require('axios').default
 const MockAdapter = require('axios-mock-adapter')
 
-const mochaaxios = require('mocha-axios')
-const { assert } = require('chai')
-const { default: mock } = require('webdriverio/build/commands/browser/mock')
-
 describe('Job Role Service', function () {
   afterEach(() => {
     sinon.restore()
@@ -20,7 +16,7 @@ describe('Job Role Service', function () {
     var jobrole2 = { val: 2 }
     var list = [jobrole1, jobrole2]
 
-    mock.onGet('http://localhost:8080/api/getJobRoles').reply(200, list)
+    mock.onGet('http://localhost:8080/job-roles/getJobRoles').reply(200, list)
 
     var result = await employeeservice.getJobRoles()
 
@@ -35,7 +31,7 @@ describe('Job Role Service', function () {
     var jobrole2 = { val: 2 }
     var list = [jobrole1, jobrole2]
 
-    mock.onGet('http://localhost:8080/api/getJobRoles').reply(404, list)
+    mock.onGet('http://localhost:8080/job-roles/getJobRoles').reply(404, list)
 
     var result = await employeeservice.getJobRoles()
 
@@ -46,7 +42,7 @@ describe('Job Role Service', function () {
     var mock = new MockAdapter(axios)
     var jobrole = { jobRoleID: 1, jobRole: 'Software Engineer' }
 
-    mock.onGet('http://localhost:8080/api/getJobSpec/1').reply(200, jobrole)
+    mock.onGet('http://localhost:8080/job-roles/getJobSpec/1').reply(200, jobrole)
 
     var result = await employeeservice.getJobRoleSpec(1)
 
@@ -56,40 +52,11 @@ describe('Job Role Service', function () {
   it('Should return false when 400 error', async () => {
     var mock = new MockAdapter(axios)
 
-    mock.onGet('http://localhost:8080/api/getJobSpec/100').reply(400, '')
+    mock.onGet('http://localhost:8080/job-roles/getJobSpec/100').reply(400, '')
 
     var result = await employeeservice.getJobRoleSpec(100)
 
     expect(result).to.equal(false)
-  })
-
-  it('Should return an object of all job training in groups', async () => {
-    var mock = new MockAdapter(axios)
-    var jt1 = { DPGroup: [], PSGroup: [], TSGroup: [] }
-    var jt2 = { DPGroup: [], PSGroup: [], TSGroup: [] }
-    var list = [jt1, jt2]
-
-    mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(200, list)
-
-    var result = await employeeservice.getJobTraining('Associate')
-
-    // expect(result.length).to.equal(2);
-
-    expect(result.TSGroup).to.eql(jt1.TSGroup)
-    expect(result.DPGroup).to.eql(jt2.DPGroup)
-  })
-
-  it('Should fail to return a list of all job training in groups', async () => {
-    var mock = new MockAdapter(axios)
-    var jt1 = { val: 1 }
-    var jt2 = { val: 2 }
-    var list = [jt1, jt2]
-
-    mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(404, list)
-
-    var result = await employeeservice.getJobTraining('Associate')
-
-    expect(result).to.equal(undefined)
   })
 
   it('Should return role matrix array from api', async () => {
@@ -106,7 +73,7 @@ describe('Job Role Service', function () {
 
     var returnedResponse = { roleMatrixModel: roleMatrixList, bandLevel: bandLevel, capability: capabilities }
 
-    mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(200, returnedResponse)
+    mock.onGet('http://localhost:8080/job-roles/getRoleMatrix').reply(200, returnedResponse)
 
     var returnedObject = await employeeservice.getRoleMatrix()
     var expected = { headers: ['Band Level', 'Engineering', 'AI', 'Cyber Security'], rows: [['Apprentice', '<a href="http://localhost:3000/jobSpec?jobRoleID=1">Dev</a>, <a href="http://localhost:3000/jobSpec?jobRoleID=3">Frontend Dev</a>', '', ''], ['Associate', '', '', ''], ['Consultant', '', '', '<a href="http://localhost:3000/jobSpec?jobRoleID=2">Sec Engineer</a>']] }
@@ -119,35 +86,11 @@ describe('Job Role Service', function () {
 
     var testArray = [['Test', 'Test 2'], ['Test 3']]
 
-    mock.onGet('http://localhost:8080/api/getRoleMatrix').reply(400, testArray)
+    mock.onGet('http://localhost:8080/job-roles/getRoleMatrix').reply(400, testArray)
 
     var result = await employeeservice.getRoleMatrix()
 
-    expect(result).to.be.false
-  })
-
-  it('Should create a table array for Job Families from api', async () => {
-    var mock = new MockAdapter(axios)
-    var returnedResponse = [{ jobCapability: 'Engineering', jobFamily: ['Engineering Strategy and Planning', 'Engineering'] }, { jobCapability: 'Cyber Security', jobFamily: [] }, { jobCapability: 'AI', jobFamily: ['Data Science'] }]
-
-    mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(200, returnedResponse)
-
-    var returnedArray = await employeeservice.getJobFamilies()
-
-    var expectedArray = [['Engineering', 'Engineering Strategy and Planning', 'Engineering'], ['Cyber Security'], ['AI', 'Data Science']]
-    expect(returnedArray).to.eql(expectedArray)
-  })
-
-  it('Get Families Should return false when 400', async () => {
-    var mock = new MockAdapter(axios)
-
-    var testObject = { capabilities: ['Test'], jobFamilyModels: [{ jobFamily: 'Test', jobCapability: 'Test' }] }
-
-    mock.onGet('http://localhost:8080/api/getJobFamilies/').reply(400, testObject)
-
-    var result = await employeeservice.getJobFamilies()
-
-    expect(result).to.be.false
+    expect(result).to.be.false // eslint-disable-line
   })
 
   it('Should add a job role if credentials are correct and return ID', async () => {
@@ -155,7 +98,7 @@ describe('Job Role Service', function () {
     var id = 10
     var newJobRole = { jobRole: 'test' }
 
-    mock.onPost('http://localhost:8080/api/addJobRole', newJobRole).reply(200, id)
+    mock.onPost('http://localhost:8080/job-roles/addJobRole', newJobRole).reply(200, id)
 
     var result = await employeeservice.addJobRole(newJobRole)
 
@@ -165,7 +108,7 @@ describe('Job Role Service', function () {
   it('Fails to add a job role and return -1', async () => {
     var mock = new MockAdapter(axios)
     var id = 1
-    mock.onPost('http://localhost:8080/api/addJobRole').reply(400, id)
+    mock.onPost('http://localhost:8080/job-roles/addJobRole').reply(400, id)
 
     var newJobRole = { jobRole: 'test' }
     var result = await employeeservice.addJobRole(newJobRole)
@@ -179,7 +122,7 @@ describe('Job Role Service', function () {
     var jobRoleID = 100
     var JobRole = { jobRole: 'test' }
 
-    mock.onPost('http://localhost:8080/api/editJobRole/' + jobRoleID, JobRole).reply(200, 1)
+    mock.onPost('http://localhost:8080/job-roles/editJobRole/' + jobRoleID, JobRole).reply(200, 1)
 
     var result = await employeeservice.editJobRole(jobRoleID, JobRole)
 
@@ -190,7 +133,7 @@ describe('Job Role Service', function () {
     var mock = new MockAdapter(axios)
 
     var id = 100
-    mock.onPost('http://localhost:8080/api/editJobRole/' + id).reply(400, -1)
+    mock.onPost('http://localhost:8080/job-roles/editJobRole/' + id).reply(400, -1)
 
     var JobRole = { jobRole: 'test' }
     var result = await employeeservice.editJobRole(id, JobRole)
@@ -203,7 +146,7 @@ describe('Job Role Service', function () {
 
     var jobRoleID = 100
 
-    mock.onPost('http://localhost:8080/api/deleteJobRole/' + jobRoleID).reply(200, 1)
+    mock.onPost('http://localhost:8080/job-roles/deleteJobRole/' + jobRoleID).reply(200, 1)
 
     var result = await employeeservice.deleteJobRole(jobRoleID)
 
@@ -214,7 +157,7 @@ describe('Job Role Service', function () {
     var mock = new MockAdapter(axios)
 
     var id = 100
-    mock.onPost('http://localhost:8080/api/deleteJobRole/' + id).reply(400, -1)
+    mock.onPost('http://localhost:8080/job-roles/deleteJobRole/' + id).reply(400, -1)
 
     var result = await employeeservice.deleteJobRole(id)
 
