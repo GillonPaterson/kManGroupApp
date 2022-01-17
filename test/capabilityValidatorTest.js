@@ -6,10 +6,6 @@ const MockAdapter = require('axios-mock-adapter')
 const capabilityService = require('../app/services/capabilityService')
 const capabilityValidator = require('../app/validator/capabilityValidator')
 
-const mochaaxios = require('mocha-axios')
-const { assert } = require('chai')
-const { default: mock } = require('webdriverio/build/commands/browser/mock')
-
 describe('Capability Validator', function () {
   afterEach(() => {
     sinon.restore()
@@ -29,10 +25,10 @@ describe('Capability Validator', function () {
   })
 
   it('Should validate the capabilty name and return error because there is a space before or after', async () => {
-    var newCapability = { capabilityName: ' test' }
-    expect(await capabilityValidator.checkCapability(newCapability)).to.equal('Capability Name must not begin with a space')
-    var newCapability = { capabilityName: 'test  ' }
-    expect(await capabilityValidator.checkCapability(newCapability)).to.equal('Capability Name must not end with a space')
+    var spaceBeforeTest = { capabilityName: ' test' }
+    expect(await capabilityValidator.checkCapability(spaceBeforeTest)).to.equal('Capability Name must not begin with a space')
+    var spaceAfterTest = { capabilityName: 'test  ' }
+    expect(await capabilityValidator.checkCapability(spaceAfterTest)).to.equal('Capability Name must not end with a space')
   })
   it('Should add a capability if credentials are correct and return ID', async () => {
     var mock = new MockAdapter(axios)
