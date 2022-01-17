@@ -16,7 +16,7 @@ describe('Job Role Service', function () {
     var jt2 = { DPGroup: [], PSGroup: [], TSGroup: [] }
     var list = [jt1, jt2]
 
-    mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(200, list)
+    mock.onGet('http://localhost:8080/training/getJobTraining/Associate').reply(200, list)
 
     var result = await trainingService.getJobTraining('Associate')
 
@@ -32,7 +32,7 @@ describe('Job Role Service', function () {
     var jt2 = { val: 2 }
     var list = [jt1, jt2]
 
-    mock.onGet('http://localhost:8080/api/getJobTraining/Associate').reply(404, list)
+    mock.onGet('http://localhost:8080/training/getJobTraining/Associate').reply(404, list)
 
     var result = await trainingService.getJobTraining('Associate')
 

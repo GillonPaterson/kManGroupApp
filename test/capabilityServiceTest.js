@@ -17,7 +17,7 @@ describe('Capability Service', function () {
 
     var cap = { capability: 'test' }
 
-    mock.onPost('http://localhost:8080/api/createCapability').reply(200, capability)
+    mock.onPost('http://localhost:8080/capability/createCapability').reply(200, capability)
 
     var result = await capabilityService.addCapabilty(cap)
 
@@ -30,7 +30,7 @@ describe('Capability Service', function () {
     var cap2 = { val: 2 }
     var capLeads = [cap1, cap2]
 
-    mock.onGet('http://localhost:8080/api/getAllCapabilityLead').reply(200, capLeads)
+    mock.onGet('http://localhost:8080/capability/getAllCapabilityLead').reply(200, capLeads)
 
     var result = await capabilityService.getAllCapabilityLeadsInfo()
 
@@ -43,7 +43,7 @@ describe('Capability Service', function () {
     var mock = new MockAdapter(axios)
     var lead = { leadID: 1 }
 
-    mock.onGet('http://localhost:8080/api/getCapabilityLead/1').reply(200, lead)
+    mock.onGet('http://localhost:8080/capability/getCapabilityLead/1').reply(200, lead)
 
     var result = await capabilityService.getCapabilityLeadInfo(1)
 
