@@ -1,5 +1,3 @@
-const NodeCache = require('node-cache')
-const myCache = new NodeCache()
 const axios = require('axios').default
 
 exports.getCompetencyData = async (jobRoleID, token) => {

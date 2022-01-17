@@ -1,10 +1,8 @@
 const loginService = require('../app/services/loginService')
 const chai = require('chai')
 const expect = chai.expect
-const sinon = require('sinon')
 const axios = require('axios').default
 const MockAdapter = require('axios-mock-adapter')
-const { assert } = require('chai')
 
 describe('login Service', () => {
   describe('login', () => {
@@ -15,7 +13,7 @@ describe('login Service', () => {
         mock.onPost('http://localhost:8080/api/login', loginInfo).reply(400)
 
         var response = await loginService.login(loginInfo)
-        expect(response).to.be.false
+        expect(response).to.be.false // eslint-disable-line
       })
     })
     describe('returned expired token', () => {
@@ -28,7 +26,7 @@ describe('login Service', () => {
         mock.onPost('http://localhost:8080/api/login', loginInfo).reply(200, '', { authorization: 'Bearer ' + expiredToken })
 
         var response = await loginService.login(loginInfo)
-        expect(response).to.be.false
+        expect(response).to.be.false // eslint-disable-line
       })
     })
 
@@ -42,7 +40,7 @@ describe('login Service', () => {
         mock.onPost('http://localhost:8080/api/login', loginInfo).reply(200, '', { authorization: 'Bearer ' + invalidToken })
 
         var response = await loginService.login(loginInfo)
-        expect(response).to.be.false
+        expect(response).to.be.false // eslint-disable-line
       })
     })
 

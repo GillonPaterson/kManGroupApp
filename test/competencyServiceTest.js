@@ -5,10 +5,6 @@ const sinon = require('sinon')
 const axios = require('axios').default
 const MockAdapter = require('axios-mock-adapter')
 
-const mochaaxios = require('mocha-axios')
-const { assert } = require('chai')
-const { default: mock } = require('webdriverio/build/commands/browser/mock')
-
 describe('Competency Service Test', function () {
   afterEach(() => {
     sinon.restore()

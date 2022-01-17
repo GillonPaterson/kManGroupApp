@@ -1,5 +1,3 @@
-const NodeCache = require('node-cache')
-const myCache = new NodeCache()
 const axios = require('axios').default
 
 // User Story 1
@@ -58,7 +56,7 @@ exports.getRoleMatrix = async (token) => {
       for (let col = 1; col < headers.length; col++) {
         const roles = []
         response.data.roleMatrixModel.forEach(role => {
-          if (role.bandLevel == row[0] && role.capability == headers[col]) {
+          if (role.bandLevel === row[0] && role.capability === headers[col]) {
             roles.push('<a href="http://localhost:3000/jobSpec?jobRoleID=' + role.jobRoleID + '">' + role.jobRole + '</a>')
           }
         })

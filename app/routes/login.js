@@ -30,12 +30,12 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/createUser', isAdmin, async (req, res) => {
-    res.render('createUser.html')
-  })
-  
-  router.post('/createUser', isAdmin, async (req, res) => {
-    var response = loginService.createUser(req.body, req.cookies.access_token)
-    res.redirect('home')
-  })
-  
-  module.exports = router
+  res.render('createUser.html')
+})
+
+router.post('/createUser', isAdmin, async (req, res) => {
+  loginService.createUser(req.body, req.cookies.access_token)
+  res.redirect('home')
+})
+
+module.exports = router

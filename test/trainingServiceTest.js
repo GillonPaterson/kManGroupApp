@@ -6,11 +6,11 @@ const axios = require('axios').default
 const MockAdapter = require('axios-mock-adapter')
 
 describe('Job Role Service', function () {
-    afterEach(() => {
-      sinon.restore()
-    })
+  afterEach(() => {
+    sinon.restore()
+  })
 
-it('Should return an object of all job training in groups', async () => {
+  it('Should return an object of all job training in groups', async () => {
     var mock = new MockAdapter(axios)
     var jt1 = { DPGroup: [], PSGroup: [], TSGroup: [] }
     var jt2 = { DPGroup: [], PSGroup: [], TSGroup: [] }
@@ -38,5 +38,4 @@ it('Should return an object of all job training in groups', async () => {
 
     expect(result).to.equal(undefined)
   })
-
 })

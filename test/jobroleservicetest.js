@@ -5,10 +5,6 @@ const sinon = require('sinon')
 const axios = require('axios').default
 const MockAdapter = require('axios-mock-adapter')
 
-const mochaaxios = require('mocha-axios')
-const { assert } = require('chai')
-const { default: mock } = require('webdriverio/build/commands/browser/mock')
-
 describe('Job Role Service', function () {
   afterEach(() => {
     sinon.restore()
@@ -94,7 +90,7 @@ describe('Job Role Service', function () {
 
     var result = await employeeservice.getRoleMatrix()
 
-    expect(result).to.be.false
+    expect(result).to.be.false // eslint-disable-line
   })
 
   it('Should add a job role if credentials are correct and return ID', async () => {

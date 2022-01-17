@@ -22,7 +22,7 @@ exports.login = async (loginInfo) => {
 
 exports.createUser = async (userInfo, token) => {
   try {
-    if (userInfo.roles == '_unchecked') {
+    if (userInfo.roles === '_unchecked') {
       userInfo.roles = "['']"
     }
     const response = await axios.post('http://localhost:8080/api/createUser', userInfo, { headers: { Authorization: 'Bearer ' + token } })
