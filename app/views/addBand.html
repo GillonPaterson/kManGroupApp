@@ -9,7 +9,7 @@
 
 <h2 class="govuk-heading-xl">Add a New Band</h2>
  
-<form class="newBandLevelForm" action="/createBandLevel" method="post">
+<form class="newBandLevelForm" action="/createBandLevelAddTraining" method="post">
 
 {% if errormessage %} 
  <div class="govuk-error-message">{{ errormessage }}</div>
@@ -56,10 +56,10 @@
 {% for bandLevel in bandlevels %}
 
 {% set bandLevelRows = (bandLevelRows.push([{text: bandLevel.jobBandLevel },{text: bandLevel.importance}]), bandLevelRows) %}
-{% set importance = (importance.push({text: bandLevel.importance}), importance) %}
+{% set importance = (importance.push({text: bandLevel.importance, value: bandLevel.importance}), importance) %}
 
 {% endfor %}
-{% set importance = (importance.push({text: importance.length + 1}), importance) %}
+{% set importance = (importance.push({text: importance.length + 1, value: importance.length + 1}), importance) %}
 
 {{ govukSelect({
   id: "importance",
@@ -76,7 +76,7 @@
  }}
 
  <button type="submit" class="govuk-button" data-module="govuk-button">
- Submit
+ Next
  </button>
 
  {% endif %} 

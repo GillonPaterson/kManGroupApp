@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Add a New Band
+{% endblock %}
+ 
+{% block content %}
+
+<h2 class="govuk-heading-xl">Add a New Band</h2>
+ 
+<form class="newBandLevelForm" action="/createBandLevelAddCompetencies" method="post">
+
+{% set trainingItems = [] %}
+
+{% for train in training %}
+
+{% set trainingItems = (trainingItems.push({text: train.trainingLink | safe, value: train.trainingId}), trainingItems) %}
+{% endfor %}
+
+ {{ govukCheckboxes({
+  idPrefix: "training",
+  name: "training",
+  fieldset: {
+    legend: {
+      text: "Select the training that apply",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: trainingItems
+}) }}
+
+ <button type="submit" class="govuk-button" data-module="govuk-button">
+ Next
+ </button>
+
+ {% endblock %}

@@ -10,3 +10,11 @@ exports.getCompetencyData = async (jobRoleID, token) => {
 
   }
 }
+
+exports.getAllCompetencyData = async (token) => {
+  try {
+    const response = await axios.get('http://localhost:8080/api/getAllCompetenciesData/', { headers: { Authorization: 'Bearer ' + token } })
+    return response.data
+  } catch (e) {
+  }
+}
