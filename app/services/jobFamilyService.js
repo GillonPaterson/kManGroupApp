@@ -2,7 +2,7 @@ const axios = require('axios').default
 
 exports.getJobFamilies = async (token) => {
   try {
-    const response = await axios.get('http://localhost:8080/api/getJobFamilies/', { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.get('http://localhost:8080/job-families/getJobFamilies/', { headers: { Authorization: 'Bearer ' + token } })
 
     const rows = []
     response.data.forEach(capability => {
@@ -23,7 +23,7 @@ exports.getJobFamilies = async (token) => {
 
 exports.getJobFamilyNames = async (token) => {
   try {
-    const response = await axios.get('http://localhost:8080/api/getJobFamilyNames', { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.get('http://localhost:8080/job-families/getJobFamilyNames', { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
 

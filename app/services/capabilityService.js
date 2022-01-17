@@ -2,7 +2,7 @@ const axios = require('axios').default
 
 exports.getAllCapabilityLeadsInfo = async (token) => {
   try {
-    const response = await axios.get('http://localhost:8080/api/getAllCapabilityLead', { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.get('http://localhost:8080/capability/getAllCapabilityLead', { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
 
@@ -11,7 +11,7 @@ exports.getAllCapabilityLeadsInfo = async (token) => {
 
 exports.getCapabilityLeadInfo = async (leadID, token) => {
   try {
-    const response = await axios.get('http://localhost:8080/api/getCapabilityLead/' + leadID, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.get('http://localhost:8080/capability/getCapabilityLead/' + leadID, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
 
@@ -20,7 +20,7 @@ exports.getCapabilityLeadInfo = async (leadID, token) => {
 
 exports.addCapabilty = async (capabilty, token) => {
   try {
-    const response = await axios.post('http://localhost:8080/api/createCapability', capabilty, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.post('http://localhost:8080/capability/createCapability', capabilty, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
     console.log(e)
@@ -29,7 +29,7 @@ exports.addCapabilty = async (capabilty, token) => {
 
 exports.getAllCapabilitesInfo = async (token) => {
   try {
-    const response = await axios.get('http://localhost:8080/api/getAllCapabilities', { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.get('http://localhost:8080/capability/getAllCapabilities', { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
 
@@ -39,7 +39,7 @@ exports.getAllCapabilitesInfo = async (token) => {
 exports.updateCapabilites = async (capability, token) => {
   try {
     console.log(capability)
-    const response = await axios.post('http://localhost:8080/api/updateCapability', capability, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.post('http://localhost:8080/capability/updateCapability', capability, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
     console.log(e)

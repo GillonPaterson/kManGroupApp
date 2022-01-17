@@ -2,7 +2,7 @@ const axios = require('axios').default
 
 exports.getJobTraining = async (jobBandLevel, token) => {
   try {
-    const response = await axios.get('http://localhost:8080/api/getJobTraining/' + jobBandLevel, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.get('http://localhost:8080/training/getJobTraining/' + jobBandLevel, { headers: { Authorization: 'Bearer ' + token } })
     var coursesDP = []
     var coursesPS = []
     var coursesTS = []
