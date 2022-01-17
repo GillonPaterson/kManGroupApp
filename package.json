@@ -45,7 +45,7 @@
         "inquirer": "^7.3.3",
         "jsonwebtoken": "^8.5.1",
         "keypather": "^3.0.0",
-        "marked": "^2.0.0",
+        "marked": "^4.0.10",
         "mocha-axios": "^1.4.2",
         "mysql": "^2.18.1",
         "node-cache": "^5.1.2",
