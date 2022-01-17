@@ -14,6 +14,7 @@ Welcome to K man group app
 2. npm run selenium - runs selenium test
 3. npm i --package-lock-only - updates the package lock 
 4. npm run pa11y-ci your/snapshot/or/htmlpage - runs accessability tests
+5. npm install <package-name> - installs package
 
 ## WorkFlows
 
