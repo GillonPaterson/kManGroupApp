@@ -1,9 +1,37 @@
 const axios = require('axios').default
+const querystring = require('querystring')
 
 // User Story 1
 exports.getJobRoles = async (token) => {
   try {
     const response = await axios.get('http://localhost:8080/job-roles/getJobRoles', { headers: { Authorization: 'Bearer ' + token } })
+    return response.data
+  } catch (e) {
+
+  }
+}
+
+exports.getJobRolesFilter = async (token, roledata) => {
+  try {
+    if (roledata.capability === '_unchecked') {
+      roledata.capability = []
+    }
+
+    if (roledata.family === '_unchecked') {
+      roledata.family = []
+    }
+
+    if (roledata.bandlevel === '_unchecked') {
+      roledata.bandlevel = []
+    }
+
+    if (roledata.jobrolename === '') {
+      roledata.jobrolename = null
+    }
+
+    const queryString = querystring.stringify(roledata)
+
+    const response = await axios.get('http://localhost:8080/api/getJobRolesFilter?' + queryString, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
 

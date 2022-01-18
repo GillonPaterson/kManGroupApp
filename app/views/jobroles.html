@@ -5,6 +5,9 @@
 {% endblock %} 
 
 {% block content %}
+
+<form class="jobrolesform" action="/jobroles" method="post">
+
 <h2 class="govuk-heading-xl">List of Job Roles</h2> 
 
 {% if jobroles and jobroles.length > 0 %}
@@ -12,9 +15,164 @@
 
 {% for jobrole in jobroles %}
 
-{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.jobRole },{text: jobrole.jobCapability}, {text: jobrole.jobFamilyName}, {text: jobrole.jobBandLevel|safe}, {text: jobrole.viewSpecURL|safe}, {text: jobrole.editURL|safe}, {text: jobrole.deleteURL|safe}]), jobrolesrows) %}
+{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.jobRole },{text: jobrole.jobCapability}, {text: jobrole.jobFamilyName}, {text: jobrole.jobBand|safe}, {text: jobrole.viewSpecURL|safe}, {text: jobrole.editURL|safe}, {text: jobrole.deleteURL|safe}]), jobrolesrows) %}
 
 {% endfor %}
+
+
+{% set capabilityItems = [] %}
+{% for capability in capabilities %}
+{% set check1 = false %}
+{% for Jobrole in jobroles %}
+{% if capability.capabilityName == Jobrole.jobCapability %}
+{% set check1 = true %}
+{% endif %}
+{% endfor %}
+{% if check1 %}
+{% set capabilityItems = (capabilityItems.push({value: capability.capabilityName, text: capability.capabilityName, checked: true }), capabilityItems) %}
+{% else %}
+{% set capabilityItems = (capabilityItems.push({value: capability.capabilityName, text: capability.capabilityName, checked: false }), capabilityItems) %}
+{% endif %}
+{% endfor %}
+
+
+
+{% set bandLevelItems = [] %}
+{% for bandLevel in bandLevels %}
+{% set check2 = false %}
+{% for role in jobroles %}
+{% if bandLevel == role.jobBandLevel %}
+{% set check2 = true %}
+{% endif %}
+{% endfor %}
+{% if check2 %}
+{% set bandLevelItems = (bandLevelItems.push({value: bandLevel, text: bandLevel, checked: true }), bandLevelItems) %}
+{% else %}
+{% set bandLevelItems = (bandLevelItems.push({value: bandLevel, text: bandLevel, checked: false }), bandLevelItems) %}
+{% endif %}
+{% endfor %}
+
+
+{% set familyItems = [] %}
+{% for family in families %}
+{% set check3 = false %}
+{% for jobRole in jobroles %}
+{% if family == jobRole.jobFamilyName %}
+{% set check3 = true %}
+{% endif %}
+{% endfor %}
+{% if check3 %}
+{% set familyItems = (familyItems.push({value: family, text: family, checked: true }), familyItems) %}
+{% else %}
+{% set familyItems = (familyItems.push({value: family, text: family, checked: false }), familyItems) %}
+{% endif %}
+{% endfor %}
+
+{% set filterByRoleName %}
+ {{ govukInput({
+ label: {
+ text: "Enter a keyword."
+ },
+ id: "jobRole",
+ name: "jobRole",
+ value: data["jobRole"]
+ }) }}
+ {% endset -%}
+
+{% set filterByCapability %}
+{{ govukCheckboxes({
+idPrefix: "capability",
+name: "capability",
+fieldset: {
+legend: {
+classes: "govuk-fieldset__legend--l"
+}
+},
+hint: {
+    text: "Select the capabilities you want to view."
+  },
+items: capabilityItems
+}) }}
+{% endset -%}
+
+{% set filterByBandLevel %}
+{{ govukCheckboxes({
+idPrefix: "bandlevel",
+name: "bandlevel",
+fieldset: {
+legend: {
+classes: "govuk-fieldset__legend--l"
+}
+},
+hint: {
+    text: "Select the band levels you want to view."
+  },
+items: bandLevelItems
+}) }}
+{% endset -%}
+
+{% set filterByJobFamily %}
+{{ govukCheckboxes({
+idPrefix: "family",
+name: "family",
+fieldset: {
+legend: {
+classes: "govuk-fieldset__legend--l"
+}
+},
+hint: {
+    text: "Select the job families you want to view."
+  },
+items: familyItems
+}) }}
+{% endset -%}
+
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+
+{{ govukAccordion({
+  id: "accordion-default",
+  items: [
+    {
+      heading: {
+        text: "Filter by Job Role"
+      },
+      content: {
+        html: filterByRoleName
+      }
+    },
+    {
+      heading: {
+        text: "Filter by Capability"
+      },
+      content: {
+        html: filterByCapability
+      }
+    },
+    {
+      heading: {
+        text: "Filter by Job Family"
+      },
+      content: {
+        html: filterByJobFamily
+      }
+    },
+    {
+      heading: {
+        text: "Filter by Band Level"
+      },
+      content: {
+        html: filterByBandLevel
+      }
+    } 
+  ]
+}) }}
+
+{{ govukButton({
+  text: "Update table"
+}) }}
+
+
+<br><br>
 
 {{govukTable({
 head: [{ text: "Job Role" },{text: "Job Capability"}, {text: "Job Family"}, {text: "Band Level"}, {text: "View Job Spec"}, {text: "Edit"}, {text: "Delete"}], 
@@ -27,13 +185,7 @@ rows: jobrolesrows })
 There are no job roles.
 
 {% endif %}
-<!--
-<script>
-function confirm_alert(ID) {
-        var answer = confirm ("Are you sure you want to delete this role?" + ID)
-        if (answer)
-            window.location="home.html";
-    }
-</script>
--->
+
+</form>
+
 {% endblock %}
