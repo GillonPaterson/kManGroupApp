@@ -7,36 +7,30 @@ exports.getJobRoles = async (token) => {
     const response = await axios.get('http://localhost:8080/job-roles/getJobRoles', { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
-
+    
   }
 }
 
 exports.getJobRolesFilter = async (token, roledata) => {
   try {
-    
-    if(roledata.capability === '_unchecked')
-    {
+    if (roledata.capability === '_unchecked') {
       roledata.capability = []
     }
 
-    if(roledata.family === '_unchecked')
-    {
+    if (roledata.family === '_unchecked') {
       roledata.family = []
     }
 
-    if(roledata.bandlevel === '_unchecked')
-    {
+    if (roledata.bandlevel === '_unchecked') {
       roledata.bandlevel = []
     }
 
-    if(roledata.jobrolename === '')
-    {
-      roledata.jobrolename = null;
+    if (roledata.jobrolename === '') {
+      roledata.jobrolename = null
     }
 
-    let queryString = querystring.stringify(roledata);
+    const queryString = querystring.stringify(roledata)
 
-    console.log(queryString)
     const response = await axios.get('http://localhost:8080/api/getJobRolesFilter?' + queryString, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
