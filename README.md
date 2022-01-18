@@ -40,6 +40,11 @@ https://design-system.service.gov.uk/get-started/
 2. if Gillon did it and it doesn't work check his spelling
 3. Ignore dependabot at all costs
 
+### Other Repos for Project
+
+Backend - https://github.com/GillonPaterson/kManGroup-Api
+Performance testing - https://github.com/GillonPaterson/gatling-tests
+
 ### Contributing
 
 we aren't open to contributing sorry.
