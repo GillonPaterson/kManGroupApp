@@ -1,6 +1,10 @@
 # kManGroupApp
 Hello welcome to K man group app
 
+## Description 
+
+This is the front end to our project it has webpages made up of a mixture of nunjucks and html using the govUK components. Also has java script to request data from the endpoints of our api. 
+
 ## How to start your application 
 
 ### enter into terminal 
@@ -25,6 +29,10 @@ All the config files for the CI pipeline are held in the .github/workflows and t
 1. superlinter -documentation- https://github.com/github/super-linter
 2. pa11y -documentation- https://github.com/pa11y/pa11y
 3. unit tests
+
+### GovUk components
+
+https://design-system.service.gov.uk/get-started/
 
 ### Rules
 
