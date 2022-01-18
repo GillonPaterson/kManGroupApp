@@ -20,25 +20,22 @@ describe('Capability Validator', function () {
   })
 
   it('Should validate the capabilty name and return error because name contains numbers ', async () => {
-    var newCapability = { capabilityName: '4127896328746' }
+    let newCapability = { capabilityName: '4127896328746' }
     expect(await capabilityValidator.checkCapability(newCapability)).to.equal('Capability Name must not contain numbers')
   })
 
   it('Should validate the capabilty name and return error because there is a space before or after', async () => {
-    var spaceBeforeTest = { capabilityName: ' test' }
+    let spaceBeforeTest = { capabilityName: ' test' }
     expect(await capabilityValidator.checkCapability(spaceBeforeTest)).to.equal('Capability Name must not begin with a space')
-    var spaceAfterTest = { capabilityName: 'test  ' }
+    let spaceAfterTest = { capabilityName: 'test  ' }
     expect(await capabilityValidator.checkCapability(spaceAfterTest)).to.equal('Capability Name must not end with a space')
   })
   it('Should add a capability if credentials are correct and return ID', async () => {
-    var mock = new MockAdapter(axios)
-    var id = 10
-    var newCapability = { capabilityName: 'test' }
-
+    let mock = new MockAdapter(axios)
+    let id = 10
+    let newCapability = { capabilityName: 'test' }
     mock.onPost('http://localhost:8080/capability/createCapability', newCapability).reply(200, id)
-
     var result = await capabilityService.addCapabilty(newCapability)
-
     expect(result).to.equal(id)
   })
 
