@@ -1,5 +1,5 @@
 # kManGroupApp
-Welcome to K man group app
+Hello welcome to K man group app
 
 ## How to start your application 
 
@@ -22,12 +22,12 @@ All the config files for the CI pipeline are held in the .github/workflows and t
 
 ### workFlows we run
 
-1. superlinter
-2. pa11y 
+1. superlinter -documentation- https://github.com/github/super-linter
+2. pa11y -documentation- https://github.com/pa11y/pa11y
 3. unit tests
 
-Rules
----
+### Rules
+
 1. You break it you fix it 
 2. if Gillon did it and it doesn't work check his spelling
 
