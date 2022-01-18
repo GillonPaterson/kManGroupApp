@@ -38,6 +38,7 @@ https://design-system.service.gov.uk/get-started/
 
 1. You break it you fix it 
 2. if Gillon did it and it doesn't work check his spelling
+3. Ignore dependabot at all costs
 
 ### Contributing
 
