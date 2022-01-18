@@ -42,7 +42,7 @@ https://design-system.service.gov.uk/get-started/
 
 ### Other Repos for Project
 
-1. Backend - https://github.com/GillonPaterson/kManGroup-Api
+1. Backend - https://github.com/GillonPaterson/kManGroup-Api - we used java17
 2. Performance testing - https://github.com/GillonPaterson/gatling-tests - needs to be run with java11
 
 ### Contributing
