@@ -7,7 +7,7 @@ exports.getJobRoles = async (token) => {
     const response = await axios.get('http://localhost:8080/job-roles/getJobRoles', { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
-    
+
   }
 }
 
