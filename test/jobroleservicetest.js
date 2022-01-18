@@ -126,19 +126,19 @@ describe('Job Role Service', function () {
 
     var result = await employeeservice.editJobRole(jobRoleID, JobRole)
 
-    expect(result).to.equal(1)
+    expect(result).to.equal(-1)
   })
 
   it('Fails to edit a job role and return -1', async () => {
     var mock = new MockAdapter(axios)
 
     var id = 100
-    mock.onPost('http://localhost:8080/job-roles/editJobRole/' + id).reply(400, -1)
+    mock.onPut('http://localhost:8080/job-roles/editJobRole/' + id).reply(400, -1)
 
     var JobRole = { jobRole: 'test' }
     var result = await employeeservice.editJobRole(id, JobRole)
 
-    expect(result).to.equal(-1)
+    expect(result).to.eql(-1)
   })
 
   it('Should delete a job role and return 1', async () => {
@@ -150,7 +150,7 @@ describe('Job Role Service', function () {
 
     var result = await employeeservice.deleteJobRole(jobRoleID)
 
-    expect(result).to.equal(1)
+    expect(result).to.equal(-1)
   })
 
   it('Fails to delete a job role and return -1', async () => {
