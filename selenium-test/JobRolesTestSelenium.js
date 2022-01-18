@@ -1,19 +1,13 @@
 const { expect } = require('chai')
-const { Builder, By, until, Key, WebElement } = require('selenium-webdriver')
-const { default: isEqual } = require('webdriverio/build/commands/element/isEqual')
+const { Builder, By, until, Key } = require('selenium-webdriver')
 const fs = require('fs')
-const { Console } = require('console')
 require('chromedriver')
-const rp = require('request-promise')
 
 describe('Selenium test', () => {
   const driver = new Builder().forBrowser('chrome').build()
 
   it('should wait until login page opens', async () => {
-    fs.readFile('selenium-test/seleniumConfig.json', (err, data) => {
-      if (err) throw err
-      config = JSON.parse(data)
-    })
+    var config = JSON.parse(fs.readFileSync('selenium-test/seleniumConfig.json', 'utf8'))
 
     await driver.get('http://localhost:3000/home')
 
@@ -21,7 +15,7 @@ describe('Selenium test', () => {
     await driver.findElement(By.id('username')).sendKeys(config.employeeUser.username)
     await driver.findElement(By.id('password')).sendKeys(config.employeeUser.password)
 
-    const button = await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()
+    await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()
     await driver.wait(until.titleIs('Home'))
     expect(title).to.equal('Login')
 
@@ -45,7 +39,7 @@ describe('Selenium test', () => {
     await driver.wait(until.titleIs('List of Job Roles'))
 
     const title = await driver.getTitle()
-
+    expect(title).to.equal('List of Job Roles')
     var htmlSource = await driver.getPageSource()
     fs.appendFile('app/assets/snapshots/jobRoles-snapshot.html', htmlSource, function (err) {
       if (err) throw err
@@ -54,7 +48,7 @@ describe('Selenium test', () => {
   })
 
   it('should have correct first row displayed on job roles page', async () => {
-    expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', 'Apprentice']
+    var expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', 'Associate']
 
     var elements = (await driver.findElements(By.className('govuk-table__cell')))
     var jobRole = await elements[0].getText()
@@ -117,7 +111,7 @@ describe('Selenium test', () => {
     var heading = await driver.findElement(By.className('govuk-heading-xl')).getText()
 
     expect(heading).to.equal('Available Training Courses for Associate')
-    expect(link).to.exist
+    expect(link).to.exist // eslint-disable-line
   })
 
   // put in bit for clicking training link
@@ -181,7 +175,7 @@ describe('Selenium test', () => {
     const title = await driver.getTitle()
     expect(title).to.equal('List of Capabilty Leads')
 
-    expectedFirstRow = ['Dave', 'Boats', 'Engineering']
+    var expectedFirstRow = ['Dave', 'Boats', 'Engineering']
 
     var elements = (await driver.findElements(By.className('govuk-table__cell')))
     var forename = await elements[0].getText()
@@ -229,51 +223,46 @@ describe('Selenium test', () => {
   })
 
   it('should logout and login as admin', async () => {
-    fs.readFile('selenium-test/seleniumConfig.json', (err, data) => {
-      if (err) throw err
-      config = JSON.parse(data)
-    })
-
+    var config = JSON.parse(fs.readFileSync('selenium-test/seleniumConfig.json', 'utf8'))
     await driver.get('http://localhost:3000/home')
     var title = await driver.getTitle()
     expect(title).to.equal('Home')
 
-    const button = await driver.findElement(By.xpath('//*[@id="main-content"]/div/div[2]/aside/a')).click()
+    await driver.findElement(By.xpath('//*[@id="main-content"]/div/div[2]/aside/a')).click()
     title = await driver.getTitle()
     expect(title).to.equal('Logged Out')
 
-    var htmlSource = await driver.getPageSource()
-    fs.appendFile('app/assets/snapshots/logout-snapshot.html', htmlSource, function (err) {
+    var logoutPageHtmlSource = await driver.getPageSource()
+    fs.appendFile('app/assets/snapshots/logout-snapshot.html', logoutPageHtmlSource, function (err) {
       if (err) throw err
       console.log('Saved!')
     })
 
-    const button2 = await driver.findElement(By.xpath('//*[@id="main-content"]/a')).click()
+    await driver.findElement(By.xpath('//*[@id="main-content"]/a')).click()
 
     title = await driver.getTitle()
     expect(title).to.equal('Login')
-    console.log(config.adminUser.username)
     const username = await driver.findElement(By.id('username'))
     await username.sendKeys('aaa')
-    for (var i = 0; i < 20; i++) {
+    for (let i = 0; i < 20; i++) {
       await username.sendKeys(Key.BACK_SPACE)
     }
     console.log(config.adminUser)
     await username.sendKeys(config.adminUser.username)
     const password = await driver.findElement(By.id('password'))
     await password.sendKeys('aaa')
-    for (var i = 0; i < 20; i++) {
+    for (let i = 0; i < 20; i++) {
       await password.sendKeys(Key.BACK_SPACE)
     }
     await password.sendKeys(config.adminUser.password)
 
-    const button3 = await driver.findElement(By.xpath('/html/body/div[1]/main/form/button')).click()
+    await driver.findElement(By.xpath('/html/body/div[1]/main/form/button')).click()
 
-    var title = await driver.getTitle()
-    expect(title).to.equal('Home')
+    var homeTitle = await driver.getTitle()
+    expect(homeTitle).to.equal('Home')
 
-    var htmlSource = await driver.getPageSource()
-    fs.appendFile('app/assets/snapshots/adminHome-snapshot.html', htmlSource, function (err) {
+    var adminHomeHtmlSource = await driver.getPageSource()
+    fs.appendFile('app/assets/snapshots/adminHome-snapshot.html', adminHomeHtmlSource, function (err) {
       if (err) throw err
       console.log('Saved!')
     })
@@ -311,8 +300,8 @@ describe('Selenium test', () => {
     var rows = (await driver.findElements(By.className('govuk-table__row')))
     var columns = elements.length / (rows.length - 1)
 
-    for (i = 0; i < elements.length; i++) {
-      if (await elements[i].getText() == 'seleniumtestname') {
+    for (let i = 0; i < elements.length; i++) {
+      if (await elements[i].getText() === 'seleniumtestname') {
         expect(true)
         var link = await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]')).getText()
         expect(link).to.equal('Edit')
@@ -337,8 +326,8 @@ describe('Selenium test', () => {
     var rows2 = (await driver.findElements(By.className('govuk-table__row')))
     var columns2 = elements2.length / (rows2.length - 1)
 
-    for (i = 0; i < elements2.length; i++) {
-      if (await elements2[i].getText() == 'selenium') {
+    for (let i = 0; i < elements2.length; i++) {
+      if (await elements2[i].getText() === 'selenium') {
         expect(true)
         var link2 = await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]')).getText()
         expect(link2).to.equal('Delete')
@@ -366,8 +355,8 @@ describe('Selenium test', () => {
 
     var elements3 = (await driver.findElements(By.className('govuk-table__cell')))
 
-    for (i = 0; i < elements3.length; i++) {
-      if (await elements3[i].getText() == 'selenium') {
+    for (let i = 0; i < elements3.length; i++) {
+      if (await elements3[i].getText() === 'selenium') {
         expect(1).to.equal(2)
         break
       }

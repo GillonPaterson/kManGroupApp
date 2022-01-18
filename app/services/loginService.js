@@ -1,9 +1,8 @@
 const axios = require('axios').default
-const auth = require('../../lib/middleware/authentication/authoriser.js')
 
 exports.login = async (loginInfo) => {
   try {
-    const response = await axios.post('http://localhost:8080/api/login', loginInfo)
+    const response = await axios.post('http://localhost:8080/login/login', loginInfo)
     var token = response.headers.authorization.split(' ')[1]
 
     if (token == null) {
@@ -23,10 +22,10 @@ exports.login = async (loginInfo) => {
 
 exports.createUser = async (userInfo, token) => {
   try {
-    if (userInfo.roles == '_unchecked') {
+    if (userInfo.roles === '_unchecked') {
       userInfo.roles = "['']"
     }
-    const response = await axios.post('http://localhost:8080/api/createUser', userInfo, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.post('http://localhost:8080/login/createUser', userInfo, { headers: { Authorization: 'Bearer ' + token } })
     return response
   } catch (e) {
     return false
