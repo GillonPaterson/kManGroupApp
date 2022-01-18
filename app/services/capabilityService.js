@@ -38,10 +38,10 @@ exports.getAllCapabilitesInfo = async (token) => {
 
 exports.updateCapabilites = async (capability, token) => {
   try {
-    console.log(capability)
-    const response = await axios.post('http://localhost:8080/capability/updateCapability', capability, { headers: { Authorization: 'Bearer ' + token } })
+    console.log(capability.capabilityName)
+    const jason = { capabilityName: capability.capabilityName }
+    const response = await axios.put('http://localhost:8080/capability/updateCapability/' + capability.capabilityID, jason, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
-    console.log(e)
   }
 }
