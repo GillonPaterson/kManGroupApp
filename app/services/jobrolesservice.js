@@ -21,7 +21,7 @@ exports.addJobRole = async (role, token) => {
 
 exports.deleteJobRole = async (id, token) => {
   try {
-    const response = await axios.post('http://localhost:8080/job-roles/deleteJobRole/' + id, {}, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.delete('http://localhost:8080/job-roles/deleteJobRole/' + id, {}, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (error) {
     return -1
@@ -76,7 +76,7 @@ exports.getRoleMatrix = async (token) => {
 
 exports.editJobRole = async (ID, role, token) => {
   try {
-    const response = await axios.post('http://localhost:8080/job-roles/editJobRole/' + ID, role, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.put('http://localhost:8080/job-roles/editJobRole/' + ID, role, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (error) {
     return -1
