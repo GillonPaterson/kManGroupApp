@@ -2,18 +2,12 @@ const axios = require('axios').default
 
 exports.getTraining = async (token) => {
   try {
-<<<<<<< HEAD
-    const response = await axios.get('http://localhost:8080/api/getTraining/', { headers: { Authorization: 'Bearer ' + token } })
-=======
     const response = await axios.get('http://localhost:8080/training/getTraining/', { headers: { Authorization: 'Bearer ' + token } })
->>>>>>> 8b63808ee3f6340504a0acef339a5ebd19fbc81c
     return response.data
   } catch (e) {
     console.log(e)
   }
 }
-<<<<<<< HEAD
-=======
 exports.getJobTraining = async (jobBandLevel, token) => {
   try {
     const response = await axios.get('http://localhost:8080/training/getJobTraining/' + jobBandLevel, { headers: { Authorization: 'Bearer ' + token } })
@@ -35,4 +29,3 @@ exports.getJobTraining = async (jobBandLevel, token) => {
 
   }
 }
->>>>>>> 8b63808ee3f6340504a0acef339a5ebd19fbc81c

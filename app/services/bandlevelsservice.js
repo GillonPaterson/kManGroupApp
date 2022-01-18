@@ -20,11 +20,7 @@ exports.getJobBandLevelsAndImportance = async (token) => {
 
 exports.createBandLevel = async (bandLevelInfo, token) => {
   try {
-<<<<<<< HEAD
-    const response = await axios.post('http://localhost:8080/api/createBandLevel', bandLevelInfo, { headers: { Authorization: 'Bearer ' + token } })
-=======
     const response = await axios.post('http://localhost:8080/band-level/createBandLevel', bandLevelInfo, { headers: { Authorization: 'Bearer ' + token } })
->>>>>>> 8b63808ee3f6340504a0acef339a5ebd19fbc81c
     return response.data
   } catch (e) {
     console.log(e)
