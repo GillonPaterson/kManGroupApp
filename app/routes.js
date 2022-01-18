@@ -45,7 +45,7 @@ router.get('/jobroles', async (req, res) => {
 })
 
 router.post('/jobroles', async (req, res) => {
-  let roledata = req.body
+  const roledata = req.body
 
   if (!(roledata.capability === '_unchecked' && roledata.family === '_unchecked' && roledata.bandlevel === '_unchecked' && roledata.jobrolename === '')) {
     const role = await jobrolesservice.getJobRolesFilter(req.cookies.access_token, roledata)
