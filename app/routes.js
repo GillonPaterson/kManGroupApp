@@ -4,6 +4,8 @@ const jobrolesservice = require('./services/jobrolesservice.js')
 const loginService = require('./services/loginService.js')
 const competencyService = require('./services/competencyService')
 const capabilityService = require('./services/capabilityService')
+const bandLevelService = require('./services/bandlevelsservice')
+const querystring = require('querystring');
 
 router.use('/', require('./routes/admin'))
 
@@ -21,16 +23,54 @@ router.get('/employeeHome', async (req, res) => {
 
 router.get('/jobroles', async (req, res) => {
   var role = await jobrolesservice.getJobRoles(req.cookies.access_token)
+  var bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
+  var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
+  var capability = await capabilityService.getAllCapabilitesInfo(req.cookies.access_token)
 
-  for (i = 0; i < role.length; i++) {
-    role[i].jobBandLevel = '<a href=http://localhost:3000/competencyData?jobRoleID=' + role[i].jobRoleID + '>' + role[i].jobBandLevel + '</a>'
+  for (let i = 0; i < role.length; i++) {
+    role[i].jobBand = '<a href=http://localhost:3000/competencyData?jobRoleID=' + role[i].jobRoleID + '>' + role[i].jobBandLevel + '</a>'
     role[i].viewSpecURL = '<a href=http://localhost:3000/jobSpec?jobRoleID=' + role[i].jobRoleID + '>More Info</a>'
     role[i].editURL = '<a href=http://localhost:3000/editRole?jobRoleID=' + role[i].jobRoleID + '>Edit</a>'
     role[i].deleteURL = '<a href=http://localhost:3000/deleteRole?jobRoleID=' + role[i].jobRoleID + '>Delete</a>'
   }
+
   res.render('jobroles.html', {
-    jobroles: role
+    jobroles: role,
+    bandLevels: bandLevels,
+    families: family,
+    capabilities: capability
   })
+})
+
+
+router.post('/jobroles', async (req, res) => {
+  var roledata = req.body
+
+  if(!(roledata.capability === '_unchecked' && roledata.family === '_unchecked' && roledata.bandlevel === '_unchecked' && roledata.jobrolename === '' )){
+    var role = await jobrolesservice.getJobRolesFilter(req.cookies.access_token, roledata)
+    var bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
+    var family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
+    var capability = await capabilityService.getAllCapabilitesInfo(req.cookies.access_token)
+    
+    for (let i = 0; i < role.length; i++) {
+      role[i].jobBand = '<a href=http://localhost:3000/competencyData?jobRoleID=' + role[i].jobRoleID + '>' + role[i].jobBandLevel + '</a>'
+      role[i].viewSpecURL = '<a href=http://localhost:3000/jobSpec?jobRoleID=' + role[i].jobRoleID + '>More Info</a>'
+      role[i].editURL = '<a href=http://localhost:3000/editRole?jobRoleID=' + role[i].jobRoleID + '>Edit</a>'
+      role[i].deleteURL = '<a href=http://localhost:3000/deleteRole?jobRoleID=' + role[i].jobRoleID + '>Delete</a>'
+    }
+
+    
+    res.render('jobroles.html', {
+      jobroles: role,
+      bandLevels: bandLevels,
+      families: family,
+      capabilities: capability
+    })
+  }
+  else{
+    res.redirect('/jobroles')
+  }
+
 })
 
 router.get('/jobSpec', async (req, res) => {

@@ -70,6 +70,7 @@
    name: "jobSpec",
    id: "jobSpec",
     errorMessage: {text: errormessage },
+    value: data["jobSpec"],
    label: {
      text: "Role Specification"
    }
@@ -150,6 +151,7 @@ hint: {text: "The link must start with 'https://'"}
 {{ govukTextarea({
    name: "jobResponsibilities",
    id: "jobResponsibilities",
+   value: data["jobResponsibilities"],
    errorMessage: {text: errormessage },
    label: {
      text: "Role Responsibilities"
