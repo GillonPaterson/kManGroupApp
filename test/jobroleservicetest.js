@@ -3,6 +3,7 @@ const chai = require('chai')
 const expect = chai.expect
 const sinon = require('sinon')
 const axios = require('axios').default
+const querystring = require('querystring')
 const MockAdapter = require('axios-mock-adapter')
 
 describe('Job Role Service', function () {
@@ -36,6 +37,34 @@ describe('Job Role Service', function () {
     var result = await employeeservice.getJobRoles()
 
     expect(result).to.equal(undefined)
+  })
+
+  it('Should return a list of all job roles with filter', async () => {
+    const mock = new MockAdapter(axios)
+    const filters = { capability: 'test', family: 'test', bandlevel: 'test', jobrolename: 'test' }
+    const role = { jobRoleID: 1, jobRole: 'test', jobFamilyName: 'test', jobCapability: 'test', jobBandLevel: 'test' }
+    let queryString = querystring.stringify(filters);
+    
+    mock.onGet('http://localhost:8080/job-roles/getJobRolesFilter?' + queryString).reply(200, role)
+    
+    const result = await employeeservice.getJobRolesFilter('', filters)
+    
+    expect(result).to.eql(role)
+    mock.restore()
+  })
+
+  it('Should fail to return a list of all job roles with filter', async () => {
+    const mock = new MockAdapter(axios)
+    const filters = { capability: 'test', family: 'test', bandlevel: 'test', jobrolename: 'test' }
+    const role = { jobRoleID: 1, jobRole: 'test', jobFamilyName: 'test', jobCapability: 'test', jobBandLevel: 'test' }
+    let queryString = querystring.stringify(filters);
+    
+    mock.onGet('http://localhost:8080/job-roles/getJobRolesFilter?' + queryString).reply(400, role)
+    
+    const result = await employeeservice.getJobRolesFilter('', filters)
+    
+    expect(result).to.eql(undefined)
+    mock.restore()
   })
 
   it('Should return jobSpec info', async () => {

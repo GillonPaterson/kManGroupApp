@@ -60,6 +60,45 @@ describe('Selenium test', () => {
     expect(firstRow).to.eql(expectedFirstRow)
   })
 
+  it('should display filter box on job roles page', async () => {
+    var filter1 = await driver.findElement(By.xpath('//*[@id="accordion-default-heading-1"]')).getText()
+    expect(filter1).to.eql('Filter by Job Role')
+
+    var filter2 = await driver.findElement(By.xpath('//*[@id="accordion-default-heading-2"]')).getText()
+    expect(filter2).to.eql('Filter by Capability')
+
+    var filter3 = await driver.findElement(By.xpath('//*[@id="accordion-default-heading-3"]')).getText()
+    expect(filter3).to.eql('Filter by Job Family')
+
+    var filter4 = await driver.findElement(By.xpath('//*[@id="accordion-default-heading-4"]')).getText()
+    expect(filter4).to.eql('Filter by Band Level')
+  })
+
+  it('should filter job roles when update table button is clicked', async () => {
+    await driver.findElement(By.xpath('//*[@id="accordion-default-heading-2"]')).click()
+    await driver.findElement(By.id('capability-2')).click()
+    await driver.findElement(By.id('capability-3')).click()
+    await driver.findElement(By.id('capability-4')).click()
+    await driver.findElement(By.id('capability-5')).click()
+    await driver.findElement(By.id('capability-6')).click()
+    await driver.findElement(By.id('capability-7')).click()
+    await driver.findElement(By.id('capability-8')).click()
+
+    expect(await driver.findElement(By.id('capability-2')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-3')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-4')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-5')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-6')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-7')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-8')).isSelected()).to.eql(false)
+
+    await driver.findElement(By.xpath('//*[@id="accordion-default-heading-2"]')).click()
+    await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()
+
+    const title = await driver.getTitle()
+    expect(title).to.equal('List of Job Roles')
+  })
+
   it('should click more info and display job spec', async () => {
     driver.findElement(By.linkText('More Info')).click()
     await driver.wait(until.titleIs('Job Specification'))
@@ -303,9 +342,9 @@ describe('Selenium test', () => {
     for (let i = 0; i < elements.length; i++) {
       if (await elements[i].getText() === 'seleniumtestname') {
         expect(true)
-        var link = await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]')).getText()
+        var link = await driver.findElement(By.xpath('//*[@id="main-content"]/form/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]')).getText()
         expect(link).to.equal('Edit')
-        await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]/a')).click()
+        await driver.findElement(By.xpath('//*[@id="main-content"]/form/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]/a')).click()
         break
       }
     }
@@ -329,9 +368,9 @@ describe('Selenium test', () => {
     for (let i = 0; i < elements2.length; i++) {
       if (await elements2[i].getText() === 'selenium') {
         expect(true)
-        var link2 = await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]')).getText()
+        var link2 = await driver.findElement(By.xpath('//*[@id="main-content"]/form/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]')).getText()
         expect(link2).to.equal('Delete')
-        await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]/a')).click()
+        await driver.findElement(By.xpath('//*[@id="main-content"]/form/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]/a')).click()
         break
       }
     }

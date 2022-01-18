@@ -3,13 +3,13 @@ const isAdmin = require('../../lib/middleware/authentication/isAdmin.js')
 const jobrolesservice = require('../services/jobrolesservice.js')
 const bandLevelService = require('../services/bandlevelsservice')
 const jobFamilyService = require('../services/jobFamilyService')
-const capabilityService = require('./services/capabilityService')
+const capabilityService = require('../services/capabilityService')
 const roleValidator = require('../validator/roleValidator')
 
 router.get('/jobroles', async (req, res) => {
   const role = await jobrolesservice.getJobRoles(req.cookies.access_token)
   const bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
-  const family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
+  const family = await jobFamilyService.getJobFamilyNames(req.cookies.access_token)
   const capability = await capabilityService.getAllCapabilitesInfo(req.cookies.access_token)
 
   for (let i = 0; i < role.length; i++) {
@@ -33,7 +33,7 @@ router.post('/jobroles', async (req, res) => {
   if (!(roledata.capability === '_unchecked' && roledata.family === '_unchecked' && roledata.bandlevel === '_unchecked' && roledata.jobrolename === '')) {
     const role = await jobrolesservice.getJobRolesFilter(req.cookies.access_token, roledata)
     const bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
-    const family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
+    const family = await jobFamilyService.getJobFamilyNames(req.cookies.access_token)
     const capability = await capabilityService.getAllCapabilitesInfo(req.cookies.access_token)
 
     for (let i = 0; i < role.length; i++) {
