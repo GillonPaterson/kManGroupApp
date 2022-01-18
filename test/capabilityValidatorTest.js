@@ -12,7 +12,7 @@ describe('Capability Validator', function () {
   })
 
   it('Should validate the capabilty name and return error because length is too long or is empty string', async () => {
-    var newCapability = { capabilityName: 'sdvjsbvjdsbvjksbvskdbvksvbskvsdkskvsdjvbjkvbsdkjvbsdkv' }
+    let newCapability = { capabilityName: 'sdvjsbvjdsbvjksbvskdbvksvbskvsdkskvsdjvbjkvbsdkjvbsdkv' }
 
     expect(await capabilityValidator.checkCapability(newCapability)).to.equal('Capability Name can be A maximum of 20 characters and must be populated')
     newCapability.capabilityName = ''
@@ -35,7 +35,7 @@ describe('Capability Validator', function () {
     let id = 10
     let newCapability = { capabilityName: 'test' }
     mock.onPost('http://localhost:8080/capability/createCapability', newCapability).reply(200, id)
-    var result = await capabilityService.addCapabilty(newCapability)
+    let result = await capabilityService.addCapabilty(newCapability)
     expect(result).to.equal(id)
   })
 
