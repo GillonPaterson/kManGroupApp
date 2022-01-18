@@ -41,7 +41,7 @@ router.post('/addCapability', isAdmin, async (req, res) => {
 })
 
 router.post('/UpdateCapability', isAdmin, async (req, res) => {
-  console.log("update hit")
+  console.log('update hit')
   try {
     console.log('res ' + req.body.capabilityID)
     var capabilityID = req.body.capabilityID

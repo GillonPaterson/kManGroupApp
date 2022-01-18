@@ -35,5 +35,4 @@ describe('Capability Validator', function () {
     const result = await capabilityService.addCapabilty(newCapability)
     expect(result).to.equal(id)
   })
-
 })
