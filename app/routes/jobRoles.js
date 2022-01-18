@@ -119,7 +119,7 @@ router.post('/addrole', isAdmin, async (req, res) => {
   }
 })
 
-router.get('/editrole', isAdmin, async (req, res) => {
+router.put('/editrole', isAdmin, async (req, res) => {
   var role = await jobrolesservice.getJobRole(req.query.jobRoleID, req.cookies.access_token)
   var bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
   var family = await jobFamilyService.getJobFamilyNames(req.cookies.access_token)
@@ -177,7 +177,7 @@ router.post('/editrole', isAdmin, async (req, res) => {
   }
 })
 
-router.get('/deleterole', isAdmin, async (req, res) => {
+router.delete('/deleterole', isAdmin, async (req, res) => {
   var role = await jobrolesservice.getJobRole(req.query.jobRoleID, req.cookies.access_token)
 
   if (role !== false) {
