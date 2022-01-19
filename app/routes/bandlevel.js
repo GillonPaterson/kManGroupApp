@@ -11,10 +11,9 @@ const myCache = new NodeCache()
 
 router.get('/createBandLevel', isAdmin, async (req, res) => {
   var bandlevels = await bandLevelService.getJobBandLevelsAndImportance(req.cookies.access_token)
-  if(bandlevels === null){
+  if (bandlevels === null) {
     res.redirect('serviceUnavailable')
-  }
-  else{
+  } else {
     res.render('addBand.html', { bandlevels: bandlevels })
   }
 })
@@ -25,15 +24,14 @@ router.post('/createBandLevelAddTraining', isAdmin, async (req, res) => {
   const errorMessage = await bandLevelValidator.validateBandLevel(bandLevelInfo)
   if (errorMessage !== null) {
     var bandlevels = await bandLevelService.getJobBandLevelsAndImportance(req.cookies.access_token)
-    if(bandlevels === null){
+    if (bandlevels === null) {
       res.redirect('serviceUnavailable')
+    } else {
+      res.render('addBand.html', {
+        bandlevels: bandlevels,
+        errormessage: errorMessage
+      })
     }
-    else{
-    res.render('addBand.html', {
-      bandlevels: bandlevels,
-      errormessage: errorMessage
-    })
-  }
   } else {
     myCache.set('bandLevelForm', bandLevelInfo)
     const training = await trainingService.getTraining(req.cookies.access_token)
@@ -77,11 +75,10 @@ router.post('/createBandLevelSubmit', isAdmin, async (req, res) => {
     const bandLevelInfo = { bandLevel: myCache.get('bandLevelForm'), training, competencies }
     var error = await bandLevelService.createBandLevel(bandLevelInfo, req.cookies.access_token)
     myCache.flushAll()
-    if(error === false){
+    if (error === false) {
       res.render('serviceUnavailable.html')
-    }
-    else{
-    res.redirect('home')
+    } else {
+      res.redirect('home')
     }
   }
 })
