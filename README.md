@@ -28,6 +28,11 @@ All the config files for the CI pipeline are held in the .github/workflows and t
 
 1. superlinter -documentation- https://github.com/github/super-linter
 2. pa11y -documentation- https://github.com/pa11y/pa11y
+
+#### How Pa11y works in this project
+
+Screenshots of the webpages used are taken during the selenium test and then the Pa11y tests can be run on the snapshots which means the tests can be run as part of the workflow. The pa11yci.json file is used to configure the test from here you can set the standart timeout etc.  
+
 3. unit tests
 
 ### GovUk components
