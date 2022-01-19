@@ -414,7 +414,7 @@ describe('Selenium test', () => {
     })
   })
 
-  it('Assert the title on create capability webpage is correct', async () => {
+  it('Assert the title on create band level webpage is correct', async () => {
     await driver.get('http://localhost:3000/createBandLevel')
     const title = await driver.getTitle()
     expect(title).to.equal('Add a New Band')
@@ -427,13 +427,13 @@ describe('Selenium test', () => {
   })
 
   it('Should enter correct details and submit successfully', async () => {
-    await driver.findElement(By.xpath('/html/body/div/main/form/div[1]/input')).sendKeys('Selenium Test')
+    await driver.findElement(By.id('jobBandLevel')).sendKeys('Selenium Test')
     await driver.findElement(By.xpath('/html/body/div/main/form/div[2]/select/option[1]')).click()
 
-    await driver.findElement(By.xpath('/html/body/div/main/form/button')).click()
+    await driver.findElement(By.className('govuk-button')).click()
 
     const title = await driver.getTitle()
-    expect(title).to.equal('Add a New Band')
+    expect(title).to.equal('Add a New Band Training')
 
     var htmlSource = await driver.getPageSource()
     fs.appendFile('app/assets/snapshots/addBandAddTraining-snapshot.html', htmlSource, function (err) {
@@ -443,11 +443,11 @@ describe('Selenium test', () => {
   })
 
   it('Should click a training box and submit', async () => {
-    await driver.findElement(By.xpath('/html/body/div/main/form/div/fieldset/div/div[1]/input')).click()
-    await driver.findElement(By.xpath('/html/body/div/main/form/button')).click()
+    await driver.findElement(By.className('govuk-checkboxes__input')).click()
+    await driver.findElement(By.className('govuk-button')).click()
 
     const title = await driver.getTitle()
-    expect(title).to.equal('Add a New Band')
+    expect(title).to.equal('Add a New Band Competency')
 
     var htmlSource = await driver.getPageSource()
     fs.appendFile('app/assets/snapshots/addBandAddCompetencies-snapshot.html', htmlSource, function (err) {
@@ -457,8 +457,8 @@ describe('Selenium test', () => {
   })
 
   it('Should click a competency box and submit', async () => {
-    await driver.findElement(By.xpath('/html/body/div/main/form/div/fieldset/div/div[1]/input')).click()
-    await driver.findElement(By.xpath('/html/body/div/main/form/button')).click()
+    await driver.findElement(By.className('govuk-checkboxes__input')).click()
+    await driver.findElement(By.className('govuk-button')).click()
 
     const title = await driver.getTitle()
     expect(title).to.equal('Home')
