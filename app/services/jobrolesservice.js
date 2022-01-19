@@ -49,7 +49,7 @@ exports.addJobRole = async (role, token) => {
 
 exports.deleteJobRole = async (id, token) => {
   try {
-    const response = await axios.delete('http://localhost:8080/job-roles/deleteJobRole/' + id, {}, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.delete('http://localhost:8080/job-roles/deleteJobRole/' + id, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (error) {
     return -1
