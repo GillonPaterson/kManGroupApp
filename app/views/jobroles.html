@@ -81,39 +81,39 @@
 
 {% set filterByCapability %}
 {{ govukCheckboxes({
-idPrefix: "capability",
-name: "capability",
-fieldset: {
+  fieldset: {
 legend: {
 classes: "govuk-fieldset__legend--l"
 }
 },
+idPrefix: "capability",
+name: "capability",
 items: capabilityItems
 }) }}
 {% endset -%}
 
 {% set filterByBandLevel %}
 {{ govukCheckboxes({
-idPrefix: "bandlevel",
-name: "bandlevel",
-fieldset: {
+  fieldset: {
 legend: {
 classes: "govuk-fieldset__legend--l"
 }
 },
+idPrefix: "bandlevel",
+name: "bandlevel",
 items: bandLevelItems
 }) }}
 {% endset -%}
 
 {% set filterByJobFamily %}
 {{ govukCheckboxes({
-idPrefix: "family",
-name: "family",
-fieldset: {
+  fieldset: {
 legend: {
 classes: "govuk-fieldset__legend--l"
 }
 },
+idPrefix: "family",
+name: "family",
 items: familyItems
 }) }}
 {% endset -%}
