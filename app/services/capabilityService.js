@@ -5,7 +5,7 @@ exports.getAllCapabilityLeadsInfo = async (token) => {
     const response = await axios.get('http://localhost:8080/capability/getAllCapabilityLead', { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
-
+    console.log(e)
   }
 }
 
@@ -14,7 +14,7 @@ exports.getCapabilityLeadInfo = async (leadID, token) => {
     const response = await axios.get('http://localhost:8080/capability/getCapabilityLead/' + leadID, { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
-
+    console.log(e)
   }
 }
 
@@ -32,7 +32,7 @@ exports.getAllCapabilitesInfo = async (token) => {
     const response = await axios.get('http://localhost:8080/capability/getAllCapabilities', { headers: { Authorization: 'Bearer ' + token } })
     return response.data
   } catch (e) {
-
+    console.log(e)
   }
 }
 
