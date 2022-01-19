@@ -48,7 +48,7 @@ describe('Selenium test', () => {
   })
 
   it('should have correct first row displayed on job roles page', async () => {
-    var expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', 'Associate']
+    var expectedFirstRow = ['Software Engineer', 'Engineering', 'Engineering', 'Apprentice']
 
     var elements = (await driver.findElements(By.className('govuk-table__cell')))
     var jobRole = await elements[0].getText()
@@ -58,6 +58,45 @@ describe('Selenium test', () => {
     var firstRow = [jobRole, jobCapability, jobFamily, bandLevel]
 
     expect(firstRow).to.eql(expectedFirstRow)
+  })
+
+  it('should display filter box on job roles page', async () => {
+    var filter1 = await driver.findElement(By.xpath('//*[@id="accordion-default-heading-1"]')).getText()
+    expect(filter1).to.eql('Filter by Job Role')
+
+    var filter2 = await driver.findElement(By.xpath('//*[@id="accordion-default-heading-2"]')).getText()
+    expect(filter2).to.eql('Filter by Capability')
+
+    var filter3 = await driver.findElement(By.xpath('//*[@id="accordion-default-heading-3"]')).getText()
+    expect(filter3).to.eql('Filter by Job Family')
+
+    var filter4 = await driver.findElement(By.xpath('//*[@id="accordion-default-heading-4"]')).getText()
+    expect(filter4).to.eql('Filter by Band Level')
+  })
+
+  it('should filter job roles when update table button is clicked', async () => {
+    await driver.findElement(By.xpath('//*[@id="accordion-default-heading-2"]')).click()
+    await driver.findElement(By.id('capability-2')).click()
+    await driver.findElement(By.id('capability-3')).click()
+    await driver.findElement(By.id('capability-4')).click()
+    await driver.findElement(By.id('capability-5')).click()
+    await driver.findElement(By.id('capability-6')).click()
+    await driver.findElement(By.id('capability-7')).click()
+    await driver.findElement(By.id('capability-8')).click()
+
+    expect(await driver.findElement(By.id('capability-2')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-3')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-4')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-5')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-6')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-7')).isSelected()).to.eql(false)
+    expect(await driver.findElement(By.id('capability-8')).isSelected()).to.eql(false)
+
+    await driver.findElement(By.xpath('//*[@id="accordion-default-heading-2"]')).click()
+    await driver.findElement(By.xpath('//*[@id="main-content"]/form/button')).click()
+
+    const title = await driver.getTitle()
+    expect(title).to.equal('List of Job Roles')
   })
 
   it('should click more info and display job spec', async () => {

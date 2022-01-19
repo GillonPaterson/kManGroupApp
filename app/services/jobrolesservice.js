@@ -30,8 +30,10 @@ exports.getJobRolesFilter = async (token, roledata) => {
     }
 
     const queryString = querystring.stringify(roledata)
+    console.log(queryString)
 
-    const response = await axios.get('http://localhost:8080/api/getJobRolesFilter?' + queryString, { headers: { Authorization: 'Bearer ' + token } })
+    const response = await axios.get('http://localhost:8080/job-roles/getJobRolesFilter?' + queryString, { headers: { Authorization: 'Bearer ' + token } })
+    console.log(response.data)
     return response.data
   } catch (e) {
 

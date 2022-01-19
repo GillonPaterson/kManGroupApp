@@ -33,7 +33,7 @@ router.post('/jobroles', async (req, res) => {
   if (!(roledata.capability === '_unchecked' && roledata.family === '_unchecked' && roledata.bandlevel === '_unchecked' && roledata.jobrolename === '')) {
     const role = await jobrolesservice.getJobRolesFilter(req.cookies.access_token, roledata)
     const bandLevels = await bandLevelService.getJobBandLevels(req.cookies.access_token)
-    const family = await jobrolesservice.getJobFamilyNames(req.cookies.access_token)
+    const family = await jobFamilyService.getJobFamilyNames(req.cookies.access_token)
     const capability = await capabilityService.getAllCapabilitesInfo(req.cookies.access_token)
 
     for (let i = 0; i < role.length; i++) {
@@ -157,7 +157,7 @@ router.post('/editrole', isAdmin, async (req, res) => {
   var val = await roleValidator.checkrole(role)
   if (val === 'No error') {
     await jobrolesservice.editJobRole(role.jobRoleID, edit, req.cookies.access_token)
-    res.redirect('jobRoles')
+    res.redirect('/jobroles')
   } else {
     req.body.errormessage = val
 

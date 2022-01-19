@@ -42,12 +42,25 @@
 
 {% block header %}
   {# Set serviceName in config.js. #}
+  
   {{ govukHeader({
     homepageUrl: "/",
     serviceName: serviceName,
     serviceUrl: "/index",
     containerClasses: "govuk-width-container"
   }) }}
+
+<!--
+  <div class="header__logo-wrap">
+  <a href="/">
+  <picture>
+  <source sizes="" srcset="/globalassets/images/5_logos/kainos_logo.png?mode=crop&amp;width=100 100w, /globalassets/images/5_logos/kainos_logo.png?mode=crop&amp;width=200 200w">
+  <img alt="logo" src="www.kainos.com/globalassets/images/5_logos/kainos_logo.png?mode=crop&amp;width=400" class="header__logo-img">
+  </picture>
+  <span class="sr-only">Logo</span>
+  </a>
+  </div>
+  -->
 {% endblock %}
 
 {% block beforeContent %}
