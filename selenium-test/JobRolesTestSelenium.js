@@ -303,9 +303,9 @@ describe('Selenium test', () => {
     for (let i = 0; i < elements.length; i++) {
       if (await elements[i].getText() === 'seleniumtestname') {
         expect(true)
-        var link = await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]')).getText()
+        var link = await driver.findElement(By.xpath('//*[@id="main-content"]/form/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]')).getText()
         expect(link).to.equal('Edit')
-        await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]/a')).click()
+        await driver.findElement(By.xpath('//*[@id="main-content"]/form/table/tbody/tr[' + ((i / columns) + 1) + ']/td[6]/a')).click()
         break
       }
     }
@@ -329,9 +329,9 @@ describe('Selenium test', () => {
     for (let i = 0; i < elements2.length; i++) {
       if (await elements2[i].getText() === 'selenium') {
         expect(true)
-        var link2 = await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]')).getText()
+        var link2 = await driver.findElement(By.xpath('//*[@id="main-content"]/form/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]')).getText()
         expect(link2).to.equal('Delete')
-        await driver.findElement(By.xpath('//*[@id="main-content"]/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]/a')).click()
+        await driver.findElement(By.xpath('//*[@id="main-content"]/form/table/tbody/tr[' + ((i / columns2) + 1) + ']/td[7]/a')).click()
         break
       }
     }
@@ -375,7 +375,7 @@ describe('Selenium test', () => {
     })
   })
 
-  it('Assert the title on create capability webpage is correct', async () => {
+  it('Assert the title on create band level webpage is correct', async () => {
     await driver.get('http://localhost:3000/createBandLevel')
     const title = await driver.getTitle()
     expect(title).to.equal('Add a New Band')
@@ -388,13 +388,13 @@ describe('Selenium test', () => {
   })
 
   it('Should enter correct details and submit successfully', async () => {
-    await driver.findElement(By.xpath('/html/body/div/main/form/div[1]/input')).sendKeys('Selenium Test')
+    await driver.findElement(By.id('jobBandLevel')).sendKeys('Selenium Test')
     await driver.findElement(By.xpath('/html/body/div/main/form/div[2]/select/option[1]')).click()
 
-    await driver.findElement(By.xpath('/html/body/div/main/form/button')).click()
+    await driver.findElement(By.className('govuk-button')).click()
 
     const title = await driver.getTitle()
-    expect(title).to.equal('Add a New Band')
+    expect(title).to.equal('Add a New Band Training')
 
     var htmlSource = await driver.getPageSource()
     fs.appendFile('app/assets/snapshots/addBandAddTraining-snapshot.html', htmlSource, function (err) {
@@ -404,11 +404,11 @@ describe('Selenium test', () => {
   })
 
   it('Should click a training box and submit', async () => {
-    await driver.findElement(By.xpath('/html/body/div/main/form/div/fieldset/div/div[1]/input')).click()
-    await driver.findElement(By.xpath('/html/body/div/main/form/button')).click()
+    await driver.findElement(By.className('govuk-checkboxes__input')).click()
+    await driver.findElement(By.className('govuk-button')).click()
 
     const title = await driver.getTitle()
-    expect(title).to.equal('Add a New Band')
+    expect(title).to.equal('Add a New Band Competency')
 
     var htmlSource = await driver.getPageSource()
     fs.appendFile('app/assets/snapshots/addBandAddCompetencies-snapshot.html', htmlSource, function (err) {
@@ -418,8 +418,8 @@ describe('Selenium test', () => {
   })
 
   it('Should click a competency box and submit', async () => {
-    await driver.findElement(By.xpath('/html/body/div/main/form/div/fieldset/div/div[1]/input')).click()
-    await driver.findElement(By.xpath('/html/body/div/main/form/button')).click()
+    await driver.findElement(By.className('govuk-checkboxes__input')).click()
+    await driver.findElement(By.className('govuk-button')).click()
 
     const title = await driver.getTitle()
     expect(title).to.equal('Home')
