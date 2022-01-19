@@ -1,5 +1,9 @@
 # kManGroupApp
-Welcome to K man group app
+Hello welcome to K man group app
+
+## Description 
+
+This is the front end to our project it has webpages made up of a mixture of nunjucks and html using the govUK components. Also has java script to request data from the endpoints of our api. 
 
 ## How to start your application 
 
@@ -22,14 +26,29 @@ All the config files for the CI pipeline are held in the .github/workflows and t
 
 ### workFlows we run
 
-1. superlinter
-2. pa11y 
+1. superlinter -documentation- https://github.com/github/super-linter
+2. pa11y -documentation- https://github.com/pa11y/pa11y
+
+#### How Pa11y works in this project
+
+Screenshots of the webpages used are taken during the selenium test and then the Pa11y tests can be run on the snapshots which means the tests can be run as part of the workflow. The pa11yci.json file is used to configure the test from here you can set the standart timeout etc.  
+
 3. unit tests
 
-Rules
----
+### GovUk components
+
+https://design-system.service.gov.uk/get-started/
+
+### Rules
+
 1. You break it you fix it 
 2. if Gillon did it and it doesn't work check his spelling
+3. Ignore dependabot at all costs
+
+### Other Repos for Project
+
+1. Backend - https://github.com/GillonPaterson/kManGroup-Api - we used java17
+2. Performance testing - https://github.com/GillonPaterson/gatling-tests - needs to be run with java11
 
 ### Contributing
 

@@ -1,0 +1,56 @@
+ <!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Add a New Band Competency
+{% endblock %}
+ 
+{% block content %}
+
+<h2 class="govuk-heading-xl">Add a New Band</h2>
+ 
+<form class="newBandLevelForm" action="/createBandLevelSubmit" method="post">
+
+{% set competenciesItems = [] %}
+
+{% for competency in competencies %}
+
+{% set competenciesItems = (competenciesItems.push({text: competency.competencyStage, value: competency.competencyDataID}), competenciesItems) %}
+{% endfor %}
+
+{% if errormessage %}
+ {{ govukCheckboxes({
+  idPrefix: "competencies",
+  name: "competencies",
+  fieldset: {
+    legend: {
+      text: "Select the competencies that apply",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  errorMessage: {
+    text: errormessage
+  },
+  items: competenciesItems
+}) }}
+{% else %}
+{{ govukCheckboxes({
+  idPrefix: "competencies",
+  name: "competencies",
+  fieldset: {
+    legend: {
+      text: "Select the competencies that apply",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: competenciesItems
+}) }}
+{% endif %}
+
+ <button type="submit" class="govuk-button" data-module="govuk-button">
+ Next
+ </button>
+
+ {% endblock %}
