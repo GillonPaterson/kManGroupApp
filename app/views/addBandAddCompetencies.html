@@ -18,7 +18,24 @@
 {% set competenciesItems = (competenciesItems.push({text: competency.competencyStage, value: competency.competencyDataID}), competenciesItems) %}
 {% endfor %}
 
+{% if errormessage %}
  {{ govukCheckboxes({
+  idPrefix: "competencies",
+  name: "competencies",
+  fieldset: {
+    legend: {
+      text: "Select the competencies that apply",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  errorMessage: {
+    text: errormessage
+  },
+  items: competenciesItems
+}) }}
+{% else %}
+{{ govukCheckboxes({
   idPrefix: "competencies",
   name: "competencies",
   fieldset: {
@@ -30,6 +47,7 @@
   },
   items: competenciesItems
 }) }}
+{% endif %}
 
  <button type="submit" class="govuk-button" data-module="govuk-button">
  Next

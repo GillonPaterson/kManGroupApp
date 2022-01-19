@@ -18,7 +18,24 @@
 {% set trainingItems = (trainingItems.push({text: train.trainingLink | safe, value: train.trainingId}), trainingItems) %}
 {% endfor %}
 
+{% if errormessage %}
  {{ govukCheckboxes({
+  idPrefix: "training",
+  name: "training",
+  fieldset: {
+    legend: {
+      text: "Select the training that apply",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  errorMessage: {
+    text: errormessage
+  },
+  items: trainingItems
+}) }}
+{% else %}
+  {{ govukCheckboxes({
   idPrefix: "training",
   name: "training",
   fieldset: {
@@ -30,6 +47,7 @@
   },
   items: trainingItems
 }) }}
+{% endif %} 
 
  <button type="submit" class="govuk-button" data-module="govuk-button">
  Next

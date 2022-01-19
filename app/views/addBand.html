@@ -12,23 +12,13 @@
 <form class="newBandLevelForm" action="/createBandLevelAddTraining" method="post">
 
 {% if errormessage %} 
- <div class="govuk-error-message">{{ errormessage }}</div>
-  {% if 'role name' in errormessage %}
-  {% set rolenameError = "true" %}
-  {% endif %}
-  {% if 'link' in errormessage %}
-  {% set rolelinkError = "true" %}
-  {% endif %}
-  {% if 'job specification' in errormessage %}
-  {% set rolespecError = "true" %}
-  {% endif %}
-  {% if 'job responsibilities' in errormessage %}
-  {% set rolerespError = "true" %}
+  {% if 'Band Level' in errormessage %}
+  {% set bandLevelError = "true" %}
   {% endif %}
 {% endif %}
 
 <br>
- {% if rolenameError %}
+ {% if bandLevelError %}
  {{ govukInput({
  label: {
  text: "Band Level"

@@ -3,26 +3,33 @@ const axios = require('axios').default
 exports.getJobBandLevels = async (token) => {
   try {
     const response = await axios.get('http://localhost:8080/band-level/getJobBandLevels', { headers: { Authorization: 'Bearer ' + token } })
+    console.log(response)
     return response.data
   } catch (e) {
-    console.log(e)
+    var error = e.name + ': ' + e.message
+    console.error(error)
+    return null
   }
 }
 
 exports.getJobBandLevelsAndImportance = async (token) => {
   try {
     const response = await axios.get('http://localhost:8080/band-level/getJobBandLevelsAndImportance', { headers: { Authorization: 'Bearer ' + token } })
+    console.log(response)
     return response.data
   } catch (e) {
-    console.log(e)
+    var error = e.name + ': ' + e.message
+    console.error(error)
+    return null
   }
 }
 
 exports.createBandLevel = async (bandLevelInfo, token) => {
   try {
-    const response = await axios.post('http://localhost:8080/band-level/createBandLevel', bandLevelInfo, { headers: { Authorization: 'Bearer ' + token } })
-    return response.data
+    await axios.post('http://localhost:8080/band-level/createBandLevel', bandLevelInfo, { headers: { Authorization: 'Bearer ' + token } })
   } catch (e) {
-    console.log(e)
+    var error = e.name + ': ' + e.message
+    console.error(error)
+    return false
   }
 }
