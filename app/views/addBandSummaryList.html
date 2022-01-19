@@ -1,0 +1,27 @@
+ <!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Add a New Band
+{% endblock %}
+ 
+{% block content %}
+
+<h2 class="govuk-heading-xl">Add a New Band</h2>
+ 
+<form class="newBandLevelForm" action="/createBandLevel" method="post">
+
+{% set summaryRows = [] %}
+
+{% set summaryRows = (summaryRows.push({key: {text: "Band Level"},{value: bandLevelName}}), summaryRows) %}
+{% set summaryRows = (summaryRows.push({key: {text: "Importance"},{value: importance}}), summaryRows) %}
+
+{# {{ govukSummaryList({
+  rows:
+}) }} #}
+
+<button type="submit" class="govuk-button" data-module="govuk-button">
+Submit
+</button>
+
+ {% endblock %}

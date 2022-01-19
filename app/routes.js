@@ -7,6 +7,7 @@ router.use('/', require('./routes/jobFamilies'))
 router.use('/', require('./routes/jobRoles'))
 router.use('/', require('./routes/login'))
 router.use('/', require('./routes/training'))
+router.use('/', require('./routes/bandlevel'))
 
 router.get('/home', async (req, res) => {
   if (res.locals.auth.isAdmin) {

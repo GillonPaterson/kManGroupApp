@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+ Add a New Band
+{% endblock %}
+ 
+{% block content %}
+
+<h2 class="govuk-heading-xl">Add a New Band</h2>
+ 
+<form class="newBandLevelForm" action="/createBandLevelAddTraining" method="post">
+
+{% if errormessage %} 
+  {% if 'Band Level' in errormessage %}
+  {% set bandLevelError = "true" %}
+  {% endif %}
+{% endif %}
+
+<br>
+ {% if bandLevelError %}
+ {{ govukInput({
+ label: {
+ text: "Band Level"
+ },
+ id: "jobBandLevel",
+ name: "jobBandLevel",
+ value: data["jobBandLevel"], 
+ errorMessage: {text: errormessage }
+ }) }}
+ {% else %}
+ {{ govukInput({
+ label: {
+ text: "Band Level"
+ },
+ id: "jobBandLevel",
+ name: "jobBandLevel",
+ hint: {text: "Band Level must be no longer than 40 characters long"}, 
+ value: data["jobBandLevel"]
+ }) }}
+ {% endif %} 
+{% if bandlevels and bandlevels.length > 0 %}
+{% set bandLevelRows = [] %}
+{% set importance = [] %}
+
+{% for bandLevel in bandlevels %}
+
+{% set bandLevelRows = (bandLevelRows.push([{text: bandLevel.jobBandLevel },{text: bandLevel.importance}]), bandLevelRows) %}
+{% set importance = (importance.push({text: bandLevel.importance, value: bandLevel.importance}), importance) %}
+
+{% endfor %}
+{% set importance = (importance.push({text: importance.length + 1, value: importance.length + 1}), importance) %}
+
+{{ govukSelect({
+  id: "importance",
+  name: "importance",
+  label: {
+    text: "Band Level Importance"
+  },
+  items: importance
+}) }}
+
+ {{govukTable({
+ head: [{ text: "BandLevel" },{text: "Importance"}], 
+ rows: bandLevelRows })
+ }}
+
+ <button type="submit" class="govuk-button" data-module="govuk-button">
+ Next
+ </button>
+
+ {% endif %} 
+{% endblock %}
