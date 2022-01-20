@@ -1,5 +1,6 @@
 {
     "ignore": [
-        "../app/assets/snapshots/addRoles-snapshot.html"
+        "../app/assets/snapshots/addRoles-snapshot.html",
+        "../app/node_modules/*"
         ]
 }
