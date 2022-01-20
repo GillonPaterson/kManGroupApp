@@ -1,6 +1,6 @@
 {
     "ignore": [
         "../app/assets/snapshots/addRoles-snapshot.html",
-        "../package.json"
+        "../../package.json"
         ]
 }
