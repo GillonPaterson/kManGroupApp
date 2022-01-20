@@ -10,15 +10,6 @@
 
 <h2 class="govuk-heading-xl">List of Job Roles</h2> 
 
-{% if jobroles and jobroles.length > 0 %}
-{% set jobrolesrows = [] %}
-
-{% for jobrole in jobroles %}
-
-{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.jobRole },{text: jobrole.jobCapability}, {text: jobrole.jobFamilyName}, {text: jobrole.jobBand|safe}, {text: jobrole.viewSpecURL|safe}, {text: jobrole.editURL|safe}, {text: jobrole.deleteURL|safe}]), jobrolesrows) %}
-
-{% endfor %}
-
 
 {% set capabilityItems = [] %}
 {% for capability in capabilities %}
@@ -165,6 +156,15 @@ items: familyItems
 
 <br><br>
 
+{% if jobroles and jobroles.length > 0 %}
+{% set jobrolesrows = [] %}
+
+{% for jobrole in jobroles %}
+
+{% set jobrolesrows = (jobrolesrows.push([{text: jobrole.jobRole },{text: jobrole.jobCapability}, {text: jobrole.jobFamilyName}, {text: jobrole.jobBand|safe}, {text: jobrole.viewSpecURL|safe}, {text: jobrole.editURL|safe}, {text: jobrole.deleteURL|safe}]), jobrolesrows) %}
+
+{% endfor %}
+
 {{govukTable({
 head: [{ text: "Job Role" },{text: "Job Capability"}, {text: "Job Family"}, {text: "Band Level"}, {text: "View Job Spec"}, {text: "Edit"}, {text: "Delete"}], 
 rows: jobrolesrows })
@@ -172,7 +172,7 @@ rows: jobrolesrows })
 
 {% else %}
 
-There are no job roles.
+<p>There are no job roles.</p>
 
 {% endif %}
 
