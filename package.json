@@ -83,6 +83,12 @@
         "supertest": "^4.0.2"
     },
     "standard": {
-        "globals": [ "it", "describe", "afterEach", "after", "config"]
+        "globals": [
+            "it",
+            "describe",
+            "afterEach",
+            "after",
+            "config"
+        ]
     }
 }
