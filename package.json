@@ -60,7 +60,7 @@
         "stack": "^0.1.0",
         "sync-request": "^6.0.0",
         "universal-analytics": "^0.4.16",
-        "url-parse": "^1.5.4",
+        "url-parse": "^1.5.8",
         "uuid": "^7.0.3",
         "webdriverio": "^7.16.11"
     },
