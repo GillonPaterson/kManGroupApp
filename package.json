@@ -62,7 +62,7 @@
         "universal-analytics": "^0.4.16",
         "url-parse": "^1.5.4",
         "uuid": "^7.0.3",
-        "webdriverio": "^7.16.11"
+        "webdriverio": "^8.3.5"
     },
     "devDependencies": {
         "axios-mock-adapter": "^1.20.0",
